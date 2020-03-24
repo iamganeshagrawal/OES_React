@@ -3,6 +3,21 @@ import { Container, Row, Col, Button } from 'react-bootstrap'
 import './toggle.css'
 
 export class UI8 extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             zip1: null,
+             zip2: null,
+             zip3: null,
+             zip4: null,
+             xml1: null,
+             xml2: null,
+             xml3: null,
+             xml4: null,
+        }
+    }
+    
     render() {
         return (
             <div>

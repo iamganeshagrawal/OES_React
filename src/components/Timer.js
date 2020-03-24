@@ -8,9 +8,9 @@ class Timer extends Component{
             secs: props.secs,
             isTimerRunning: false,
             callback: props.callback,
-            offset: 377
+            offset: 252
         };
-        this.reduceOffset = (377 / props.secs).toFixed(2);
+        this.reduceOffset = (252 / props.secs).toFixed(2);
     }
     componentDidMount(){
         this.startTimer();
@@ -48,10 +48,10 @@ class Timer extends Component{
         
         return(
             <Fragment>
-                <svg height="140" width="140">
-                    <circle cx="70" cy="70" r="60" fill="none" stroke="#61c3ce" stroke-width="10"/>
-                    <circle cx="70" cy="70" r="60" stroke="white" stroke-width="11" fill="none" stroke-dasharray='377' stroke-dashoffset={this.state.offset} transform='rotate(-90 70 70)'/>
-                    <text font-weight="bold" font-size="16" text-anchor="middle" alignment-baseline="middle" y="50%" x="50%" fill="black">{(timeHours<10?'0':'')+timeHours}:{("00" + timeMins).substr(-2)}:{("00" + timeSecs).substr(-2)}</text>
+                <svg height="100" width="100">
+                    {/* <circle cx="50" cy="50" r="40" fill="none" stroke="#61c3ce" stroke-width="6"/> */}
+                    <circle cx="50" cy="50" r="40" stroke="#61c3ce" stroke-width="7" fill="none" stroke-dasharray='252' stroke-linecap='round' stroke-dashoffset={this.state.offset} transform='rotate(-90 50 50)'/>
+                    <text font-weight="bold" font-size="14" text-anchor="middle" alignment-baseline="middle" y="50%" x="50%" fill="black">{(timeHours<10?'0':'')+timeHours}:{("00" + timeMins).substr(-2)}:{("00" + timeSecs).substr(-2)}</text>
                 </svg>
                 <p className="p-0 m-0"><b>Exam Time</b></p>
             </Fragment>

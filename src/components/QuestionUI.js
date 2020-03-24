@@ -9,22 +9,22 @@ export class QuestionUI extends Component {
                 <Row>
                     <Col md={3} className="border-right shadow-lg p-0" style={{height:"100vh"}}>
                         {/* User Info */}
-                        <Container fluid={true} className="py-3 px-2 text-dark text-center">
+                        <Container fluid={true} className="py-2 px-2 text-dark text-center">
                             <img src="https://picsum.photos/75" alt="user" className="rounded-circle border mt-3" style={{width: '75px', height: '75px'}} />
                             <p className="my-0"><b>Exam Student Name</b></p>
                             <p className="my-0"><b>Hall Ticket Number</b></p>
-                            <p className="mt-0 mb-3"><small>studentemail@gmail.com</small></p>
+                            <p className="mt-0 mb-2"><small>studentemail@gmail.com</small></p>
                         </Container>
                         {/* Timer */}
-                        <Container fluid={true} className="py-4 px-2 text-dark border-top text-center">
-                            <Timer secs={300} callback={() => console.log("timeup")}/>
+                        <Container fluid={true} className="py-2 px-2 text-dark border-top text-center">
+                            <Timer secs={60*5} callback={() => console.log("timeup")}/>
                         </Container>
                         {/* Questions Nav Bubbles */}
                         <Container fluid={true} className="py-4 px-3 border-top" style={{overflowX:'auto'}}>
                             <p><strong><span className="text-bold" style={{color:'#1c8ff9'}}>QUESTION ></span> 1</strong></p>
                             {
-                                new Array(12).fill(0).map((e,i) => (
-                                    <Button variant="outline-dark" key={i} className="m-1 rounded-circle shadow" style={{width:'40px',height:'40px'}}>{i+1}</Button>
+                                new Array(50).fill(0).map((e,i) => (
+                                    <Button variant="outline-dark" key={i} className="mb-1 mr-1 rounded-circle p-0" style={{width:'35px',height:'35px'}}>{i+1}</Button>
                                 ))
                             }
                         </Container>

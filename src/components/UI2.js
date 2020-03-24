@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Media, Button } from 'react-bootstrap'
 import './toggle.css';
 
-class AdminDecrypt extends Component {
+class UI3 extends Component {
     render() {
         return (
             <div>
@@ -104,4 +104,4 @@ class AdminDecrypt extends Component {
     }
 }
 
-export default AdminDecrypt
+export default UI3

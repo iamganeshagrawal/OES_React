@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap'
-import './RegistrationData.css'
+import { Container, Row, Col, Button} from 'react-bootstrap'
+import './UI6.css'
 
-export class RegistrationData extends Component {
+export class UI6 extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             file: null
+        }
+    }
+    
+    onFileChangeHandler = event => {
+        this.setState({
+            file: event.target.files[0]
+        })
+    }
     render() {
+        const fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
         return (
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
@@ -17,13 +31,17 @@ export class RegistrationData extends Component {
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
                                 <Container fluid={true}>
                                     <div className="fieldBox">
+                                        {/* hidden input for file upload and access via ref  */}
+                                        <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
+                                        {/* Actual UI Elements */}
                                         <span className="fieldTitle">Registration Data</span>
-                                        <input className="fieldInput" type="text" placeholder="Path of the Registration Data" />
-                                        <button className="fieldButton">Upload</button>
+                                        <input className="fieldInput file" readOnly type="text" placeholder="Path of the Registration Data" value={fakePath} onClick={(e) => this.fileRef.click()} />
+                                        <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
+                                        
                                     </div>
                                     <div className="fieldBox">
                                         <span className="fieldTitle">Decryption Key</span>
-                                        <input className="fieldInput" style={{width:'90%'}} type="text" placeholder="*****  *****  ***** *****" />
+                                        <input className="fieldInput placeholder" style={{width:'100%'}} type="text" placeholder="*****  *****  ***** *****" />
                                     </div>
                                     {/* Decrypt Button */}
                                     <Button className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
@@ -40,4 +58,4 @@ export class RegistrationData extends Component {
     }
 }
 
-export default RegistrationData
+export default UI6

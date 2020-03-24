@@ -26,6 +26,9 @@
     color: #333333;
     border-radius: 10px;
 }
+.fieldInput.file{
+    cursor: pointer;
+}
 .fieldButton{
     width: 25%;
     border-radius: 0 5px 5px 0;
@@ -34,4 +37,20 @@
     color: white;
     background-color: #333333;
     border: solid #333333 1px;
+}
+.placeholder::-webkit-input-placeholder {
+    /* color: peachpuff; */
+    font-size: 20px;
+}
+.placeholder::-moz-placeholder {
+    /* color: peachpuff; */
+    font-size: 20px;
+}
+.placeholder:-ms-input-placeholder {
+    /* color: peachpuff; */
+    font-size: 20px;
+}
+.placeholder::placeholder {
+    /* color: peachpuff; */
+    font-size: 20px;
 }
