@@ -1,0 +1,49 @@
+/* .modal {
+    position: fixed;
+    top:50%;
+    left:30%;
+    width:80vh;
+    height: 30vh;
+    background: rgb(62, 201, 62);
+    box-shadow:"0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)";
+    border-radius: 1%;
+  }
+  
+  .modal-main {
+    position:fixed;
+    background: white;
+    width: 80%;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+  
+  .display-success {
+    display: block;
+  }
+  
+  .display-fail {
+    display: none;
+  }
+   */
+
+.card{
+  height:25vh;
+  width:85vh;
+  top:50%;
+  left:35%;
+  position:absolute;
+  box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.card-header{
+  color:red;
+}
+/* style={{width:"65px",right:"40%",transform:"translateY(-55%)",position:"relative"}} */
+.card-body{
+  margin-top: 10px;
+}
+.Media img{
+  width: 10px;
+  
+}

@@ -1,0 +1,32 @@
+#btn1{
+  width:250px;
+  text-align: center;
+  margin-left: 50px;
+}
+#inp1,#inp2{
+  border-bottom: none;
+  width:80%;  
+}
+.image{
+    background-color: lavender;
+    top: 0;
+    width: 100%;
+    height:100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  @media only screen and (min-width:1200px){
+  .image{
+    background-image: url('./logo.jpg');
+    top: 0;
+    width: 100%;
+    height:100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  }
+  .login{
+    position: absolute;
+    right: 0%;
+    margin-right: 73px;
+  }

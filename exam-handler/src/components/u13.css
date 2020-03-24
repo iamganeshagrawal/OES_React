@@ -1,0 +1,49 @@
+body{
+    background-color: #ffffff;
+}
+.mainfield{
+    position: relative;
+    border: 1px solid #bbb2b2 ;
+    width: 60%;
+    margin-top: 15px;
+    border-radius: 5px;
+    margin-left: 10%;
+}
+.header{
+    font-weight: bold;
+    position: absolute;
+    margin-top: -14px;
+    margin-left: -240px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#U13inp1,#U13inp2,#U13inp3,#U13inp5{
+    border-radius: 10px;
+    width:85%;
+    border: none;
+    display: inline-block;
+    box-shadow: none;
+    outline: none;
+}
+#U13inp4{
+    font-weight: bold;
+    position: absolute;
+    margin-top: -14px;
+    margin-left: 10px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.select{
+    background-color: white;
+    border:none;
+    margin-left: 20px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+#U13sel1{
+    box-shadow: none;
+    outline: none;
+}
