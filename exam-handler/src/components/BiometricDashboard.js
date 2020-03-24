@@ -1,8 +1,11 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Media } from 'react-bootstrap';
 import './OesDashboard.css'
 
+//TODO: UI needs full rework
+//TODO: Serach option is missing so add that
+//FIXME: approx 25% screen going non scrollable and rest will be scrollable and horizontal scroll must disable
+//FIXME: Shadow of sidebar will be needs correction and table of candidate list also need improment 
 
 class BiometricDashboard extends React.Component{
     render(){
@@ -28,19 +31,19 @@ class BiometricDashboard extends React.Component{
                             </div> */}
                             <div className="card-body  mt-5">
                             <Media className="media">
-                                <img  src="./assets/images/dashboard.png"  alt="dashboard "/>
+                                <img  src="./assets/images/Asset 15@4x.png"  alt="dashboard "/>
                                 <Media.Body>
                                   <p>Dashboard </p>
                                 </Media.Body>
                             </Media>
                             <Media className="media">
-                                <img  src="./assets/images/biometric.png"  alt="Biometric "/>
+                                <img  src="./assets/images/Asset 14@4x.png"  alt="Biometric "/>
                                 <Media.Body>
                                   <p>BioMetric </p>
                                 </Media.Body>
                             </Media>
                             <Media className="media">
-                                <img  src="./assets/images/multiple-sessions.png"  alt="dashboard "/>
+                                <img  src="./assets/images/Asset 13@4x.png"  alt="dashboard "/>
                                 <Media.Body>
                                   <p>Multiple sessions </p>
                                 </Media.Body>

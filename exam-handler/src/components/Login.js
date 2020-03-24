@@ -1,11 +1,10 @@
 import React from 'react';
 import './u12.css';
 
+//FIXME: UI needs full rework
+
 class Login extends React.Component{
-    constructor(props){
-        super(props);
-    }
-    handleClick(){
+    handleClick = () => {
         var x = document.getElementById("U12mypass");
         if (x.type==="password"){
             x.type="text"
@@ -36,7 +35,7 @@ class Login extends React.Component{
                                 <input type="text" id="U12myname" className="form-control" name="UserName" required />
                                 Password
                                 <input type="password" className="form-control" id="U12mypass" name="Password" required />
-                                <div><input type="checkbox" class="checkmark" onClick={this.handleClick.bind(this)}/> &nbsp;<span style={{color:"#007bff"}}>Show Password</span></div>
+                                <div><input type="checkbox" class="checkmark" onClick={this.handleClick}/> &nbsp;<span style={{color:"#007bff"}}>Show Password</span></div>
                                 <br />
                                 <div>
                                 <span><a href="www.google.com">Forgot Password?</a></span>&emsp;&emsp;&emsp;&emsp;<span><button type="sumbit"

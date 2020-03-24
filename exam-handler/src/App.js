@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Comp from './components/UploadQP';
+import Comp from './components/u13';
 
 const reducer = (state = {}, action) => ({});
 const store = createStore(reducer);

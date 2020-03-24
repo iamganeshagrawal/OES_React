@@ -1,5 +1,7 @@
 import React from 'react'
 import {Media} from 'react-bootstrap'
+//FIXME: some minor changes need
+
 class MyModal extends React.Component{
    
 render(){
@@ -15,7 +17,7 @@ render(){
                         <button onClick={this.props.hideModal} style={{marginLeft:"95%",marginTop:"0px"}}>X</button>
                         
                         <Media>
-                            <img  src="/assets/svg/document-security-unlock-white.svg"  style={{width:"65px",left:"5%",paddingTop:"20px",position:"relative"}} alt="lock"/>
+                            <img className="svg-icon" src="/assets/svg/document-security-unlock-white.svg"  style={{width:"65px",left:"5%",paddingTop:"20px",position:"relative"}} alt="lock"/>
                             <Media.Body style={{paddingTop:"10px"}}>
                                 <h2 style={{color:"white"}}>Decryption Successfull</h2>
                                 <p style={{color:"white"}}>Current set of question paper is successfully decrypted.</p>
@@ -34,7 +36,7 @@ render(){
                             <button onClick={this.props.hideModal} style={{marginLeft:"95%",marginTop:"0px"}}>X</button>
                             
                             <Media>
-                                <img  src="/assets/svg/document-security-lock-white.svg"  style={{width:"65px",left:"5%",paddingTop:"20px",position:"relative"}} alt="lock"/>
+                                <img className="svg-icon" src="/assets/svg/document-security-lock-white.svg"  style={{width:"65px",left:"5%",paddingTop:"20px",position:"relative"}} alt="lock"/>
                                 <Media.Body style={{paddingTop:"10px"}}>
                                     <h2 style={{color:"white"}}>Decryption Error</h2>
                                     <p style={{color:"white"}}>Check Both the Side Keys, Observer as well as CS-user keys.</p>

@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container,Media } from 'react-bootstrap';
 import './OesDashboard2.css'
 
+//FIXME: need some changes in UI view
+
 class Dashboard extends Component {
    
     render() {

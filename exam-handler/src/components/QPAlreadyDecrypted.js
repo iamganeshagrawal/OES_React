@@ -1,10 +1,10 @@
 import React from 'react';
 import './u2.css';
 
+//FIXME: UI needs full rework
+
 class QPAlreadyDecrypted extends React.Component{
-    constructor(props){
-        super(props);
-    }
+    
     render(){
         return (
             <div className="container h-100" style={{position:"absolute"}}>

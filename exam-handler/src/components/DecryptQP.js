@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Media, Button} from 'react-bootstrap'
 import './toggle.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import MyModal from './MyModal'
 
 
 class DecryptQP extends Component {
-    state = { decrypted: true ,
-              show:false
+    state = { decrypted: false ,
+              show:true
             };
     
     showModal=()=>{
