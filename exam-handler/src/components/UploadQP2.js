@@ -6,6 +6,7 @@ import './block-lock.css'
 export class UploadQP2 extends Component {
     render() {
         return (
+            //TODO: create fake path name of files to show in files input fileds if required
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
                     <Row>

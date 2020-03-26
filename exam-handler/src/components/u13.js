@@ -1,10 +1,10 @@
 import React from 'react';
 import './u13.css';
 
+//FIXME:UI needs full rework
+
 class U13 extends React.Component{
-    constructor(props){
-        super(props);
-    }
+    
     render(){
         return (
             <div className="container" style={{position:"absolute"}}>
