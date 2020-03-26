@@ -1,17 +1,17 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import Comp from './components/ExamSubmitted';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-
-const reducer = (state = {}, action) => ({});
-const store = createStore(reducer);
+import Router from './config/appRoutes';
+import store from './config/store';
+// import Loader from './components/loader';
+// import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
 	<Provider store={store}>
-    	<Comp />
+		{/* <ToastContainer />
+			<Loader /> */}
+    	<Router />
 	</Provider>
   );
 }
