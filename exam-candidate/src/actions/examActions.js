@@ -1,4 +1,9 @@
-import { START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM } from '../actions/types';
+import { SAVE_EXAM, START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM } from '../actions/types';
+
+export const saveExam = (data) => ({
+	type: SAVE_EXAM,
+	data
+});
 
 export const startExam = (data) => ({
 	type: START_EXAM,

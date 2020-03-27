@@ -1,79 +1,91 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InstructionPageTimer from './InstructionPageTimer';
-//import axios from 'axios';
-// import store from './store';
+import { startExamReq } from '../config/httpRoutes';
+import { startExam } from '../actions/examActions';
+import { alertError } from '../config/toaster';
 
 class InstructionPage extends React.Component{
     constructor(props){
-        super(props);
-        this.state={
+		super(props);
+		
+		if(!this.props.session.session) {
+			this.props.history.push("/login");
+		}
+
+		if(this.props.questions) {
+			this.props.history.push("/exam");
+		}
+
+        this.state = {
             candidateName:'',
             email:'',
             candidateImage:'',
             ins:'',
-            time:5,
+            time: 15 * 60,
             timer:true
-        }
+        };
         this.updateTimer = this.updateTimer.bind(this)
-    }
-    // componentDidMount(){
-    //     var headerObj=JSON.parse(localStorage.getItem("header"));
-    //     var examdataObj=JSON.parse(localStorage.getItem("examdata"));
-    //     console.log(headerObj);
-    //     const state=store.getState();
-    //     const authToken = state.Auth.token;
-    //     axios.get('http://192.168.100.6:8080/startExam',
-    //     headers:
-    //             {
-    //             Authorization: `Bearer ${authToken}`
-    //              }
-        
-    //     )
-    //     .then(res => res.json());
-    // }
-    handleStartexam=()=>{
-        console.log("exam started!");
-    }
+	}
+	
+    startExam = () => {
+        startExamReq().then( (res) => {
+			this.props.saveQuestions(res.data);
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+	
     updateTimer(){
         this.setState({
             timer:false
         });
-        console.log(this.state.timer);
-    }
+	}
+	
     render(){
-        console.log("parent");
-        console.log(this.state.timer);
+		let { name, image, hallTicket, email } = this.props.session;
+		let { startTime, instructions } = this.props.exam;
         return(
-            
-            <div className="container-fluid ">
-                <div className="row text-center ">
-                    <div className="col-lg-3 pr-0 pl-0" style={{boxShadow:"0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"}}>
-                        <container className="card" style={{height:"50vh" ,paddingTop:"80px"}}>
-                            <div className="card-body pt-3">
-                                <img className="rounded-circle " src="./index.jpg" style={{height:"100px",width:"100px"}} alt="card "/>
-                                <h6 className="card-title text-muted pt-3"><b>Exam Student Name</b></h6>
-                                <h6 className="card-title text-muted pd-3"><b>Hall Ticket Number</b></h6>
-                                <h6 className="card-title text-muted pd-3">studentmail@gmail.com</h6>
-                            </div>
-                        </container>
-                        <container className="card pr-lg-2"  style={{height:"50vh",paddingTop:"70px"}}>
-                            <div style={{paddingTop:"20px"}} >
-                            <InstructionPageTimer secs={this.state.time} 
-                                callback={()=> {console.log('a'); this.setState({timer:false})}}
-                            />
-                            </div>
-                            <p ><b>Exam Start Time</b></p>
-                        </container>
-                    </div>
-                    <div className="col-lg-9">
-                        <img src="Instructionimg.jpg" alt="instruction" style={{ maxWidth: "100%",display: "block", height: "auto"}} />
-                        
-                        <button className="btn btn-primary" onClick="handleStartExam" disabled={this.state.timer}>Start exam</button>
-                    </div>
-                </div>
-            </div>
+			<div className="row text-center ">
+				<div className="col-lg-3 pr-0 pl-0" style={{boxShadow:"0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"}}>
+					<container className="card" style={{height:"50vh" ,paddingTop:"80px"}}>
+						<div className="card-body pt-3">
+							<img className="rounded-circle " src={image} style={{height:"100px",width:"100px"}} alt="card" />
+							<h6 className="card-title text-muted pt-3"><b>{name}</b></h6>
+							<h6 className="card-title text-muted pd-3"><b>{hallTicket}</b></h6>
+							<h6 className="card-title text-muted pd-3">{email}</h6>
+						</div>
+					</container>
+					<container className="card pr-lg-2"  style={{height:"50vh",paddingTop:"70px"}}>
+						<div style={{paddingTop:"20px"}} >
+						<InstructionPageTimer secs={this.state.time} 
+							callback={()=> {this.setState({timer:false})}}
+						/>
+						</div>
+						<p ><b>{startTime}</b></p>
+					</container>
+				</div>
+				<div className="col-lg-9">
+					<img src={instructions} alt="instructions" style={{ maxWidth: "100%",display: "block", height: "auto"}} />
+					
+					<button className="btn btn-primary" onClick={this.startExam()} disabled={this.state.timer}>Start exam</button>
+				</div>
+			</div>
         )
     }
 }
-export default InstructionPage
+
+const mapStateToProps = (state) => ({
+	session: state.session,
+	exam: state.exam
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	saveQuestions: (questions) => {dispatch(startExam(questions))}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InstructionPage);

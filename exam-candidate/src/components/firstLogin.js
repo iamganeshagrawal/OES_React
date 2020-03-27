@@ -2,105 +2,122 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './floating-labels.css';
 import './firstLogin.css';
-import axios from 'axios';
-import {connect} from 'react-redux';
-
+import { connect } from 'react-redux';
+import { loginReq } from '../config/httpRoutes';
+import { emailRE, hallTicketRE } from '../config/RegEx';
+import { login } from '../actions/sessionsActions';
+import { saveExam } from '../actions/examActions';
+import { alertWarn, alertError, alertSuccess } from '../config/toaster';
+import { saveToken } from '../config/localStorage';
 
 class FirstLogin extends React.Component{
     constructor(props){
-        super(props);
+		super(props);
+		
+		if(this.props.session) {
+			this.props.history.push("/instructions");
+		}
+
         this.state = {
             hallTicket:'',
             email:'',
             login:true
-        };
-    }
-    handleEmail = (event) => {
-        this.setState({email:event.target.value})
-    }
-    handleTicket = (event) => {
-        this.setState({hallTicket:event.target.value})
-    }
+		};
+	}
+	
+    handleChange = (event) => {
+        this.setState({[event.target.name]: event.target.value});
+	}
+	
     handleSubmit = (event) => {
-        event.preventDefault();
-        const cand = {
-            "hallTicket":this.state.hallTicket,
-            "email":this.state.email
-        }
-        axios.put("http://192.168.100.34:8080/login",cand,{
-            headers:{
-              'Content-Type':'application/json',
-              'Access-Control-Allow-Origin':'*'
-        }})  
-        .then(res => {
-            console.log(res.data)
-            this.setState({login:true})
-            const details = {
-                'hallTicket':this.state.hallTicket,
-                'email':this.state.email,
-                'id':res.data.candidate.id,
-                'name':res.data.candidate.name,
-                'image':res.data.candidate.image,
-                'examTime':res.data.exam.duration,
-                'maxTime':res.data.exam.max,
-                'auth':res.headers.auth,
-                'instructions':res.data.exam.instructions
-            }
-            this.props.dispatch({type:'STORE',data:details})
-        }).catch(res => {
-            console.log(res)
-            console.log(res.message)
-            const details = {
-                'message':res.message
-            }
-            this.setState({login:false})
-            this.props.dispatch({type:'STORE',data:details})
-        })
+		event.preventDefault();
+		
+		let { email, hallTicket } = this.state;
+		if(!hallTicketRE.test(hallTicket)) {
+			return alertWarn("Invalid Hall Ticket Number");
+		}
+
+		if(!emailRE.test(email)) {
+			return alertWarn("Invalid E-Mail Address");
+		}
+		
+		loginReq({
+			hallTicket,
+			email
+		}).then((res) => {
+			let { candidate, exam, instructions, timeLeft=false, message } = res.data;
+			
+			saveToken(res.headers.auth);
+			this.props.login({
+				...candidate,
+                hallTicket,
+				email,
+				session: res.headers.Auth
+			});
+
+			this.props.saveExam({
+				...exam,
+                examTime: timeLeft || exam.duration,
+                instructions
+			});
+
+			alertSuccess(message);
+        }).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+        });
     }
     render(){
-        if (!this.state.login){
-            return (
-                <div>
-                <img src={require('../components/loading.gif')} style={{position:'fixed',top:'50%',left:'50%',transform:"translate(-50%, -50%)",width:'30px'}} alt='loading' />
-                </div>
-            )
-        }
-        else {
-        return (
-            <div className="container-fluid image">
-            <div className="row">
-                <div className="col-sm-8">
-                    <img src="./logo.jpg" width="900" height="600" alt="logo" />
-                </div>
-            <div className="card col-sm-4" >
-                <div className="container" style={{height:"250px"}}>
-                    </div>
-                <div className="container">
-                <h2>Login</h2>
-                <p style={{marginTop:"-10px"}}>Enter your Login Credentials</p>
-                <form onSubmit={this.handleSubmit}>
-                <div id="inp1" className="form-label-group">
-                <input onChange={this.handleTicket} type="text" id="inputTicket" name="Ticket" className="form-control" placeholder="HallTicket Number" required autoFocus />
-                <label htmlFor="inputTicket">Enter Ticket Number</label>
-                </div> 
-                <div id="inp2" className="form-label-group">
-                <input onChange={this.handleEmail} type="email" id="inputEmail" name="Email" className="form-control" placeholder="Email" required />
-                <label htmlFor="inputEmail">Enter Email</label>
-                </div> 
-                <button id="btn1" type="submit" className="btn btn-primary btn-block">Login</button>
-                </form>
-                <br />
-                <h1>{this.props.message}</h1>
-            </div>
-            </div> 
-            </div>
-            </div>
-        )
-    }
-}
+        // if (!this.state.login){
+        //     return (
+        //         <div>
+        //         <img src={require('../components/loading.gif')} style={{position:'fixed',top:'50%',left:'50%',transform:"translate(-50%, -50%)",width:'30px'}} alt='loading' />
+        //         </div>
+        //     )
+        // }
+        // else {
+			return (
+				<div className="row">
+					<div className="col-sm-8">
+						<img src="./logo.jpg" width="900" height="600" alt="logo" />
+					</div>
+					<div className="card col-sm-4" >
+						<div className="container" style={{height:"250px"}} />
+						<div className="container">
+							<h2>Login</h2>
+							<p style={{marginTop:"-10px"}}>Enter your Login Credentials</p>
+
+							<form onSubmit={this.handleSubmit}>
+								<div id="inp1" className="form-label-group">
+									<input onChange={this.handleTicket} type="text" id="inputTicket" name="hallTicket" className="form-control" placeholder="HallTicket Number" required autoFocus />
+									<label htmlFor="inputTicket">Enter Ticket Number</label>
+								</div> 
+								<div id="inp2" className="form-label-group">
+									<input onChange={this.handleEmail} type="email" id="inputEmail" name="email" className="form-control" placeholder="Email" required />
+									<label htmlFor="inputEmail">Enter Email</label>
+								</div> 
+								<button id="btn1" type="submit" className="btn btn-primary btn-block">Login</button>
+							</form>
+							<br />
+							<h1>{this.state.message}</h1>
+						</div>
+					</div>
+				</div>
+			)
+		// }
+	}
 }
 const mapStateToProps = (state) => ({
-    message:state.candidate.message
+	// message:state.candidate.message
+	session: state.session.session
 });
 
-export default connect(mapStateToProps)(FirstLogin);
+const mapDispatchToProps = (dispatch) => ({
+	login: (data) => {dispatch(login(data));},
+	saveExam: (data) => {dispatch(saveExam(data));}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FirstLogin);

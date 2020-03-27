@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from './store';
 import { refreshToken, logout } from '../actions/sessionActions';
+import { getToken } from './localStorage';
 
 
 var axiosInstance = axios.create();
@@ -20,7 +21,7 @@ function addSubscriber(callback) {
 
 
 axiosInstance.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('x-auth');
+  const token = getToken();
 
   if(token) {
     config.headers.authorization = token;

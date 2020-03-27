@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 // export const LOGOUT = 'LOGOUT';
 
+export const SAVE_EXAM = 'SAVE_EXAM';
 export const START_EXAM = 'START_EXAM';
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const CLEAR_ANSWER = 'CLEAR_ANSWER';
