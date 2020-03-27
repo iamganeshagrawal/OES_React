@@ -1,6 +1,5 @@
 import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Router from './config/appRoutes';
 import { Provider } from 'react-redux';
 import store from './config/store';
@@ -16,5 +15,14 @@ function App() {
 	</Provider>
   );
 }
+
+// // For UI testing
+// import UI from './components/Dashboard'
+// function App() {
+// 	return (
+// 		<UI />
+// 	)
+// }
+
 
 export default App;

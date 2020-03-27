@@ -1,83 +1,128 @@
 import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container,Media } from 'react-bootstrap';
-import './OesDashboard2.css'
+import { Container, Row, Col, Table } from 'react-bootstrap';
+import './BiometricDashboard.css'
 
-//FIXME: need some changes in UI view
+// ALL UI CHANGES FIXED || 27 March 2020 || Ganesh Agrawal
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             totalCount: 8,
+             presentCount: 4
+        }
+    }
+    
    
     render() {
-        const count=87;
-        const progressBarValue=count*2.826;
+        let mockData = [
+            {
+                hallTicket: '123ABC456XYZ780',
+                sessionId: '1275',
+                sectionName: 'English',
+                response: 'Answer_XY_Star_1_16',
+                ipAddress: '192.168.100.101',
+                markedDetected: '',
+                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+                state: 'normal'
+            },
+            {
+                hallTicket: '123ABC456XYZ780',
+                sessionId: '1275',
+                sectionName: 'English',
+                response: 'Answer_XY_Star_1_16',
+                ipAddress: '192.168.100.101',
+                markedDetected: '',
+                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+                state: 'active'
+            },
+            {
+                hallTicket: '123ABC456XYZ780',
+                sessionId: '1275',
+                sectionName: 'English',
+                response: 'Answer_XY_Star_1_16',
+                ipAddress: '192.168.100.101',
+                markedDetected: '',
+                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+                state: 'normal'
+            },
+            {
+                hallTicket: '123ABC456XYZ780',
+                sessionId: '1275',
+                sectionName: 'English',
+                response: 'Answer_XY_Star_1_16',
+                ipAddress: '192.168.100.101',
+                markedDetected: '',
+                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+                state: 'inactive'
+            }
+        ]
+        let progressCircleValue = parseInt((this.state.presentCount / this.state.totalCount) *100); // 88
         return (
-            <div className="container-fluid">
-                <div className="row ">
-                    <Container className="mt-3 ml-0 " >
-                   
-                    <Media className="mb-2">
-                    <svg height="100" width="100">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="1"/>
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="5" stroke-dasharray={progressBarValue} transform='rotate(-90 50 50)'/>
-                        <text font-weight="bold" font-size="16" text-anchor="middle" alignment-baseline="middle" y="50%" x="50%" fill="black">{count}% </text>
-                        </svg>
-                                        <Media.Body className="pl-3 content">
-                                        <p> Registration Data Hall Ticket Counts</p>
-                                        <p>Login Hall Tickets</p>
-                                        <p>Login Sessions</p>
-                                        </Media.Body>
-                    </Media>
-                    </Container>
-                        
-                    <Container className="mt-5">
-                        <div class="dashboard">
-                            DashBoard
-                        </div>
-                        <table class="table ">
-                            <thead>
-                                <tr>
-                                <th>Hall Ticket Number</th>
-                                <th>Session ID</th>
-                                <th>Section Name</th>
-                                <th>Response</th>
-                                <th>Ip Address(MAC Address)</th>
-                                <th>Marked Detected</th>
-                                <th>Last Activity Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td>AFCAT 005 0484</td>
-                                <td>2345</td>
-                                <td>English</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                </tr>
-                                <tr>
-                                <td>AFCAT 005 0484</td>
-                                <td>2345</td>
-                                <td>English</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                </tr>
-                                <tr>
-                                <td>AFCAT 005 0484</td>
-                                <td>2345</td>
-                                <td>English</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                </tr>
-                        </tbody>
-                        </table>
-                    </Container>
-                    
-                </div>
+            <div style={{height: '100vh',overflow: 'hidden'}}>
+                <Container fluid={true} >
+                    <Row style={{height:'20vh'}}>
+                        <Col md={1} style={{position: "relative", height: '100%'}}>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <svg height="80" width="80">
+                                    <circle cx="40" cy="40" r="35" fill="none" stroke="black" strokeWidth="1"/>
+                                    <circle cx="40" cy="40" r="35" fill="none" stroke="black" strokeWidth="5" strokeDasharray={progressCircleValue*2.2} strokeLinecap='round' transform='rotate(-90 40 40)'/>
+                                    <text fontWeight="800" fontSize="16" textAnchor="middle" alignmentBaseline="middle" y="50%" x="50%" fill="black">{progressCircleValue}%</text>
+                                </svg>
+                            </Container>
+                        </Col>
+                        <Col md={3} style={{position: "relative", height: '100%'}}>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <h6>Registration Data Hall Ticket Counts</h6>
+                                <h6>Login Hall Tickets</h6>
+                                <h6>Login Sessions</h6>
+                            </Container>
+                        </Col>
+                        <Col md={7} style={{position: "relative", height: '100%'}}>
+                            <Container fluid={true} style={{position: "absolute", bottom: '0', paddingBottom:'20px'}}>
+                                <span className="customTab">Dashboard</span>
+                            </Container>
+                        </Col>
+                    </Row>
+                    <Row style={{height:'80vh'}}>
+                        <Col md={{span:10, offset:1}}>
+                            <div id="cond-table" style={{fontSize: '0.75rem', overflowY: 'auto',height:'78vh', marginBottom:'2vh'}}>
+                            <Table striped hover>
+                                <thead>
+                                    <tr>
+                                        <th className="stickyTableHeading">Hall-Ticket Number</th>
+                                        <th className="stickyTableHeading">Session ID</th>
+                                        <th className="stickyTableHeading">Section Name</th>
+                                        <th className="stickyTableHeading">Response</th>
+                                        <th className="stickyTableHeading">IP Address(MAC Address)</th>
+                                        <th className="stickyTableHeading">Marked Detected</th>
+                                        <th className="stickyTableHeading">Last Activity Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        mockData.map((cand,i) => {
+                                            const _classname = cand.state === 'active' ? 'font-color-green' : cand.state === 'inactive' ? 'font-color-red' : ''
+                                            return (
+                                                <tr key={i} className={_classname}>
+                                                    <td>{cand.hallTicket}</td>
+                                                    <td>{cand.sessionId}</td>
+                                                    <td>{cand.sectionName}</td>
+                                                    <td>{cand.response}</td>
+                                                    <td>{cand.ipAddress}</td>
+                                                    <td>{cand.markedDetected}</td>
+                                                    <td>{cand.lastActivityTime}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }
