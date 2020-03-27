@@ -1,31 +1,52 @@
 import React from 'react';
-import './u5.css';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
-//FIXME: UI needs full rework
+// ALL UI CHANGES FIXED || 26 March 2020 || Ganesh Agrawal
 
 class QPStarted extends React.Component{
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             isExamActive: false
+        }
+
+        // for display exam state on button style for that
+        this.examStateDisplay = {
+            active: (<span style={{fontSize:'0.8rem', color:'#fff', backgroundColor:'#267729', padding:'0.1rem 0.5rem', borderRadius:'0.25rem', marginLeft:'2rem'}}>Active</span>),
+            unactive: (<span style={{fontSize:'0.8rem', color:'#fff', backgroundColor:'#f53d2f', padding:'0.1rem 0.5rem', borderRadius:'0.25rem', marginLeft:'2rem'}}>Unactive</span>)
+        }
+    }
     
     render(){
         return (
-            <div className="container h-100" style={{position:"absolute"}}>
-                <div className="row w-100">
-                    <div className="col-md-6">
-                        <div className="container" style={{position:"relative",left:"40%",transform:'translateY(-50%)'}}>
-                            <img src="/assets/images/u5.png" alt="pic" width="400px" height="400px"/>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="container" style={{position:"relative",left:"30%",transform:'translateY(-50%)'}}>  
-                        <h4><img src="/assets/svg/green.svg" style={{width:"20px"}} /> <b>Paper Name Active</b></h4>
-                        <p style={{lineHeight:"20px",padding:"-10px"}}>The current set of question paper is already decrypted and is ready for available for Exam.</p>
-                        <div>
-                        <button type="button" id="U5btn1" className="btn btn-outline-dark btn-block"><b>Start Exam</b></button>
-                        <button type="button" id="U5btn2" className="btn btn-outline-dark btn-block"><b>Exam</b>&emsp;&emsp;<span class="px-2" style={{color:"white",backgroundColor:"#4dff4d",borderRadius:"4px"}}>Active</span></button>
-                        </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+
+            <div>
+                <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
+                    <Row>
+                        <Col md={{span:3, offset:2}} style={{height: '100vh', position: "relative"}}>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <img src="/assets/images/u5.png" alt="AssetImage" style={{width:'100%'}} />
+                            </Container>
+                        </Col>
+                        <Col md={{span:3, offset:2}} style={{height: '100vh', position: "relative"}}>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)', textAlign:'center'}}>
+                                <h4><img src="/assets/images/Asset 8@4x.png" style={{width:"1.5rem", marginRight:'1rem'}} alt="green checkmark" /><b>Paper Name Active</b></h4>
+                                <p style={{fontSize:'0.8rem'}} className="text-muted">
+                                    The current set of question paper is already decrypted and is ready for available for Exam.
+                                </p>
+                                <Button variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}}>
+                                    <b>Start Exam</b>
+                                </Button>
+                                <Button variant="outline-dark" style={{width:'250px'}}>
+                                    <b>Exam</b>
+                                    {this.state.isExamActive ? this.examStateDisplay['active'] : this.examStateDisplay['unactive'] }
+                                </Button>
+                            </Container>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         )
     }
 }

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-import './App.css';
 
 import Login from '../components/Login';
 import DecRegData from '../components/DecRegistrationData';
@@ -15,14 +13,14 @@ import QPStarted from '../components/QPStarted';
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
 
-class Router extends Component {
+class appRouter extends Component {
   render() {
     return (
 		<div className="container-fluid">
 			<Router history={history}>
 			    <Switch>
 					<Redirect exact from="/" to="/login" />
-				   	
+		
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/decReg" component={DecRegData} />
 					<Route exact path="/uploadQP" component={UploadQP} />
@@ -41,4 +39,4 @@ class Router extends Component {
   }
 }
 
-export default Router;
+export default appRouter;
