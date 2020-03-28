@@ -61,7 +61,7 @@ class FirstLogin extends React.Component{
                 instructions
 			});
 
-			alertSuccess(message);
+			alertSuccess(message || "Login Successful");
         }).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.message || "Unexpected Error has Occurred");
