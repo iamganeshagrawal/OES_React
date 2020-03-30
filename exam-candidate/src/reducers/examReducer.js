@@ -1,7 +1,12 @@
-import { START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM } from '../actions/types';
+import { SAVE_EXAM, START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM } from '../actions/types';
 
 const initialState = {
-	questions: []
+	questions: [],
+	code: '',
+	examTime: '',
+	max: '',
+	instructions: '',
+	startTime: ''
 };
 
 const examReducer = (state, action) => {
@@ -10,6 +15,11 @@ const examReducer = (state, action) => {
 	}
 
 	switch(action.type) {
+		case SAVE_EXAM:
+			return {
+				...state,
+				...action.data
+			};
 		case START_EXAM:
 			return {
 				...state,

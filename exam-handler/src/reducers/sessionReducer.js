@@ -1,10 +1,7 @@
 import { LOGIN } from '../actions/types';
 
 const initialState = {
-	session: '',
-	hallTicketNumber: '',
-	email: '',
-	examCode: ''
+	session: ''
 };
 
 const sessionReducer = (state, action) => {

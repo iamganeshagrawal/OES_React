@@ -2,42 +2,42 @@ import axios from 'axios';
 // import axios from './interceptor';
 import baseUrl from './urlConfig';
 
-export const login = (data) => {
+export const loginReq = (data) => {
 	return axios.put(baseUrl+'handleLogin', data);
 };
 
-export const changePassword = (data) => {
+export const changePasswordReq = (data) => {
 	return axios.put(baseUrl+'changePass', data);
 };
 
-export const startExam = (data) => {
+export const startExamReq = (data) => {
 	return axios.put(baseUrl+'startExam', data);
 };
 
-export const endExam = (data) => {
+export const endExamReq = (data) => {
 	return axios.put(baseUrl+'endExam', data);
 };
 
-export const decryptRegistration = (data) => {
+export const decryptRegistrationReq = (data) => {
 	return axios.post(baseUrl+'decryptRegistration', data);
 };
 
-export const decryptExam = (data) => {
+export const decryptExamReq = (data) => {
 	return axios.post(baseUrl+'decryptExam', data);
 };
 
-export const discardExam = (data) => {
+export const discardExamReq = (data) => {
 	return axios.put(baseUrl+'discardEx', data);
 };
 
-export const fetchDashboard = (data) => {
+export const fetchDashboardReq = (data) => {
 	return axios.get(baseUrl+'fetchDash', data);
 };
 
-export const getExamsWithoutResponseSheet = (data) => {
+export const getExamsWithoutResponseSheetReq = (data) => {
 	return axios.get(baseUrl+'preGenResponse', data);
 };
 
-export const generateResponseSheet = (data) => {
+export const generateResponseSheetReq = (data) => {
 	return axios.get(baseUrl+'genResponse', data);
 };
