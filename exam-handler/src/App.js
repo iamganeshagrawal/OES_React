@@ -1,28 +1,28 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Router from './config/appRoutes';
-import { Provider } from 'react-redux';
-import store from './config/store';
-// import Loader from './components/loader';
-// import { ToastContainer } from 'react-toastify';
+// import Router from './config/appRoutes';
+// import { Provider } from 'react-redux';
+// import store from './config/store';
+// // import Loader from './components/loader';
+// // import { ToastContainer } from 'react-toastify';
 
-function App() {
-  return (
-    <Provider store={store}>
-		{/* <ToastContainer />
-			<Loader /> */}
-    	<Router />
-	</Provider>
-  );
-}
-
-// // For UI testing
-// import UI from './components/Dashboard'
 // function App() {
-// 	return (
-// 		<UI />
-// 	)
+//   return (
+//     <Provider store={store}>
+// 		{/* <ToastContainer />
+// 			<Loader /> */}
+//     	<Router />
+// 	</Provider>
+//   );
 // }
+
+// For UI testing
+import UI from './components/ChangePass'
+function App() {
+	return (
+		<UI />
+	)
+}
 
 
 export default App;
