@@ -1,8 +1,91 @@
 import React, { Component } from 'react';
 import {Container, Col, Row, Button} from 'react-bootstrap'
 import Timer from './Timer'
+import { connect } from 'react-redux';
+import { answerQuestion, clearAnswer, submitExam } from '../actions/examActions';
+import { answerQuestionReq, clearAnswerReq, submitExamReq } from '../config/httpRoutes';
+import { alertError/*, alertSuccess */ } from '../config/toaster';
 
 class Exam extends Component {
+	constructor(props) {
+		super(props);
+
+		if(!this.props.session.session) {
+			this.props.history.push("/login");
+		} else if(!this.props.exam.questions) {
+			this.props.history.push("/instructions");
+		}
+
+		this.state = {
+			questions: []
+		};
+	}
+	componentDidMount() {
+		this.setState({questions: this.props.questions});
+	}
+
+	answerQuestion = (option, question, optionChar, index) => {
+		answerQuestionReq({
+			option,
+			question,
+			optionChar
+		}).then( (res) => {
+			// alertSuccess(res.data.message || "Answer Saved Successfully");
+			let { questions } = this.state;
+			questions[index] = {...questions[index], option, optionChar};
+			this.setState({questions}, () => {
+				this.props.answerQuestion({questions});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+	clearAnswer = (question, index) => {
+		clearAnswerReq({
+			question
+		}).then( (res) => {
+			// alertSuccess(res.data.message || "Answer Cleared Successfully");
+			let { questions } = this.state;
+			questions[index] = {...questions[index], option: '', optionChar: ''};
+			this.setState({questions}, () => {
+				this.props.clearAnswer({questions});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+	submitExam = () => {
+		submitExamReq()
+		.then( (res) => {
+			// alertSuccess(res.data.message || "Exam Submitted Successfully");
+			this.setState({submitted: true}, () => {
+				this.props.submitExam({submitted: true});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+	componentDidUpdate() {
+		if(this.props.exam.submitted) {
+			this.props.history.push("/examSubmitted");
+		}
+	}
+
     render() {
         return (
             <Container fluid={true}>
@@ -100,4 +183,15 @@ class Exam extends Component {
     }
 }
 
-export default Exam;
+const mapStateToProps = (state) => ({
+	session: state.session,
+	exam: state.exam
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	answerQuestion: (questions) => {dispatch(answerQuestion(questions));},
+	clearAnswer: (questions) => {dispatch(clearAnswer(questions));},
+	submitExam: (submitted) => {dispatch(submitExam(submitted));}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Exam);

@@ -1,7 +1,19 @@
 import React, { cloneElement } from 'react';
 import './attempts.css';
 
-class Attempt extends React.Component{
+class ExamSubmitted extends React.Component{
+	constructor(props) {
+		super(props);
+
+		if(!this.props.session.session) {
+			this.props.history.push("/login");
+		} else if(!this.props.exam.questions) {
+			this.props.history.push("/instructions");
+		} else if(!this.props.exam.submitted) {
+			this.props.history.push("/exam");
+		}
+	}
+
     render(){
         return (
             <div className="container-fluid">
@@ -27,4 +39,9 @@ class Attempt extends React.Component{
     }
 }
 
-export default Attempt;
+const mapStateToProps = (state) => ({
+	session: state.session,
+	exam: state.exam
+});
+
+export default connect(mapStateToProps)(ExanSubmitted);

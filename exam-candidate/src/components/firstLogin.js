@@ -69,7 +69,13 @@ class FirstLogin extends React.Component{
 				alertError("Server has Timed Out");
 			}
         });
-    }
+	}
+	componentDidUpdate() {
+		if(this.props.session) {
+			this.props.history.push("/instructions");
+		}
+	}
+
     render(){
         // if (!this.state.login){
         //     return (

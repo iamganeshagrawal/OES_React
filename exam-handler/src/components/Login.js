@@ -1,6 +1,7 @@
 import React from 'react';
 import './checkbox.container.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { loginReq } from '../config/httpRoutes';
 import { login } from '../actions/sessionsActions';
 import { alertError, alertSuccess } from '../config/toaster';
@@ -55,9 +56,18 @@ class Login extends React.Component{
         this.usernameInputRef.disabled = false
         this.passwordInputRef.disabled = false
         this.signInButtonRef.disabled = false
-    }
+	}
+	componentDidUpdate() {
+		if(this.props.session) {
+			if(this.props.passwordChanged) {
+				this.props.history.push(/*"/home"*/"/dash");
+			} else {
+				this.props.history.push("/changePass");
+			}
+		}
+	}
 
-    render(){
+    render() {
         return (
 			<Row>
 				<Col md={{span:3, offset:2}} style={{height: '100vh', position: "relative"}}>
@@ -98,7 +108,8 @@ class Login extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-	session: state.session.session
+	session: state.session.session,
+	passwordChanged: state.session.passwordChanged
 });
 
 const mapDispatchToProps = (dispatch) => ({

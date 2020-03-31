@@ -1,6 +1,6 @@
 // import axios from 'axios';
 import axios from './interceptor';
-import baseUrl from './urlConfig';
+baseUrl = "http://localhost:8080/handling/";
 
 export const loginReq = (data) => {
 	return axios.put(baseUrl+'login', data);
@@ -18,6 +18,6 @@ export const clearAnswerReq = (data) => {
 	return axios.delete(baseUrl+'clearAnswer', data);
 };
 
-export const submitExamReq = (data) => {
-	return axios.put(baseUrl+'submitExam', data);
+export const submitExamReq = () => {
+	return axios.put(baseUrl+'submitExam');
 };

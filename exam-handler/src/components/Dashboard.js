@@ -1,20 +1,41 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Table } from 'react-bootstrap';
-import './BiometricDashboard.css'
+import './BiometricDashboard.css';
+import { connect } from 'react-redux';
+import { alertError, alertWarn } from '../config/toaster';
+import { fetchDashboardReq } from '../config/httpRoutes';
 
 // ALL UI CHANGES FIXED || 27 March 2020 || Ganesh Agrawal
 
 class Dashboard extends Component {
     constructor(props) {
         super(props)
-    
+	
+		if(!this.props.examStarted) {
+			alertWarn("You must Start Exam first");
+			this.props.history.push("/startExam");
+		}
+		
         this.state = {
-             totalCount: 8,
-             presentCount: 4
-        }
+             totalCount: 0,
+			 presentCount: 4,
+			 sessions: [{}]
+		}
     }
-    
-   
+	
+	componentDidMount() {
+		fetchDashboardReq()
+		.then( (res) => {
+			this.setState({sessions: res.data, totalCount: res.data.length});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+	
     render() {
         let mockData = [
             {
@@ -102,7 +123,7 @@ class Dashboard extends Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        mockData.map((cand,i) => {
+                                        this.state.sessions.map((cand,i) => {
                                             const _classname = cand.state === 'active' ? 'font-color-green' : cand.state === 'inactive' ? 'font-color-red' : ''
                                             return (
                                                 <tr key={i} className={_classname}>
@@ -128,4 +149,8 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+	examStarted: state.session.examStarted
+});
+
+export default connect(mapStateToProps)(Dashboard);

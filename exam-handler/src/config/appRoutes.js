@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Login from '../components/Login';
+import ChangePassword from '../components/ChangePassword';
 import DecRegData from '../components/DecRegistrationData';
 import UploadQP from '../components/UploadQP';
 import UploadQP2 from '../components/UploadQP2';
@@ -8,10 +9,11 @@ import DecryptQP from '../components/DecryptQP';
 import QPAlreadyDecrypted from '../components/QPAlreadyDecrypted';
 import BioDash from '../components/BiometricDashboard';
 import Dash from '../components/Dashboard';
-import QPStarted from '../components/QPStarted';
+import StartExam from '../components/StartExam';
 
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
+import StartExam from '../components/StartExam';
 
 class appRouter extends Component {
   render() {
@@ -22,14 +24,15 @@ class appRouter extends Component {
 					<Redirect exact from="/" to="/login" />
 		
 					<Route exact path="/login" component={Login} />
-					<Route exact path="/decReg" component={DecRegData} />
+					<Route exact path="/changePass" component={ChangePassword} />
+					<Route exact path="/decryptReg" component={DecRegData} />
 					<Route exact path="/uploadQP" component={UploadQP} />
 					<Route exact path="/uploadQP2" component={UploadQP2} />
 					<Route exact path="/decryptQP" component={DecryptQP} />
 					<Route exact path="/qpAlrdy" component={QPAlreadyDecrypted} />
 					<Route exact path="/bioDash" component={BioDash} />
 					<Route exact path="/dash" component={Dash} />
-					<Route exact path="/qpStarted" component={QPStarted} />
+					<Route exact path="/startExam" component={StartExam} />
 
 				   	<Redirect from="*" to="/login" />
 				</Switch>

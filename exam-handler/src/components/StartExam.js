@@ -1,11 +1,21 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { alertError, alertSuccess } from '../config/toaster';
+import { startExamReq, endExamReq } from '../config/httpRoutes';
+import { startExam, endExam } from '../actions/sessionsActions';
+import { saveToken } from '../config/localStorage';
 
 // ALL UI CHANGES FIXED || 26 March 2020 || Ganesh Agrawal
 
-class QPStarted extends React.Component{
+class StartExam extends React.Component{
     constructor(props) {
-        super(props)
+		super(props);
+		
+		if(!this.props.examCode) {
+			alertError("Please Decrypt Question Papers First");
+			this.props.history.push("/decryptQP");
+		}
     
         this.state = {
              isExamActive: false
@@ -16,7 +26,41 @@ class QPStarted extends React.Component{
             active: (<span style={{fontSize:'0.8rem', color:'#fff', backgroundColor:'#267729', padding:'0.1rem 0.5rem', borderRadius:'0.25rem', marginLeft:'2rem'}}>Active</span>),
             unactive: (<span style={{fontSize:'0.8rem', color:'#fff', backgroundColor:'#f53d2f', padding:'0.1rem 0.5rem', borderRadius:'0.25rem', marginLeft:'2rem'}}>Unactive</span>)
         }
-    }
+	}
+	
+	startExam = () => {
+		startExamReq({
+			examCode: this.props.examCode
+		}).then( (res) => {
+			let { Auth:session } = req.headers;
+			alertSuccess(res.data.message || "Exam Started Successfully");
+			this.setState({isExamACtive: true}, () => {
+				saveToken(session);
+				this.props.startExam({examStarted: true, session});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+	endExam = () => {
+		endExamReq().then( (res) => {
+			alertSuccess(res.data.message || "Exam Ended Successfully");
+			this.setState({isExamACtive: false}, () => {
+				this.props.endExam({examEnded: true});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
     
     render(){
         return (
@@ -51,4 +95,13 @@ class QPStarted extends React.Component{
     }
 }
 
-export default QPStarted;
+const mapStateToProps = (state) => ({
+	examCode: state.exam.examCode
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	startExam: (exmCode) => {dispatch(startExam(exmCode));},
+	endExam: () => {dispatch(endExam());}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StartExam);

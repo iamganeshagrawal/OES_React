@@ -1,10 +1,67 @@
 import React from 'react';
 import './u13.css';
+import { connect } from 'react-redux';
+import { alertSuccess, alertError, alertWarn } from '../config/toaster';
+import { changePasswordReq } from '../config/httpRoutes';
+ import { changePassword } from '../actions/examActions';
 
 //FIXME:UI needs full rework
 
-class U13 extends React.Component{
-    
+class ChangePassword extends React.Component{
+	constructor(props) {
+		super(props);
+
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		} else if (this.props.passwordChanged) {
+			this.props.history.push(/*"/home"*/"/dash");
+		}
+
+		this.state = {
+			password: '',
+			confirmPass: '',
+			securityQuestion: '',
+			securityAnswer: ''
+		}
+	}
+
+	changePassword = () => {
+		if(!this.state.password) {
+			return alertWarn("Please Enter a New Password");
+		}
+
+		if(this.state.password !== this.state.confirmPass) {
+			return alertWarn("Both Passwords must Match");
+		}
+
+		if(!this.state.securityQuestion) {
+			return alertWarn("Please Select a Security Question");
+		}
+
+		if(!this.state.securityAnswer) {
+			return alertWarn("Please Enter a Security Answer");
+		}
+
+		let { password:newPass, securityQuestion:secQuestion, securityAnswer:secAnswer } = this.state;
+
+		changePasswordReq({
+			newPass,
+			secQuestion,
+			secAnswer
+		})
+		.then( (res) => {
+			alertSuccess(res.data.message || "Credentials Updated Successfully");
+			this.props.changePassword({passwordChanged: true});
+			this.props.history.push("/dash");
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
     render(){
         return (
             <div className="container" style={{position:"absolute"}}>
@@ -19,7 +76,7 @@ class U13 extends React.Component{
                         <h4 style={{color:"blue",fontWeight:"bold"}}>OES ></h4>
                         <p className="text-muted" style={{marginTop:"-10px",marginBottom:"40px"}}>Admin Login</p>
                         <form id="U13f1" className="needs-validation" noValidate>
-                        <div className="mainfield">
+                        	<div className="mainfield">
                                 <input type="text" id="U13inp1" className="form-control"/><span className="header">Name</span>
                                 <img src='../green.svg' width="20px"/>
                             </div>
@@ -49,11 +106,20 @@ class U13 extends React.Component{
                             </div>
                         </form>
                         </div> 
-                        </div>
-                    </div>
-                </div>
+					</div>
+				</div>
+			</div>
         )
     }
 }
 
-export default U13;
+const mapStateToProps = (state) => ({
+	session: state.session.session,
+	passwordChanged: state.session.passwordChanged
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	changePassword: (data) => {dispatch(changePassword(data));}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

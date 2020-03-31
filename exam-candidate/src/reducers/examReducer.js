@@ -6,7 +6,8 @@ const initialState = {
 	examTime: '',
 	max: '',
 	instructions: '',
-	startTime: ''
+	startTime: '',
+	submitted: false
 };
 
 const examReducer = (state, action) => {
