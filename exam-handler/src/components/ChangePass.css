@@ -1,0 +1,76 @@
+.myInputBox{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    position: relative;
+    margin: 20px 0;
+}
+.myInputBox:focus-within {
+    box-shadow:  4px 4px 12px #e6e6e6, 
+             -4px -4px 12px #ffffff;
+}
+.myInputBox label {
+    background-color: white;
+    top: -30%;
+    left: 5%;
+    position: absolute;
+    z-index: 1;
+    color: #333333;
+    padding: 0 0.5rem;
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.myInputBox input[type="text"], .myInputBox input[type="password"] {
+    border: none;
+    height: 100%;
+    width: calc(100% - 30px);
+    padding: 0 10px 0 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.myInputBox select {
+    border: none;
+    height: 100%;
+    width: calc(100% - 10px);
+    padding: 0 10px 0 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    background-color: transparent;
+}
+.myInputBox input[type="text"]:focus, .myInputBox input[type="password"]:focus {
+    outline: none;
+    color: rgb(33, 150, 243);
+}
+.myInputBox select:focus{
+    outline: none;
+}
+
+.myInputBox img{
+    display: none;
+    width: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.myInputBox img.checked {
+    display: inline-block;
+}
+.mySubmitButton {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    background: none;
+    color: #333333;
+    margin: 10px 0;
+}
+.mySubmitButton:hover {
+    color: #ffffff;
+    background: #333333;
+}

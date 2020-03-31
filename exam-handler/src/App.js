@@ -17,7 +17,7 @@ function App() {
 }
 
 // // For UI testing
-// import UI from './components/Dashboard'
+// import UI from './components/ChangePass'
 // function App() {
 // 	return (
 // 		<UI />

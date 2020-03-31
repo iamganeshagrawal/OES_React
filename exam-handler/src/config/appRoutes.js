@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Login from '../components/Login';
-import ChangePassword from '../components/ChangePassword';
+import ChangePassword from '../components/ChangePass';
 import DecRegData from '../components/DecRegistrationData';
 import UploadQP from '../components/UploadQP';
 import UploadQP2 from '../components/UploadQP2';
