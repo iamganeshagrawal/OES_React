@@ -78,7 +78,7 @@ class ChangePass extends React.Component{
 			this.props.history.push("/dash");
 		}).catch( (err) => {
 			if(err.response) {
-				alertError(err.response.message || "Unexpected Error has Occurred");
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}

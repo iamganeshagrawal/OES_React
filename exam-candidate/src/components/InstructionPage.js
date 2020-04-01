@@ -33,7 +33,7 @@ class InstructionPage extends React.Component{
 			this.props.saveQuestions(res.data);
 		}).catch( (err) => {
 			if(err.response) {
-				alertError(err.response.message || "Unexpected Error has Occurred");
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}

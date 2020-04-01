@@ -1,16 +1,46 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Button} from 'react-bootstrap'
 import './UI6.css'
+import { decryptRegistrationReq } from '../config/httpRoutes';
+import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 
 class DecRegistrationData extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             file: null
+			file: null,
+			key: '',
         }
-    }
-    
+	}
+	
+	// key: "encRegData", zip
+	handleKeyChange = ({ target }) => {
+		this.setState({[target.name]: target.value});
+	}
+	
+	decryptReg = () => {
+		let { file, key } = this.state;
+
+		if(filename.split(".")[1] !== "zip")
+		{return alertWarn("Invalid File Type");}
+
+		let formData = new FormData();
+		formData.append("zip", file);
+		formData.append("key", key);
+
+		decryptRegistrationReq(formData)
+		.then( (res) => {
+			alertSuccess(res.data.message || "Registration Data Uploaded Successfully");
+		}).catch( (err) => {
+			if (err.response) {
+				alertError(err.response.data.message || "Unexpected Error Has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+	
     onFileChangeHandler = event => {
         this.setState({
             file: event.target.files[0]
@@ -41,10 +71,10 @@ class DecRegistrationData extends Component {
                                     </div>
                                     <div className="fieldBox">
                                         <span className="fieldTitle">Decryption Key</span>
-                                        <input className="fieldInput placeholder" style={{width:'100%'}} type="text" placeholder="*****  *****  ***** *****" />
+                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="text" placeholder="*****  *****  ***** *****" />
                                     </div>
                                     {/* Decrypt Button */}
-                                    <Button className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
+                                    <Button onClick={this.decryptReg} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
                                 </Container>
                             </Container>
                         </Col>

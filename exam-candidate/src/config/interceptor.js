@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from './store';
-import { refreshToken, logout } from '../actions/sessionActions';
+// import store from './store';
+// import { refreshToken, logout } from '../actions/sessionActions';
 import { getToken } from './localStorage';
 
 
@@ -29,35 +29,35 @@ axiosInstance.interceptors.request.use(function (config) {
   return config;
 });
 
-axiosInstance.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
-  const { config, response: { status } } = error;
-  const originalRequest = config;
+// axiosInstance.interceptors.response.use(function (response) {
+//   return response;
+// }, function (error) {
+//   const { config, response: { status } } = error;
+//   const originalRequest = config;
 
-  if (status === 401 && config.headers.authorization) {
-    if (!isAlreadyFetchingAccessToken) {
-      isAlreadyFetchingAccessToken = true;
-      store.dispatch(refreshToken()).then((token) => {
-        isAlreadyFetchingAccessToken = false;
-        onAccessTokenFetched(token);
-      }).catch( (err) => {
-        store.dispatch(logout(err.userid));
-        return Promise.reject(err.err);
-      });
-    }
+//   if (status === 401 && config.headers.authorization) {
+//     if (!isAlreadyFetchingAccessToken) {
+//       isAlreadyFetchingAccessToken = true;
+//       store.dispatch(refreshToken()).then((token) => {
+//         isAlreadyFetchingAccessToken = false;
+//         onAccessTokenFetched(token);
+//       }).catch( (err) => {
+//         store.dispatch(logout(err.userid));
+//         return Promise.reject(err.err);
+//       });
+//     }
 
-    const retryOriginalRequest = new Promise((resolve, reject) => {
-      addSubscriber(token => {
-        originalRequest.headers.authorization = token;
-        resolve(axios(originalRequest));
-      });
-    });
+//     const retryOriginalRequest = new Promise((resolve, reject) => {
+//       addSubscriber(token => {
+//         originalRequest.headers.authorization = token;
+//         resolve(axios(originalRequest));
+//       });
+//     });
 
-    return retryOriginalRequest;
-  } else {
-    return Promise.reject(error);
-  }
-});
+//     return retryOriginalRequest;
+//   } else {
+//     return Promise.reject(error);
+//   }
+// });
 
 export default axiosInstance;

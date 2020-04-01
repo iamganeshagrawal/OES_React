@@ -47,24 +47,28 @@ class FirstLogin extends React.Component{
 		}).then((res) => {
 			let { candidate, exam, instructions, timeLeft=false, message } = res.data;
 			
-			saveToken(res.headers.auth);
-			this.props.login({
-				...candidate,
-                hallTicket,
-				email,
-				session: res.headers.Auth
-			});
-
-			this.props.saveExam({
-				...exam,
-                examTime: timeLeft || exam.duration,
-                instructions
-			});
-
-			alertSuccess(message || "Login Successful");
+			if(this.props.connect()) {
+				saveToken(res.headers.auth);
+				this.props.login({
+					...candidate,
+					hallTicket,
+					email,
+					session: res.headers.Auth
+				});
+				
+				this.props.saveExam({
+					...exam,
+					examTime: timeLeft || exam.duration,
+					instructions
+				});
+				
+				alertSuccess(message || "Login Successful");
+			} else {
+				alertError("Could not Maintain Connection with Server. Please Try Again.");
+			}
         }).catch( (err) => {
 			if(err.response) {
-				alertError(err.response.message || "Unexpected Error has Occurred");
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}

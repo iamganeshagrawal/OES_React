@@ -20,6 +20,15 @@ const sessionReducer = (state, action) => {
 				...state,
 				...action.data
 			};
+		case LOGOUT:
+			return {
+				session: '',
+				hallTicket: '',
+				email: '',
+				id: '',
+				name: '',
+				image: ''
+			};
 		default:
 			return state;
 	}

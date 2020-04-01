@@ -2,13 +2,23 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Media, Button} from 'react-bootstrap'
 import './toggle.css';
 import MyModal from './MyModal'
-
+import { decryptExamReq } from '../config/httpRoutes';
+import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 
 class DecryptQP extends Component {
-    state = { decrypted: false ,
-              show:true
-            };
-    
+	constructor(props) {
+		super(props)
+	
+		this.state = {
+			file: null,
+			key: '',
+			decrypted: false,
+			show:true
+		}
+	}
+	
+	// key: "encPaper", zip
+			
     showModal=()=>{
             this.setState({ show: true });
             // this.setState({ decrypted: false })
@@ -16,6 +26,39 @@ class DecryptQP extends Component {
 
     hideModal=()=>{
             this.setState({show:false});
+	}
+	
+	// key: "encRegData", zip
+	handleKeyChange = ({ target }) => {
+		this.setState({[target.name]: target.value});
+	}
+	
+	decryptExam = () => {
+		let { file, key } = this.state;
+
+		if(filename.split(".")[1] !== "zip")
+		{return console.log("Invalid File Type");}
+
+		let formData = new FormData();
+		formData.append("zip", file);
+		formData.append("key", key);
+
+		decryptExamReq(formData)
+		.then( (res) => {
+			alertSuccess(res.data.message || "Question Papers Uploaded Successfully");
+		}).catch( (err) => {
+			if (err.response) {
+				alertError(err.response.data.message || "Unexpected Error Has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+	
+    onFileChangeHandler = event => {
+        this.setState({
+            file: event.target.files[0]
+        })
     }
 
     render() {

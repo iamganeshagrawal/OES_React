@@ -45,7 +45,7 @@ class Login extends React.Component{
 			alertSuccess(res.data.message || "Login Successful");
 		}).catch( (err) => {
 			if(err.response) {
-				alertError(err.response.message || "Unexpected Error has Occurred");
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}

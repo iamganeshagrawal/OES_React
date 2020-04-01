@@ -1,5 +1,5 @@
 export const LOGIN = 'LOGIN';
-// export const LOGOUT = 'LOGOUT';
+export const LOGOUT = 'LOGOUT';
 
 export const SAVE_EXAM = 'SAVE_EXAM';
 export const START_EXAM = 'START_EXAM';

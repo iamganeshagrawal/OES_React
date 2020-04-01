@@ -1,4 +1,4 @@
-import { LOGIN, CHANGE_PASSWORD, START_EXAM, END_EXAM } from '../actions/types';
+import { LOGIN, CHANGE_PASSWORD, START_EXAM, END_EXAM, LOGOUT } from '../actions/types';
 
 const initialState = {
 	session: '',
@@ -32,6 +32,13 @@ const sessionReducer = (state, action) => {
 			return {
 				...state,
 				...action.data
+			};
+		case LOGOUT:
+			return {
+				session: '',
+				passwordChanged: false,
+				examStarted: false,
+				examEnded: false
 			};
 		default:
 			return state;
