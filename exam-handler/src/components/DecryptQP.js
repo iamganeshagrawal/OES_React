@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Media, Button} from 'react-bootstrap'
-import './toggle.css';
-import MyModal from './MyModal'
+import { Container, Row, Col, Button} from 'react-bootstrap'
+import './UI6.css'
 import { decryptExamReq } from '../config/httpRoutes';
 import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 
@@ -18,25 +17,17 @@ class DecryptQP extends Component {
 	}
 	
 	// key: "encPaper", zip
-			
-    showModal=()=>{
-            this.setState({ show: true });
-            // this.setState({ decrypted: false })
-    }
-
-    hideModal=()=>{
-            this.setState({show:false});
-	}
-	
-	// key: "encRegData", zip
 	handleKeyChange = ({ target }) => {
 		this.setState({[target.name]: target.value});
 	}
 	
 	decryptExam = () => {
-		let { file, key } = this.state;
+        let { file, key } = this.state;
+        
+        if(!file) return console.log('File Missing');
+        if(key.length===0) return console.log('Key Missing');
 
-		if(filename.split(".")[1] !== "zip")
+		if(file.name.split(".")[1] !== "zip")
 		{return console.log("Invalid File Type");}
 
 		let formData = new FormData();
@@ -62,107 +53,48 @@ class DecryptQP extends Component {
     }
 
     render() {
+        const fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
         return (
-            <>
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
                     <Row>
                         <Col md={{span:4, offset:1}} style={{height: '100vh', position: "relative"}}>
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
-                                <h4>Decrypt Question Paper</h4>
-                                <p>Decrypt the Question paper by Uplodaing it's Key in its Relevent Set and by Clicking the Decrypt button below.</p>
+                                <h4>Upload &amp; Decrypt Question Paper</h4>
+                                <p>Decrypt the Question paper by Uplodaing Question paper and it's Key in its Relevent field and by Clicking the Decrypt button below.</p>
                                 <img src="/assets/images/admin-panel-sidebar.jpg" alt="CheckList" style={{width:'100%'}} />
                             </Container>
                         </Col>
-                        <Col md={{span:4,offset:1}} style={{height: '100vh', position: "relative"}}>
+                        <Col md={{span:4,offset:2}} style={{height: '100vh', position: "relative"}}>
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
                                 <Container fluid={true}>
-                                    <Media className="mb-2">
-                                        <img className="align-self-center mr-3 " src="/assets/svg/document-security-lock.svg" marginTop={'110px'} width={'25px'}  alt="Lock" />
-                                        <Media.Body className="border-bottom pb-2">
-                                            <table>
-                                                <tr>
-                                                    <th className="pr-3">Set 1</th>
-                                                    <td>Paper Set Name 1</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="pr-3">Key</th>
-                                                    <td><input type="password" className="form-control-sm border-bottom" style={{border: 'none'}} id="set1" name="set1" /></td>
-                                                </tr>
-                                            </table>
-                                        </Media.Body>
-                                    </Media>
-                                    <Media className="mb-2">
-                                        <img className="align-self-center mr-3" src="/assets/svg/document-security-lock.svg" width={'25px'}  alt="Lock" />
-                                        <Media.Body className="border-bottom pb-2">
-                                            <table>
-                                                <tr>
-                                                    <th className="pr-3">Set 2</th>
-                                                    <td>Paper Set Name 2</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="pr-3">Key</th>
-                                                    <td><input type="password" className="form-control-sm border-bottom" style={{border: 'none'}} id="set2" name="set2" /></td>
-                                                </tr>
-                                            </table>
-                                        </Media.Body>
-                                    </Media>
-                                    <Media className="mb-2">
-                                        <img className="align-self-center mr-3" src="/assets/svg/document-security-lock.svg" width={'25px'}  alt="Lock" />
-                                        <Media.Body className="border-bottom pb-2">
-                                            <table>
-                                                <tr>
-                                                    <th className="pr-3">Set 3</th>
-                                                    <td>Paper Set Name 3</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="pr-3">Key</th>
-                                                    <td><input type="password" className="form-control-sm border-bottom" style={{border: 'none'}} id="set3" name="set3" /></td>
-                                                </tr>
-                                            </table>
-                                        </Media.Body>
-                                    </Media>
-                                    <Media className="mb-2">
-                                        <img className="align-self-center mr-3" src="/assets/svg/document-security-lock.svg" width={'25px'}  alt="Lock" />
-                                        <Media.Body className="border-bottom pb-2">
-                                            <table>
-                                                <tr>
-                                                    <th className="pr-3">Set 4</th>
-                                                    <td>Paper Set Name 4</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="pr-3">Key</th>
-                                                    <td><input type="password" className="form-control-sm border-bottom" style={{border: 'none'}} id="set4" name="set4" /></td>
-                                                </tr>
-                                            </table>
-                                        </Media.Body>
-                                    </Media>
-                                    {/* Decrypt Button */}
-                                    <Media className="mt-4">
-                                        <img className="align-self-center mr-3" src="/assets/svg/document-security-lock.svg" width={'25px'} style={{ opacity: '0'}}  alt="Lock" />
+                                    <div className="fieldBox">
+                                        {/* hidden input for file upload and access via ref  */}
+                                        <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
+                                        {/* Actual UI Elements */}
+                                        <span className="fieldTitle">Question Paper</span>
+                                        <input className="fieldInput file" readOnly type="text" placeholder="Upload Question Paper Here" value={fakePath} onClick={(e) => this.fileRef.click()} />
+                                        <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
                                         
-                                        <Media.Body className="">
-                                            <Button className="px-3" size="sm" variant="outline-secondary" onClick={this.showModal}><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
-                                        </Media.Body>
-                                    </Media>
+                                    </div>
+                                    <div className="fieldBox">
+                                        <span className="fieldTitle">Decryption Key</span>
+                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
+                                                placeholder="*****  *****  ***** *****" 
+                                                ref={ref => this.keyInputRef=ref} 
+                                                onFocus={()=> (this.keyInputRef.type='text')}
+                                                onBlur={() => this.keyInputRef.type="password"} 
+                                        />
+                                    </div>
+                                    {/* Decrypt Button */}
+                                    <Button onClick={this.decryptExam} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
                                 </Container>
-                            </Container>
-                        </Col>
-                        <Col md={1} style={{height: '100vh', position: "relative"}}>
-                            <Container fluid={true} style={{position: "absolute", top: '20%'}}>
-                                <label class="switch">
-                                    <input type="checkbox" />
-                                    <span class="slider round"></span>
-                                    <img src="/assets/svg/padlock.svg" alt="L" class="slider-img" />
-                                </label>
                             </Container>
                         </Col>
                     </Row>
                     
                 </Container>
             </div>
-            <MyModal decrypted={this.state.decrypted} show={this.state.show} hideModal={this.hideModal} />
-          </>
         )
     }
 }

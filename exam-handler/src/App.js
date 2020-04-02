@@ -16,11 +16,15 @@ function App() {
   );
 }
 
-// For UI testing
-// import UI from './components/DecRegistrationData'
+// // For UI testing
+// import UI from './components/DecryptQP'
+// import { ToastContainer } from 'react-toastify'
 // function App() {
 // 	return (
+// 		<>
+// 		<ToastContainer />
 // 		<UI />
+// 		</>
 // 	)
 // }
 
