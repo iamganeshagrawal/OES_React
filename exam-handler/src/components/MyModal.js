@@ -1,5 +1,6 @@
 import React from 'react'
 import {Media} from 'react-bootstrap'
+
 //FIXME: some minor changes need
 
 class MyModal extends React.Component{

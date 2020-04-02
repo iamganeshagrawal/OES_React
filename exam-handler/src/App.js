@@ -16,8 +16,8 @@ function App() {
   );
 }
 
-// // For UI testing
-// import UI from './components/ChangePass'
+// For UI testing
+// import UI from './components/DecRegistrationData'
 // function App() {
 // 	return (
 // 		<UI />

@@ -26,6 +26,9 @@
     color: #333333;
     border-radius: 10px;
 }
+.fieldInput:focus {
+    outline: none;
+}
 .fieldInput.file{
     cursor: pointer;
 }

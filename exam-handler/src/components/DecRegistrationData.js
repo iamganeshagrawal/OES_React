@@ -71,10 +71,15 @@ class DecRegistrationData extends Component {
                                     </div>
                                     <div className="fieldBox">
                                         <span className="fieldTitle">Decryption Key</span>
-                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="text" placeholder="*****  *****  ***** *****" />
+                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
+                                                placeholder="*****  *****  ***** *****" 
+                                                ref={ref => this.keyInputRef=ref} 
+                                                onFocus={()=> (this.keyInputRef.type='text')}
+                                                onBlur={() => this.keyInputRef.type="password"} 
+                                        />
                                     </div>
                                     {/* Decrypt Button */}
-                                    <Button onClick={this.decryptReg} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
+                                    <Button onClick={()=>this.decryptReg()} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
                                 </Container>
                             </Container>
                         </Col>
