@@ -3,6 +3,8 @@ import { Container, Row, Col, Button} from 'react-bootstrap'
 import './UI6.css'
 import { decryptRegistrationReq } from '../config/httpRoutes';
 import { alertError, alertSuccess, alertWarn } from '../config/toaster';
+import { decryptRegistration } from '../actions/examActions';
+import { connect } from 'react-redux';
 
 class DecRegistrationData extends Component {
     constructor(props) {
@@ -32,6 +34,7 @@ class DecRegistrationData extends Component {
 		decryptRegistrationReq(formData)
 		.then( (res) => {
 			alertSuccess(res.data.message || "Registration Data Uploaded Successfully");
+			this.props.decryptRegistration({regDataDecrypted: true});
 		}).catch( (err) => {
 			if (err.response) {
 				alertError(err.response.data.message || "Unexpected Error Has Occurred");
@@ -93,4 +96,12 @@ class DecRegistrationData extends Component {
     }
 }
 
-export default DecRegistrationData;
+const mapStateToProps = (state) => ({
+	regDataDecrypted: state.exam.regDataDecrypted
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	decryptRegistration: (regDecrypted) => {dispatch(decryptRegistration(regDecrypted));}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecRegistrationData);

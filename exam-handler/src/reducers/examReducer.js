@@ -2,7 +2,9 @@ import { DECRYPT_REGISTRATION, DECRYPT_EXAM, DISCARD_EXAM,
 	GET_DASHBOARD/*, GET_EXAMS_WITHOUT_RESPONSE_SHEET, GENERATE_RESPONSE_SHEET*/ } from '../actions/types';
 
 const initialState = {
-	examCode: ''
+	examCode: '',
+	qpDecrypted: false,
+	regDataDecrypted: false
 };
 
 const examReducer = (state, action) => {

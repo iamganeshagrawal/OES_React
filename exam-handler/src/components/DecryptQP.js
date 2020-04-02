@@ -3,6 +3,8 @@ import { Container, Row, Col, Button} from 'react-bootstrap'
 import './UI6.css'
 import { decryptExamReq } from '../config/httpRoutes';
 import { alertError, alertSuccess, alertWarn } from '../config/toaster';
+import { decryptExam } from '../actions/examActions';
+import { connect } from 'react-redux';
 
 class DecryptQP extends Component {
 	constructor(props) {
@@ -37,6 +39,7 @@ class DecryptQP extends Component {
 		decryptExamReq(formData)
 		.then( (res) => {
 			alertSuccess(res.data.message || "Question Papers Uploaded Successfully");
+			this.props.decryptExam({qpDecrypted: true});
 		}).catch( (err) => {
 			if (err.response) {
 				alertError(err.response.data.message || "Unexpected Error Has Occurred");
@@ -98,5 +101,12 @@ class DecryptQP extends Component {
         )
     }
 }
+const mapStateToProps = (state) => ({
+	qpDecrypted: state.exam.qpDecrypted
+});
 
-export default DecryptQP
+const mapDispatchToProps = (dispatch) => ({
+	decryptRegistration: (qpDecrypted) => {dispatch(decryptRegistration(qpDecrypted));}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecryptQP);
