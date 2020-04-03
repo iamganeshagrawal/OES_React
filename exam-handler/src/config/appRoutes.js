@@ -13,7 +13,6 @@ import StartExam from '../components/StartExam';
 
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
-import StartExam from '../components/StartExam';
 
 class appRouter extends Component {
   render() {

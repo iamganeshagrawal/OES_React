@@ -13,8 +13,6 @@ class DecryptQP extends Component {
 		this.state = {
 			file: null,
 			key: '',
-			decrypted: false,
-			show:true
 		}
 	}
 	
@@ -26,11 +24,11 @@ class DecryptQP extends Component {
 	decryptExam = () => {
         let { file, key } = this.state;
         
-        if(!file) return console.log('File Missing');
-        if(key.length===0) return console.log('Key Missing');
+        if(!file) return alertWarn('File Missing');
+        if(key.length===0) return alertWarn('Key Missing');
 
 		if(file.name.split(".")[1] !== "zip")
-		{return console.log("Invalid File Type");}
+		{return alertWarn("Invalid File Type");}
 
 		let formData = new FormData();
 		formData.append("zip", file);
@@ -47,7 +45,7 @@ class DecryptQP extends Component {
 				alertError("Server has Timed Out");
 			}
 		});
-	}
+    }
 	
     onFileChangeHandler = event => {
         this.setState({
@@ -56,7 +54,13 @@ class DecryptQP extends Component {
     }
 
     render() {
-        const fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
+        // create a fakePath to show on UI when file change
+        let fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
+        // Get status of decrypted question paper
+        let isDecrypted = this.props.qpDecrypted;
+        // If question paper decrypted then create a static fakePath for UI
+        if(isDecrypted){ fakePath = `C:\\fakepath\\exam.zip.enc`; }
+
         return (
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
@@ -71,26 +75,37 @@ class DecryptQP extends Component {
                         <Col md={{span:4,offset:2}} style={{height: '100vh', position: "relative"}}>
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
                                 <Container fluid={true}>
-                                    <div className="fieldBox">
-                                        {/* hidden input for file upload and access via ref  */}
-                                        <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
-                                        {/* Actual UI Elements */}
-                                        <span className="fieldTitle">Question Paper</span>
-                                        <input className="fieldInput file" readOnly type="text" placeholder="Upload Question Paper Here" value={fakePath} onClick={(e) => this.fileRef.click()} />
-                                        <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
-                                        
+                                    <div className={isDecrypted ? 'disabled-block' : null}>
+                                        <div className="fieldBox">
+                                            {/* hidden input for file upload and access via ref  */}
+                                            <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
+                                            {/* Actual UI Elements */}
+                                            <span className="fieldTitle">Question Paper</span>
+                                            <input className="fieldInput file" readOnly type="text" placeholder="Upload Question Paper Here" value={fakePath} onClick={(e) => this.fileRef.click()} />
+                                            <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
+                                        </div>
+                                        <div className="fieldBox">
+                                            <span className="fieldTitle">Decryption Key</span>
+                                            <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
+                                                    placeholder="*****  *****  ***** *****" 
+                                                    ref={ref => this.keyInputRef=ref} 
+                                                    onFocus={()=> (this.keyInputRef.type='text')}
+                                                    onBlur={() => this.keyInputRef.type="password"} 
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="fieldBox">
-                                        <span className="fieldTitle">Decryption Key</span>
-                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
-                                                placeholder="*****  *****  ***** *****" 
-                                                ref={ref => this.keyInputRef=ref} 
-                                                onFocus={()=> (this.keyInputRef.type='text')}
-                                                onBlur={() => this.keyInputRef.type="password"} 
-                                        />
-                                    </div>
-                                    {/* Decrypt Button */}
-                                    <Button onClick={this.decryptExam} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
+                                    {
+                                        // Render Decypt Button if QP not decrypted
+                                        (!isDecrypted) ? 
+                                                    <Button onClick={this.decryptExam} className="px-3" size="sm" variant="outline-secondary">
+                                                        <img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt
+                                                    </Button>
+                                                    :
+                                                    <div style={{marginTop: '1rem', textAlign: 'center'}}>
+                                                        <h4><img src="/assets/images/Asset 8@4x.png" alt="green right" height="20px" className="mr-2" /><b>Decryption Successful</b></h4>
+                                                        <p className="text-muted">The current question paper is already decrypted.</p>
+                                                    </div>
+                                    }
                                 </Container>
                             </Container>
                         </Col>
@@ -106,7 +121,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	decryptRegistration: (qpDecrypted) => {dispatch(decryptRegistration(qpDecrypted));}
+	decryptExam: (qpDecrypted) => {dispatch(decryptExam(qpDecrypted));}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecryptQP);
