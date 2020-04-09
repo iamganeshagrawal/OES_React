@@ -22,9 +22,12 @@ class DecRegistrationData extends Component {
 	}
 	
 	decryptReg = () => {
-		let { file, key } = this.state;
+        let { file, key } = this.state;
+        
+        if(!file) return alertWarn('File Missing');
+        if(key.length===0) return alertWarn('Key Missing');
 
-		if(filename.split(".")[1] !== "zip")
+		if(file.name.split(".")[1] !== "zip")
 		{return alertWarn("Invalid File Type");}
 
 		let formData = new FormData();
@@ -50,7 +53,13 @@ class DecRegistrationData extends Component {
         })
     }
     render() {
-        const fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
+        // create a fakePath to show on UI when file change
+        let fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
+        // Get status of decrypted question paper
+        let isDecrypted = this.props.regDataDecrypted;
+        // If question paper decrypted then create a static fakePath for UI
+        if(isDecrypted){ fakePath = `C:\\fakepath\\exam.zip.enc`; }
+
         return (
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
@@ -63,31 +72,40 @@ class DecRegistrationData extends Component {
                         <Col md={{span:4,offset:2}} style={{height: '100vh', position: "relative"}}>
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
                                 <Container fluid={true}>
-                                    <div className="fieldBox">
-                                        {/* hidden input for file upload and access via ref  */}
-                                        <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
-                                        {/* Actual UI Elements */}
-                                        <span className="fieldTitle">Registration Data</span>
-                                        <input className="fieldInput file" readOnly type="text" placeholder="Path of the Registration Data" value={fakePath} onClick={(e) => this.fileRef.click()} />
-                                        <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
-                                        
+                                    <div className={isDecrypted ? 'disabled-block' : null}>
+                                        <div className="fieldBox">
+                                            {/* hidden input for file upload and access via ref  */}
+                                            <input type="file" id="customFile" style={{visibility:'hidden',display:'none'}} ref={(ref)=>this.fileRef=ref} onChange={this.onFileChangeHandler} />
+                                            {/* Actual UI Elements */}
+                                            <span className="fieldTitle">Registration Data</span>
+                                            <input className="fieldInput file" readOnly type="text" placeholder="Path of the Registration Data" value={fakePath} onClick={(e) => this.fileRef.click()} />
+                                            <button className="fieldButton" onClick={(e) => this.fileRef.click()}>Upload</button>
+                                            
+                                        </div>
+                                        <div className="fieldBox">
+                                            <span className="fieldTitle">Decryption Key</span>
+                                            <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
+                                                    placeholder="*****  *****  ***** *****" 
+                                                    ref={ref => this.keyInputRef=ref} 
+                                                    onFocus={()=> (this.keyInputRef.type='text')}
+                                                    onBlur={() => this.keyInputRef.type="password"} 
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="fieldBox">
-                                        <span className="fieldTitle">Decryption Key</span>
-                                        <input onChange={this.handleKeyChange} name="key" className="fieldInput placeholder" style={{width:'100%'}} type="password" 
-                                                placeholder="*****  *****  ***** *****" 
-                                                ref={ref => this.keyInputRef=ref} 
-                                                onFocus={()=> (this.keyInputRef.type='text')}
-                                                onBlur={() => this.keyInputRef.type="password"} 
-                                        />
-                                    </div>
-                                    {/* Decrypt Button */}
-                                    <Button onClick={()=>this.decryptReg()} className="px-3" size="sm" variant="outline-secondary"><img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt</Button>
+                                    {
+                                        // Render Decypt Button if QP not decrypted
+                                        (!isDecrypted) ? 
+                                                    <Button onClick={this.decryptReg} className="px-3" size="sm" variant="outline-secondary">
+                                                        <img src="/assets/svg/keyboard.svg" alt="dcrypt" height="30px" className="mr-3" /> Decrypt
+                                                    </Button>
+                                                    :
+                                                    <div style={{marginTop: '1rem', textAlign: 'center'}}>
+                                                        <h4><img src="/assets/images/Asset 8@4x.png" alt="green right" height="20px" className="mr-2" /><b>Decryption Successful</b></h4>
+                                                        <p className="text-muted">The current <b>Registration Data</b> is already decrypted.</p>
+                                                    </div>
+                                    }
                                 </Container>
                             </Container>
-                        </Col>
-                        <Col md={1} style={{height: '100vh', position: "relative"}}>
-                            
                         </Col>
                     </Row>
                 </Container>
