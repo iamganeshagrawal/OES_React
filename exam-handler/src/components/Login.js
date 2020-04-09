@@ -37,6 +37,7 @@ class Login extends React.Component{
         this.signInButtonRef.disabled = true
 		
 		// Main Login
+		const {username, password} = this.state
 		loginReq({username, password})
 		.then( (res) => {
 			let { authHand:session } = res.headers;

@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import './css/LoginPage.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 class LoginPage extends React.Component{
     constructor(props) {
@@ -10,26 +12,24 @@ class LoginPage extends React.Component{
             password: '',
             username: ''
         }
-    }
+	}
+	componentDidMount(){
+		this.props.hideLoader()
+	}
 
     handleInputChange = (e) => {
         this.setState({[e.target.name] : e.target.value});
     }
     handleSignIn = (e) => {
         this.passwordInputRef.type = 'password'
-        this.disableInputs(true)
+		this.props.showLoader()
 		// Perform API Call Here
 
 		
 		
 		// dummy to demo
-		setTimeout(() => this.disableInputs(false), 3000)
+		setTimeout(() => this.props.hideLoader(), 5000)
 
-    }
-    disableInputs = (b) => {
-        this.usernameInputRef.disabled = b
-        this.passwordInputRef.disabled = b
-        this.signInButtonRef.disabled = b
     }
 
     render() {
@@ -72,5 +72,14 @@ class LoginPage extends React.Component{
     }
 }
 
+const mapStateToProps = store => ({
 
-export default LoginPage;
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
+	
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
