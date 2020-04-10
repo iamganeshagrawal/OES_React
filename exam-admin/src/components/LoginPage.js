@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { connect } from 'react-redux'
 import './css/LoginPage.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import {showLoader, hideLoader} from './FullPageLoader'
+import {showLoader, hideLoader} from './FullPageLoader';
+
+import { loginReq } from '../config/httpRoutes';
+import { login } from '../actions/sessionActions';
+import { alertSuccess, alertError } from '../config/toaster';
 
 class LoginPage extends React.Component{
     constructor(props) {
         super(props);
-        
+		
+		if(this.state.session) {
+			this.props.history.push("/centers");
+		}
+		
         this.state = {
             password: '',
             username: ''
@@ -15,6 +23,12 @@ class LoginPage extends React.Component{
 	}
 	componentDidMount(){
 		this.props.hideLoader()
+	}
+
+	componentDidUpdate(prevProps) {
+		if(!prevProps.session && this.props.session) {
+			this.props.history.push("/centers");
+		}
 	}
 
     handleInputChange = (e) => {
@@ -25,10 +39,23 @@ class LoginPage extends React.Component{
 		this.props.showLoader()
 		// Perform API Call Here
 
-		
+		loginReq({user, passwd}).then( (res) => {
+			alertSuccess(res.data.message || "Login Successful");
+			// this.props.history.push("/centers");
+			this.props.login({session: res.headers['auth-admin']});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.data.message || "Unexpected Error has Occurred")
+			} else {
+				alertError("Server has Timed Out");
+			}
+		}).finally( () => {
+			this.props.hideLoader()
+		});
+		// {user, passwd}
 		
 		// dummy to demo
-		setTimeout(() => this.props.hideLoader(), 5000)
+		// setTimeout(() => this.props.hideLoader(), 5000)
 
     }
 
@@ -73,13 +100,13 @@ class LoginPage extends React.Component{
 }
 
 const mapStateToProps = store => ({
-
-})
+	session: store.session.session
+});
 
 const mapDispatchToProps = (dispatch) => ({
 	showLoader: () => {dispatch(showLoader())},
 	hideLoader: () => {dispatch(hideLoader())},
-	
+	login: (data) => {dispatch(login(data));},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
