@@ -19,7 +19,7 @@ class Centers extends React.Component {
 
 	componentDidMount() {
 		this.props.showLoader();
-		getCentersReq(formData)
+		getCentersReq(/*formData*/)
 		.then( (res) => {
 			this.setState({centers: res.data});
 		}).catch( (err) => {
