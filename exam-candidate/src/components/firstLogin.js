@@ -33,6 +33,7 @@ class FirstLogin extends React.Component{
 		event.preventDefault();
 		
 		let { email, hallTicket } = this.state;
+		console.log(email, hallTicket);
 		if(!hallTicketRE.test(hallTicket)) {
 			return alertWarn("Invalid Hall Ticket Number");
 		}
@@ -68,8 +69,10 @@ class FirstLogin extends React.Component{
 			}
         }).catch( (err) => {
 			if(err.response) {
+				console.log(err.response);
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
+				console.log(err);
 				alertError("Server has Timed Out");
 			}
         });
@@ -102,11 +105,11 @@ class FirstLogin extends React.Component{
 
 							<form onSubmit={this.handleSubmit}>
 								<div id="inp1" className="form-label-group">
-									<input onChange={this.handleTicket} type="text" id="inputTicket" name="hallTicket" className="form-control" placeholder="HallTicket Number" required autoFocus />
+									<input onChange={this.handleChange} type="text" id="inputTicket" name="hallTicket" className="form-control" placeholder="HallTicket Number" required autoFocus />
 									<label htmlFor="inputTicket">Enter Ticket Number</label>
 								</div> 
 								<div id="inp2" className="form-label-group">
-									<input onChange={this.handleEmail} type="email" id="inputEmail" name="email" className="form-control" placeholder="Email" required />
+									<input onChange={this.handleChange} type="email" id="inputEmail" name="email" className="form-control" placeholder="Email" required />
 									<label htmlFor="inputEmail">Enter Email</label>
 								</div> 
 								<button id="btn1" type="submit" className="btn btn-primary btn-block">Login</button>

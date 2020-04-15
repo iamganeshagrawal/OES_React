@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InstructionPageTimer from './InstructionPageTimer';
+import { connect } from 'react-redux';
 import { startExamReq } from '../config/httpRoutes';
 import { startExam } from '../actions/examActions';
 import { alertError } from '../config/toaster';

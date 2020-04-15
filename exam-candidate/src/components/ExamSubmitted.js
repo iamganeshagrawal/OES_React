@@ -1,5 +1,6 @@
-import React, { cloneElement } from 'react';
+import React/*, { cloneElement }*/ from 'react';
 import './attempts.css';
+import { connect } from 'react-redux';
 
 class ExamSubmitted extends React.Component{
 	constructor(props) {
@@ -44,4 +45,4 @@ const mapStateToProps = (state) => ({
 	exam: state.exam
 });
 
-export default connect(mapStateToProps)(ExanSubmitted);
+export default connect(mapStateToProps)(ExamSubmitted);

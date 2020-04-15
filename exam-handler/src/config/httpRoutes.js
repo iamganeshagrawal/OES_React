@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import axios from './interceptor';
-baseUrl = "http://localhost:8080/handling/";
+const baseUrl = "http://localhost:8080/handling/";
 
 export const loginReq = (data) => {
 	return axios.put(baseUrl+'handleLogin', data);

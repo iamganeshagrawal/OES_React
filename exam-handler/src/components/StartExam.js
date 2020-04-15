@@ -32,7 +32,7 @@ class StartExam extends React.Component{
 		startExamReq({
 			examCode: this.props.examCode
 		}).then( (res) => {
-			let { Auth:session } = req.headers;
+			let { Auth:session } = res.headers;
 			alertSuccess(res.data.message || "Exam Started Successfully");
 			this.setState({isExamACtive: true}, () => {
 				saveToken(session);

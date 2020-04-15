@@ -7,16 +7,16 @@ import { getToken } from './localStorage';
 var axiosInstance = axios.create();
 axiosInstance.defaults.timeout = 30000;
 
-let isAlreadyFetchingAccessToken = false;
-let subscribers = [];
+// let isAlreadyFetchingAccessToken = false;
+// let subscribers = [];
 
-function onAccessTokenFetched(token) {
-  subscribers = subscribers.filter(callback => callback(token));
-}
+// function onAccessTokenFetched(token) {
+//   subscribers = subscribers.filter(callback => callback(token));
+// }
 
-function addSubscriber(callback) {
-  subscribers.push(callback);
-}
+// function addSubscriber(callback) {
+//   subscribers.push(callback);
+// }
 
 
 
