@@ -4,7 +4,7 @@ import './ChangePass.css';
 import { connect } from 'react-redux';
 import { alertSuccess, alertError, alertWarn } from '../config/toaster';
 import { changePasswordReq } from '../config/httpRoutes';
- import { changePassword } from '../actions/examActions';
+ import { changePassword } from '../actions/sessionsActions';
 
 // ALL UI CHANGES FIXED || 30 March 2020 || Ganesh Agrawal
 

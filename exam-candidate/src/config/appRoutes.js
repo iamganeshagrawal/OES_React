@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import '../App.css';
 
 import Login from '../components/firstLogin';
 import Instructions from '../components/InstructionPage';
@@ -14,7 +14,7 @@ import { createSocketConn, closeSocketConn } from './websocket';
 import { removeToken } from './localStorage';
 import { logout } from '../actions/sessionsActions';
 
-class Router extends Component {
+class RouterComp extends Component {
 	connectSocket = () => {
 		if(!this.props.session) {
 			return false;
@@ -61,4 +61,4 @@ const mapDispatchToProps = (dispatch) => ({
 	logout: () => {dispatch(logout())}
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Router);
+export default connect(mapStateToProps, mapDispatchToProps)(RouterComp);
