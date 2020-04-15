@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import store from './config/store';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Loader from './components/FullPageLoader'
-import Page from './components/LoginPage'
+import Page from './components/EncryptRegPage'
 
 function App() {
   return (
