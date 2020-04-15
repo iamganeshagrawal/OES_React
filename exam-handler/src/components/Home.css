@@ -1,0 +1,85 @@
+.welcome-card {
+    width: 500px;
+    height: 100px;
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9e6ec;
+    color: #f77c8a;
+}
+.welcome-card img {
+    height: 120px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+.exam-action-button-group {
+    display: flex !important;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 2px solid #343a40;
+    margin-bottom: 20px;
+}
+.exam-action-button {
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+    color: #343a40;
+    display: inline-block;
+    padding: 10px 0;
+    margin: 0 0;
+}
+.exam-action-button:hover {
+    color: #1d2024;
+    cursor: pointer;
+}
+.exam-action-button img {
+    width: 20px;
+    margin-right: 10px;
+    transform: scale(0.8);
+}
+.exam-action-button:hover img, .exam-action-button.active img{
+    transform: scale(1);
+}
+.exam-action-button.active {
+    position: relative;
+}
+.exam-action-button.active::after {
+    content: '';
+    position: absolute;
+    height: 8px;
+    width: 100%;
+    background-color: #343a40;
+    bottom: -4px;
+    left: 0;
+}
+
+.link-card {
+    padding: 10px 20px;
+    box-shadow:  5px 5px 10px #cccccc, 
+                -5px -5px 10px #ffffff;
+    margin: 20px 0;
+}
+.link-card img {
+    width: 20px;
+    margin-right: 20px;
+}
+.link-card a {
+    color: #343a40;
+    font-weight: 600;
+}
+.link-card a:hover{
+    color: #1d2024;
+    text-decoration: none;
+}
+.link-card span.task-status {
+    background-color:#909497;
+    color: white;
+    border-radius: 2px;
+    font-size: 10px;
+    padding: 2px 5px;
+    font-weight: 600;
+}
+.link-card span.task-status.done {
+    background-color: rgb(7, 70, 7);
+}

@@ -17,13 +17,13 @@ function App() {
 }
 
 // // For UI testing
-// import UI from './components/TestingComp'
+// import UI from './components/Home'
 // import { ToastContainer } from 'react-toastify'
 // function App() {
 // 	return (
 // 		<>
 // 		<ToastContainer />
-// 		<UI qpDecrypted={true} />
+// 		<UI />
 // 		</>
 // 	)
 // }
