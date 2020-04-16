@@ -44,7 +44,6 @@ class DecRegistrationData extends Component {
 			this.props.decryptRegistration({regDataDecrypted: true});
 		}).catch( (err) => {
 			if (err.response) {
-				console.log(err.response);
 				alertError(err.response.data.message || "Unexpected Error Has Occurred");
 			} else {
 				alertError("Server has Timed Out");

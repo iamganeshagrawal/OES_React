@@ -46,6 +46,7 @@ axiosInstance.interceptors.response.use(function (response) {
 		saveToken(res.headers.authhand);
         onAccessTokenFetched(res.headers.authhand);
       }).catch( async (err) => {
+		console.log(err);
 		await logoutReq(token);
 		store.dispatch(logout());
 		removeToken();

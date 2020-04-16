@@ -14,9 +14,10 @@ class StartExam extends React.Component{
 		
 		if(!this.props.session) {
 			this.props.history.push("/login");
-		}
-
-		if(!this.props.examCode) {
+		} else if(!this.props.regDataDecrypted) {
+			alertInfo("Please Decrypt Registration Data First");
+			this.props.history.push("/decryptReg");
+		} else if(!this.props.qpDecrypted) {
 			alertInfo("Please Decrypt Question Papers First");
 			this.props.history.push("/decryptQP");
 		}
@@ -94,7 +95,7 @@ class StartExam extends React.Component{
 													"Decrypt Registration Data and Question Paper to Continue"
 									}
                                 </p>
-                                <Button variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}} disabled={this.props.qpDecrypted && this.props.regDataDecrypted}>
+                                <Button onClick={this.startExam} variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}} disabled={!(this.props.qpDecrypted && this.props.regDataDecrypted)}>
                                     <b>Start Exam</b>
                                 </Button>
                                 <Button variant="outline-dark" style={{width:'250px'}}>
@@ -111,7 +112,6 @@ class StartExam extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-	examCode: state.exam.examCode,
 	session: state.session.session,
 	qpDecrypted: state.exam.qpDecrypted,
 	regDataDecrypted: state.exam.regDataDecrypted,
