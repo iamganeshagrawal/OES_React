@@ -22,7 +22,7 @@ class StartExam extends React.Component{
 		}
     
         this.state = {
-             isExamActive: false
+             isExamActive: this.props.examStarted
         }
 
         // for display exam state on button style for that
@@ -81,9 +81,20 @@ class StartExam extends React.Component{
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)', textAlign:'center'}}>
                                 <h4><img src="/assets/images/Asset 8@4x.png" style={{width:"1.5rem", marginRight:'1rem'}} alt="green checkmark" /><b>Paper Name Active</b></h4>
                                 <p style={{fontSize:'0.8rem'}} className="text-muted">
-                                    The current set of question paper is already decrypted and is ready for available for Exam.
+									{
+										this.props.regDataDecrypted && this.props.qpDecrypted ?
+											"The current set of question paper is already decrypted and is ready for available for Exam."
+										:
+											this.props.qpDecrypted ?
+												"Decrypt Registration Data to Continue"
+											:
+												this.props.regDataDecrypted ?
+													"Decrypt Question Paper in order to Continue"
+												:
+													"Decrypt Registration Data and Question Paper to Continue"
+									}
                                 </p>
-                                <Button variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}}>
+                                <Button variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}} disabled={this.props.qpDecrypted && this.props.regDataDecrypted}>
                                     <b>Start Exam</b>
                                 </Button>
                                 <Button variant="outline-dark" style={{width:'250px'}}>
@@ -101,7 +112,10 @@ class StartExam extends React.Component{
 
 const mapStateToProps = (state) => ({
 	examCode: state.exam.examCode,
-	session: state.session.session
+	session: state.session.session,
+	qpDecrypted: state.exam.qpDecrypted,
+	regDataDecrypted: state.exam.regDataDecrypted,
+	examStarted: state.exam.examStarted
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -129,7 +129,7 @@ export class Home extends Component {
 													<a href="/decryptReg">Import Registration Data</a>
 												</Col>
 												<Col md={4}>
-													<span className="task-status">Done</span>
+													<span className="task-status">{this.props.regDataDecrypted ? "Done" : "Pending"}</span>
 												</Col>
 											</Row>
 											<Row className="link-card">
@@ -138,7 +138,7 @@ export class Home extends Component {
 													<a href="/decryptQP">Import Question Paper</a>
 												</Col>
 												<Col md={4}>
-													<span className="task-status">Done</span>
+													<span className="task-status">{this.props.qpDecrypted ? "Done" : "Pending"}</span>
 												</Col>
 											</Row>
 											<Row className="link-card">
@@ -146,9 +146,9 @@ export class Home extends Component {
 													<img src="/assets/images/Asset 15@4x.png" alt="something" />
 													<a href="/startExam">Start Examination</a>
 												</Col>
-												<Col md={4}>
+												{/* <Col md={4}>
 													<span className="task-status done">Done</span>
-												</Col>
+												</Col> */}
 											</Row>
 										</>
 								}
@@ -189,7 +189,9 @@ export class Home extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	session: state.session.session
+	session: state.session.session,
+	qpDecrypted: state.exam.qpDecrypted,
+	regDataDecrypted: state.exam.regDataDecrypted
 });
 
 const mapDispatchToProps = (dispatch) => ({

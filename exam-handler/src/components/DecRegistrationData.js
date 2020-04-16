@@ -56,7 +56,14 @@ class DecRegistrationData extends Component {
         this.setState({
             file: event.target.files[0]
         })
-    }
+	}
+	
+	componentDidUpdate(prevProps) {
+		if(this.props.regDataDecrypted && !prevProps.regDataDecrypted) {
+			this.props.history.push("/home");
+		}
+	}
+
     render() {
         // create a fakePath to show on UI when file change
         let fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;

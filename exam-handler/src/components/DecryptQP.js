@@ -27,7 +27,7 @@ class DecryptQP extends Component {
 	
 	decryptExam = () => {
         let { file, key } = this.state;
-        
+
         if(!file) return alertWarn('File Missing');
         if(key.length===0) return alertWarn('Key Missing');
 
@@ -55,7 +55,13 @@ class DecryptQP extends Component {
         this.setState({
             file: event.target.files[0]
         })
-    }
+	}
+	
+	componentDidUpdate(prevProps) {
+		if(this.props.qpDecrypted && !prevProps.qpDecrypted) {
+			this.props.history.push("/home");
+		}
+	}
 
     render() {
         // create a fakePath to show on UI when file change
