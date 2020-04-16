@@ -1,0 +1,132 @@
+.cust__input-wrapper {
+    $box-width: 350px;
+    $input-width: $box-width - 100px;
+
+    width: $box-width;
+    border: none;
+    border-radius: 10px;
+    box-shadow:  9px 9px 18px #b3b3b3, 
+             -9px -9px 18px #ffffff;
+    margin: 20px 0;
+
+    .input-box {
+        height: 60px;
+        cursor: pointer;
+        position: relative;
+
+        &:nth-child(1) {
+            border-radius: 10px 10px 0 0;
+            border-bottom: 1px solid #b3b3b3;
+        }
+        &:nth-child(2) {
+            border-radius: 0 0 10px 10px;
+        }
+
+        &:focus-within {
+            background: rgba(#b3b3b3, 0.1);
+        }
+
+        input {
+            cursor: pointer;
+            border: none;
+            height: 30px;
+            width: $input-width;
+            position: absolute;
+            top: 20px;
+            left: ($box-width - $input-width)/2;
+            background: transparent;
+            color: rgba(#000000, 0.75);
+            font-size: 16px;
+            caret-color: rgba(#0000ff, 1);
+            letter-spacing: 1px;
+
+            &:focus {
+                outline: none;
+                background: transparent;
+                color: rgba(#000000, 1);
+            }
+
+            &:focus ~ span.input-label {
+                color: rgba(#000000, 0.7);
+            }
+            &::placeholder {
+                color: rgba(#000000, 0.5);
+            }
+        }
+
+        .input-label {
+            color: rgba(#000000, 0.5);
+            font-size: 12px;
+            position: absolute;
+            display: inline-block;
+            top: 5px;
+            left: ($box-width - $input-width)/2;
+            user-select: none;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        img.check-mark {
+            width: 20px;
+            position: absolute;
+            display: block;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+            filter: grayscale(100%);
+            transition: filter 100ms ease;
+
+            &.isvalid {
+                filter: none;
+            }
+        }
+        img.icon {
+            width: 24px;
+            position: absolute;
+            display: block;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 13px;
+        }
+    }
+}
+
+.cust__header-wrapper {
+    width: 100%;
+
+    .c-big {
+        display: block;
+        font-size: 32px;
+        padding: 0;
+        margin: 0;
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+    .c-small {
+        display:  block;
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-top: -5px;
+    }
+}
+.login-wrapper {
+    height: 100vh;
+    margin: 0 10%;
+    border: none;
+    position: relative;
+    // border-top: none;
+    // border-bottom: none;
+    box-shadow: 9px 0px 18px 0px #b3b3b3,
+                -9px 0px 18px 0px #b3b3b3;
+
+    .cust__hand-image {
+        width: 50%;
+        transform: translateY(-50%) scaleX(-1);
+        z-index: -1;
+        position: absolute;
+        top: 15%;
+
+    }
+}

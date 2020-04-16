@@ -1,14 +1,18 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './floating-labels.css';
-import './firstLogin.css';
 import { connect } from 'react-redux';
 import { loginReq } from '../config/httpRoutes';
 import { emailRE, hallTicketRE } from '../config/RegEx';
 import { login } from '../actions/sessionsActions';
 import { saveExam } from '../actions/examActions';
+import { Row, Col, Container, Image, Button } from 'react-bootstrap';
 import { alertWarn, alertError, alertSuccess } from '../config/toaster';
 import { saveToken } from '../config/localStorage';
+import './css/login.scss';
+
+// @Recreated By: Ganesh Agrawal
+// @Last Change: 16 April 2020
+
+//TODO: have to add NetParam logo as per UI design
 
 class FirstLogin extends React.Component{
     constructor(props){
@@ -19,18 +23,20 @@ class FirstLogin extends React.Component{
 		}
 
         this.state = {
-            hallTicket:'',
-            email:'',
-            login:true
+            hallTicket: '',
+            email: ''
 		};
 	}
 	
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
 	}
+
+	checkValid = (x, rx) => {
+		return rx.test(x);
+	}
 	
     handleSubmit = (event) => {
-		event.preventDefault();
 		
 		let { email, hallTicket } = this.state;
 		if(!hallTicketRE.test(hallTicket)) {
@@ -74,6 +80,7 @@ class FirstLogin extends React.Component{
 			}
         });
 	}
+
 	componentDidUpdate() {
 		if(this.props.session) {
 			this.props.history.push("/instructions");
@@ -81,45 +88,49 @@ class FirstLogin extends React.Component{
 	}
 
     render(){
-        // if (!this.state.login){
-        //     return (
-        //         <div>
-        //         <img src={require('../components/loading.gif')} style={{position:'fixed',top:'50%',left:'50%',transform:"translate(-50%, -50%)",width:'30px'}} alt='loading' />
-        //         </div>
-        //     )
-        // }
-        // else {
-			return (
-				<div className="row">
-					<div className="col-sm-8">
-						<img src="./logo.jpg" width="900" height="600" alt="logo" />
-					</div>
-					<div className="card col-sm-4" >
-						<div className="container" style={{height:"250px"}} />
-						<div className="container">
-							<h2>Login</h2>
-							<p style={{marginTop:"-10px"}}>Enter your Login Credentials</p>
-
-							<form onSubmit={this.handleSubmit}>
-								<div id="inp1" className="form-label-group">
-									<input onChange={this.handleChange} type="text" id="inputTicket" name="hallTicket" className="form-control" placeholder="HallTicket Number" required autoFocus />
-									<label htmlFor="inputTicket">Enter Ticket Number</label>
-								</div> 
-								<div id="inp2" className="form-label-group">
-									<input onChange={this.handleChange} type="email" id="inputEmail" name="email" className="form-control" placeholder="Email" required />
-									<label htmlFor="inputEmail">Enter Email</label>
-								</div> 
-								<button id="btn1" type="submit" className="btn btn-primary btn-block">Login</button>
-							</form>
-							<br />
-							<h1>{this.state.message}</h1>
+		const { hallTicket, email} = this.state;
+		return (
+			<div style={{height: '100vh', width: '100vw', overflow: 'hidden'}}>
+				<Row>
+					<Col md={{span:5, offset: 1}} style={{position: 'relative', height:'100vh'}}>
+						<Container fluid style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '0 10%'}}>
+							<Image src="/assets/images/login-screeb.png" fluid />
+						</Container>
+					</Col>
+					<Col md={{span:5}} style={{position: 'relative', height:'100vh'}}>
+						<div className="login-wrapper">
+							<img className="cust__hand-image" src="/assets/images/2492644.png" alt="hand" />
+							<Container fluid style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '0 10%', display: 'inline-block'}}>
+								<div className="cust__header-wrapper">
+									<span className="c-big">Login</span>
+									<span className="c-small">Enter your Login Credentials</span>
+								</div>
+								<div className="cust__input-wrapper">
+									<div className="input-box" onClick={()=>this.hallTicketInputRef.focus()}>
+									<img className="icon" src="/assets/images/ticket.png" alt="icon" />
+										<input type="text" name="hallTicket" value={hallTicket} onChange={this.handleChange} placeholder="123ABC456XYZ789" ref={ref=>this.hallTicketInputRef=ref} />
+										<span className="input-label">Hall Ticket Number</span>
+										<img className={this.checkValid(hallTicket, hallTicketRE) ? 'check-mark isvalid' : 'check-mark'} src="/assets/images/Asset 8@4x.png" alt="check-mark" />
+									</div>
+									<div className="input-box" onClick={()=>this.emailInputRef.focus()}>
+										<img className="icon" src="/assets/images/mail.png" alt="icon" />
+										<input className="cust__input" type="text" name="email" value={email} onChange={this.handleChange} placeholder="example@mail.com" ref={ref=>this.emailInputRef=ref} />
+										<span className="input-label">Email</span>
+										<img className={this.checkValid(email, emailRE) ? 'check-mark isvalid' : 'check-mark'} src="/assets/images/Asset 8@4x.png" alt="check-mark" />
+									</div>
+								</div>
+								<div style={{width: '350px', marginTop: '35px'}}>
+									<Button variant="primary" block onClick={this.handleSubmit}>Login</Button>
+								</div>
+							</Container>
 						</div>
-					</div>
-				</div>
-			)
-		// }
+					</Col>
+				</Row>
+			</div>
+		)
 	}
 }
+
 const mapStateToProps = (state) => ({
 	// message:state.candidate.message
 	session: state.session.session
