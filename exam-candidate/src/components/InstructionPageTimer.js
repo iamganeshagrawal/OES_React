@@ -51,7 +51,6 @@ class InstructionPageTimer extends Component{
         const timeSecs = (this.state.secs % 60);
         const timeMins = (Math.floor(this.state.secs / 60) % 60);
         const timeHours = Math.floor(Math.floor(this.state.secs / 60) / 60);
-        console.log("chid");
         return(
             <Fragment>
                 <svg height="140" width="140">

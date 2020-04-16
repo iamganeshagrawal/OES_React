@@ -1,5 +1,5 @@
-import axios from 'axios';
-// import axios from './interceptor';
+// import axios from 'axios';
+import axios from './interceptor';
 const baseUrl = "http://localhost:8080/handling/";
 
 export const loginReq = (data) => {

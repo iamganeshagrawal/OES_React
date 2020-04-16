@@ -15,7 +15,7 @@ class ChangePass extends React.Component{
 		if(!this.props.session) {
 			this.props.history.push("/login");
 		} else if (this.props.passwordChanged) {
-			this.props.history.push(/*"/home"*/"/dash");
+			this.props.history.push("/home");
 		}
     
         this.state = {
@@ -65,7 +65,7 @@ class ChangePass extends React.Component{
 			return alertWarn("Please Enter a Security Answer");
 		}
 
-		let { password:newPass, securityQue:secQuestion, securityAn:secAnswer } = this.state;
+		let { password:newPass, securityQue:secQuestion, securityAns:secAnswer } = this.state;
 
 		changePasswordReq({
 			newPass,
@@ -75,7 +75,7 @@ class ChangePass extends React.Component{
 		.then( (res) => {
 			alertSuccess(res.data.message || "Credentials Updated Successfully");
 			this.props.changePassword({passwordChanged: true});
-			this.props.history.push("/dash");
+			this.props.history.push("/home");
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");

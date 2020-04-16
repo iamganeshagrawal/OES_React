@@ -1,10 +1,10 @@
 import { baseUrl } from '../config/httpRoutes';
-baseUrl.replace("http", "ws");
+const baseURL = baseUrl.replace("http", "ws");
 
 export const createSocketConn = (token, closeCB) => {
-	let ws = new WebSocket(baseUrl+"ws", token);
+	let ws = new WebSocket(baseURL+"ws", token);
 	ws.onclose = closeCB;
-	ws.onerror = closeCB;
+	// ws.onerror = closeCB;
 	return ws;
 }
 

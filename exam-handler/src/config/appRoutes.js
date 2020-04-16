@@ -10,6 +10,7 @@ import QPAlreadyDecrypted from '../components/QPAlreadyDecrypted';
 import BioDash from '../components/BiometricDashboard';
 import Dash from '../components/Dashboard';
 import StartExam from '../components/StartExam';
+import Home from '../components/Home';
 
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
@@ -23,6 +24,7 @@ class appRouter extends Component {
 					<Redirect exact from="/" to="/login" />
 		
 					<Route exact path="/login" component={Login} />
+					<Route exact path="/home" component={Home} />
 					<Route exact path="/changePass" component={ChangePassword} />
 					<Route exact path="/decryptReg" component={DecRegData} />
 					<Route exact path="/uploadQP" component={UploadQP} />

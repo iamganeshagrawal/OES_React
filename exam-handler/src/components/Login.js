@@ -14,7 +14,7 @@ class Login extends React.Component{
 		super(props);
 		
 		if(this.props.session) {
-			this.props.history.push(/*"/home"*/"/dash");
+			this.props.history.push("/home");
 		}
     
         this.state = {
@@ -40,7 +40,7 @@ class Login extends React.Component{
 		const {username, password} = this.state
 		loginReq({username, password})
 		.then( (res) => {
-			let { authHand:session } = res.headers;
+			let { authhand:session } = res.headers;
 			saveToken(session);
 			this.props.login({session});
 			alertSuccess(res.data.message || "Login Successful");
@@ -58,10 +58,10 @@ class Login extends React.Component{
         this.passwordInputRef.disabled = false
         this.signInButtonRef.disabled = false
 	}
-	componentDidUpdate() {
-		if(this.props.session) {
+	componentDidUpdate(prevProps) {
+		if(this.props.session && !prevProps.session) {
 			if(this.props.passwordChanged) {
-				this.props.history.push(/*"/home"*/"/dash");
+				this.props.history.push("/home");
 			} else {
 				this.props.history.push("/changePass");
 			}
@@ -82,7 +82,7 @@ class Login extends React.Component{
 						<p className="text-muted">Admin Login</p>
 						<h2 style={{fontFamily:"sans-serif", marginBottom:'2px'}}>Welcome!</h2>
 						<p className="text-muted">Enter your credentials for Login!</p>
-						<Form onSubmit={this.handleSubmit}>
+						<Form onSubmit={this.handleSignIn}>
 							<Form.Label className="text-muted" style={{fontSize:'0.8rem', marginBottom:'0.1rem'}}>Username</Form.Label>
 							<Form.Control size="sm" type="text" name="username" placeholder="Enter username" onChange={this.handleInputChange} ref={input => this.usernameInputRef=input} style={{border:'none', borderBottom:'1px solid black', outline: 'none', boxShadow: 'none', borderRadius: '0px', marginBottom: '0.4rem'}} />
 							<Form.Label className="text-muted" style={{fontSize:'0.8rem',marginBottom:'0.1rem'}}>Password</Form.Label>

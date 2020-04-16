@@ -21,18 +21,18 @@ const options = {
 var activeToasts = [];
 
 export const alertSuccess = (message) => {
-	if(activeToasts.length > 2) {
-		toast.dismiss(activeToasts[0]);
-		activeToasts.shift();
-	}
+	// if(activeToasts.length > 2) {
+	// 	toast.dismiss(activeToasts[0]);
+	// 	activeToasts.shift();
+	// }
 	activeToasts.push(toast.success(message, options));
 }
 
 export const alertError = (message) => {
-	if(activeToasts.length > 2) {
-		toast.dismiss(activeToasts[0]);
-		activeToasts.shift();
-	}
+	// if(activeToasts.length > 2) {
+	// 	toast.dismiss(activeToasts[0]);
+	// 	activeToasts.shift();
+	// }
 	activeToasts.push(toast.error(message, options));
 }
 

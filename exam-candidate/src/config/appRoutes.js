@@ -15,11 +15,11 @@ import { removeToken } from './localStorage';
 import { logout } from '../actions/sessionsActions';
 
 class RouterComp extends Component {
-	connectSocket = () => {
-		if(!this.props.session) {
+	connectSocket = (tkn) => {
+		if(!tkn) {
 			return false;
 		}
-		this.ws = createSocketConn(this.props.session, () => {this.props.logout(); removeToken();});
+		this.ws = createSocketConn(tkn, () => {this.props.logout(); removeToken();});
 		return true;
 	}
 

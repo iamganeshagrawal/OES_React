@@ -1,7 +1,7 @@
 import { SAVE_EXAM, START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM } from '../actions/types';
 
 const initialState = {
-	questions: [],
+	questions: null,
 	code: '',
 	examTime: '',
 	max: '',

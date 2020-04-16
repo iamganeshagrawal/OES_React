@@ -33,7 +33,6 @@ class FirstLogin extends React.Component{
 		event.preventDefault();
 		
 		let { email, hallTicket } = this.state;
-		console.log(email, hallTicket);
 		if(!hallTicketRE.test(hallTicket)) {
 			return alertWarn("Invalid Hall Ticket Number");
 		}
@@ -48,13 +47,13 @@ class FirstLogin extends React.Component{
 		}).then((res) => {
 			let { candidate, exam, instructions, timeLeft=false, message } = res.data;
 			
-			if(this.props.connect()) {
+			// if(this.props.connect(res.headers.auth)) {
 				saveToken(res.headers.auth);
 				this.props.login({
 					...candidate,
 					hallTicket,
 					email,
-					session: res.headers.Auth
+					session: res.headers.auth
 				});
 				
 				this.props.saveExam({
@@ -64,15 +63,13 @@ class FirstLogin extends React.Component{
 				});
 				
 				alertSuccess(message || "Login Successful");
-			} else {
-				alertError("Could not Maintain Connection with Server. Please Try Again.");
-			}
+			// } else {
+			// 	alertError("Could not Maintain Connection with Server. Please Try Again.");
+			// }
         }).catch( (err) => {
 			if(err.response) {
-				console.log(err.response);
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
-				console.log(err);
 				alertError("Server has Timed Out");
 			}
         });

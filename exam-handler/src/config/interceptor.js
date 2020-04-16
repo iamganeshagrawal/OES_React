@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from './store';
 import { refreshTokenReq, logoutReq } from '../config/httpRoutes';
-import { removeToken } from './localStorage';
+import { removeToken, saveToken } from './localStorage';
 import { logout } from '../actions/sessionsActions';
 
 
@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(function (config) {
   const token = localStorage.getItem('x-auth');
 
   if(token) {
-    config.headers.authorization = token;
+    config.headers['x-handling-auth'] = token;
   }
   return config;
 });
@@ -33,23 +33,25 @@ axiosInstance.interceptors.request.use(function (config) {
 axiosInstance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  const { config, response: { status } } = error;
+  const { config, response: { status, data } } = error;
   const originalRequest = config;
-
+	console.log(status, data, config.headers);
   if (status === 401 && config.headers['x-handling-auth']) {
 	let token = config.headers['x-handling-auth'];
     if (!isAlreadyFetchingAccessToken) {
       isAlreadyFetchingAccessToken = true;
       refreshTokenReq(token).then((res) => {
-        isAlreadyFetchingAccessToken = false;
-        onAccessTokenFetched(res.headers.authHand);
+		isAlreadyFetchingAccessToken = false;
+		console.log(res.headers);
+		saveToken(res.headers.authhand);
+        onAccessTokenFetched(res.headers.authhand);
       }).catch( async (err) => {
 		await logoutReq(token);
 		store.dispatch(logout());
 		removeToken();
-        return Promise.reject(err.err);
+        return Promise.reject(err);
       }).catch( (err) => {
-		return Promise.reject(err.err);
+		return Promise.reject(err);
 	  });
     }
 
