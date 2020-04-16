@@ -8,7 +8,11 @@ import { connect } from 'react-redux';
 
 class DecRegistrationData extends Component {
     constructor(props) {
-        super(props)
+		super(props);
+		
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		}
     
         this.state = {
 			file: null,
@@ -40,6 +44,7 @@ class DecRegistrationData extends Component {
 			this.props.decryptRegistration({regDataDecrypted: true});
 		}).catch( (err) => {
 			if (err.response) {
+				console.log(err.response);
 				alertError(err.response.data.message || "Unexpected Error Has Occurred");
 			} else {
 				alertError("Server has Timed Out");
@@ -115,7 +120,8 @@ class DecRegistrationData extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	regDataDecrypted: state.exam.regDataDecrypted
+	regDataDecrypted: state.exam.regDataDecrypted,
+	session: state.session.session
 });
 
 const mapDispatchToProps = (dispatch) => ({

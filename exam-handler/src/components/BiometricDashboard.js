@@ -1,12 +1,17 @@
 import React from 'react'
 import { Container, Row, Col, Media, Table } from 'react-bootstrap';
 import './BiometricDashboard.css'
+import { connect } from 'react-redux';
 
 // ALL UI CHANGES FIXED || 27 March 2020 || Ganesh Agrawal
 
 class BiometricDashboard extends React.Component{
     constructor(props) {
-        super(props)
+		super(props);
+		
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		}
     
         this.state = {
              searchText: '',
@@ -149,4 +154,9 @@ class BiometricDashboard extends React.Component{
         )
     }
 }
-export default BiometricDashboard;
+
+const mapStateToProps = (state) => ({
+	session: state.session.session
+});
+
+export default connect(mapStateToProps)(BiometricDashboard);

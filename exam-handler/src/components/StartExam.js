@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { alertError, alertSuccess } from '../config/toaster';
+import { alertError, alertSuccess, alertInfo } from '../config/toaster';
 import { startExamReq, endExamReq } from '../config/httpRoutes';
 import { startExam, endExam } from '../actions/sessionsActions';
 import { saveToken } from '../config/localStorage';
@@ -12,8 +12,12 @@ class StartExam extends React.Component{
     constructor(props) {
 		super(props);
 		
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		}
+
 		if(!this.props.examCode) {
-			alertError("Please Decrypt Question Papers First");
+			alertInfo("Please Decrypt Question Papers First");
 			this.props.history.push("/decryptQP");
 		}
     
@@ -96,7 +100,8 @@ class StartExam extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-	examCode: state.exam.examCode
+	examCode: state.exam.examCode,
+	session: state.session.session
 });
 
 const mapDispatchToProps = (dispatch) => ({

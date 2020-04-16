@@ -33,16 +33,16 @@ axiosInstance.interceptors.request.use(function (config) {
 axiosInstance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  const { config, response: { status, data } } = error;
+  const { config, response: { status } } = error;
   const originalRequest = config;
-	console.log(status, data, config.headers);
+
   if (status === 401 && config.headers['x-handling-auth']) {
 	let token = config.headers['x-handling-auth'];
     if (!isAlreadyFetchingAccessToken) {
       isAlreadyFetchingAccessToken = true;
-      refreshTokenReq(token).then((res) => {
+
+	  refreshTokenReq(token).then((res) => {
 		isAlreadyFetchingAccessToken = false;
-		console.log(res.headers);
 		saveToken(res.headers.authhand);
         onAccessTokenFetched(res.headers.authhand);
       }).catch( async (err) => {

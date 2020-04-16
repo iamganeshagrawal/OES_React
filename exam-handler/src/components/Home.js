@@ -33,7 +33,11 @@ import "./Home.css";
 
 export class Home extends Component {
     constructor(props) {
-        super(props)
+		super(props);
+		
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		}
     
         this.state = {
              activetTab: 'pre', // 'pre', 'post', 'end'

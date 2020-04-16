@@ -8,7 +8,11 @@ import { connect } from 'react-redux';
 
 class DecryptQP extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
+
+		if(!this.props.session) {
+			this.props.history.push("/login");
+		}
 	
 		this.state = {
 			file: null,
@@ -117,7 +121,8 @@ class DecryptQP extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-	qpDecrypted: state.exam.qpDecrypted
+	qpDecrypted: state.exam.qpDecrypted,
+	session: state.session.session
 });
 
 const mapDispatchToProps = (dispatch) => ({

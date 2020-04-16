@@ -13,9 +13,7 @@ class InstructionPage extends React.Component{
 		
 		if(!this.props.session.session) {
 			this.props.history.push("/login");
-		}
-
-		if(this.props.questions) {
+		} else if(this.props.questions) {
 			this.props.history.push("/exam");
 		}
 
