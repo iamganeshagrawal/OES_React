@@ -39,7 +39,7 @@ class StartExam extends React.Component{
 		}).then( (res) => {
 			let { Auth:session } = res.headers;
 			alertSuccess(res.data.message || "Exam Started Successfully");
-			this.setState({isExamACtive: true}, () => {
+			this.setState({isExamActive: true}, () => {
 				saveToken(session);
 				this.props.startExam({examStarted: true, session});
 			});
@@ -55,7 +55,7 @@ class StartExam extends React.Component{
 	endExam = () => {
 		endExamReq().then( (res) => {
 			alertSuccess(res.data.message || "Exam Ended Successfully");
-			this.setState({isExamACtive: false}, () => {
+			this.setState({isExamActive: false}, () => {
 				this.props.endExam({examEnded: true});
 			});
 		}).catch( (err) => {
@@ -115,7 +115,8 @@ const mapStateToProps = (state) => ({
 	session: state.session.session,
 	qpDecrypted: state.exam.qpDecrypted,
 	regDataDecrypted: state.exam.regDataDecrypted,
-	examStarted: state.exam.examStarted
+	examStarted: state.exam.examStarted,
+	examCode: state.exam.examCode
 });
 
 const mapDispatchToProps = (dispatch) => ({

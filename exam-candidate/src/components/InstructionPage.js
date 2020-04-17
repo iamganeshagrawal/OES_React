@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startExamReq } from '../config/httpRoutes';
 import { startExam } from '../actions/examActions';
-import { alertError } from '../config/toaster';
+import { alertError, alertSuccess } from '../config/toaster';
 
 class InstructionPage extends React.Component{
     constructor(props){
@@ -17,8 +17,8 @@ class InstructionPage extends React.Component{
 			this.props.history.push("/exam");
 		}
 		
-		// let timeLeft = (new Date(this.props.exam.startTime).now() - new Date().now()) / 1000;
-		let timer = ((new Date(this.props.exam.startTime).now() - new Date().now()) / 1000) > 0;
+		let timeLeft = ((new Date(this.props.exam.startTime)).getTime() - Date.now()) / 1000;
+		let timer = timeLeft > 0;
         this.state = {
             candidateName:'',
             email:'',
@@ -32,7 +32,8 @@ class InstructionPage extends React.Component{
 	
     startExam = () => {
 		startExamReq().then( (res) => {
-			this.props.saveQuestions(res.data);
+			alertSuccess(res.data.message || "Exam Started Successfully");
+			this.props.saveQuestions({questions: res.data});
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
@@ -56,7 +57,7 @@ class InstructionPage extends React.Component{
 	
     render(){
 		let { name, image, hallTicket, email } = this.props.session;
-		let { instructions } = this.props.exam;
+		let { instructions, startTime } = this.props.exam;
         return(
 			<div className="row text-center ">
 				<div className="col-lg-3 pr-0 pl-0" style={{boxShadow:"0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"}}>
@@ -74,7 +75,7 @@ class InstructionPage extends React.Component{
 							callback={()=> {this.setState({timer:false})}}
 						/>
 						</div>
-						<p ><b>{startTime}</b></p>
+						<p ><b>{startTime.split("T")[1].split("Z")[0]}</b></p>
 					</Container>
 				</div>
 				<div className="col-lg-9">

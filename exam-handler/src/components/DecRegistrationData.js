@@ -40,8 +40,9 @@ class DecRegistrationData extends Component {
 
 		decryptRegistrationReq(formData)
 		.then( (res) => {
-			alertSuccess(res.data.message || "Registration Data Uploaded Successfully");
-			this.props.decryptRegistration({regDataDecrypted: true});
+			let { examCode, message } = res.data;
+			alertSuccess(message || "Registration Data Uploaded Successfully");
+			this.props.decryptRegistration({regDataDecrypted: true, examCode});
 		}).catch( (err) => {
 			if (err.response) {
 				alertError(err.response.data.message || "Unexpected Error Has Occurred");

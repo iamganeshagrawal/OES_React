@@ -55,9 +55,9 @@ export class Home extends Component {
 		.then( (res) => {
 			this.props.logout({
 				session: '',
-				passwordChanged: false,
-				examStarted: false,
-				examEnded: false
+				// passwordChanged: false,
+				// examStarted: false,
+				// examEnded: false
 			});
 			alertSuccess(res.data.message || "Logout Successful");
 		}).catch( (err) => {
