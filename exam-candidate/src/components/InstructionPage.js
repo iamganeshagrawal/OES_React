@@ -16,14 +16,16 @@ class InstructionPage extends React.Component{
 		} else if(this.props.questions) {
 			this.props.history.push("/exam");
 		}
-
+		
+		// let timeLeft = (new Date(this.props.exam.startTime).now() - new Date().now()) / 1000;
+		let timer = ((new Date(this.props.exam.startTime).now() - new Date().now()) / 1000) > 0;
         this.state = {
             candidateName:'',
             email:'',
             candidateImage:'',
             ins:'',
-            time: 15 * 60,
-            timer:true
+            time: /*15 * 60*/ timer ? timeLeft : 0,
+            timer
         };
         this.updateTimer = this.updateTimer.bind(this);
 	}
@@ -45,10 +47,16 @@ class InstructionPage extends React.Component{
             timer:false
         });
 	}
+
+	componentDidUpdate(prevProps) {
+		if(this.props.exam.questions && !prevProps.exam.questions) {
+			this.props.history.push("/exam");
+		}
+	}
 	
     render(){
 		let { name, image, hallTicket, email } = this.props.session;
-		let { startTime, instructions } = this.props.exam;
+		let { instructions } = this.props.exam;
         return(
 			<div className="row text-center ">
 				<div className="col-lg-3 pr-0 pl-0" style={{boxShadow:"0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"}}>
@@ -72,7 +80,7 @@ class InstructionPage extends React.Component{
 				<div className="col-lg-9">
 					<img src={instructions} alt="instructions" style={{ maxWidth: "100%",display: "block", height: "auto"}} />
 					
-					<button className="btn btn-primary" onClick={this.startExam} disabled={this.state.timer}>Start exam</button>
+					<button className="btn btn-primary" onClick={this.startExam} disabled={this.state.timer}>Start Exam</button>
 				</div>
 			</div>
         )
