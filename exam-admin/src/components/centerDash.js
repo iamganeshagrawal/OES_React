@@ -8,7 +8,7 @@ class CenterDash extends React.Component {
 	constructor(props) {
 		super(props);
 
-		if(!this.state.session) {
+		if(!this.props.session) {
 			this.props.history.push("/login");
 		}
 

@@ -12,7 +12,7 @@ class LoginPage extends React.Component{
     constructor(props) {
         super(props);
 		
-		if(this.state.session) {
+		if(this.props.session) {
 			this.props.history.push("/centers");
 		}
 		
@@ -39,6 +39,8 @@ class LoginPage extends React.Component{
 		this.props.showLoader()
 		// Perform API Call Here
 
+		let { username: user, password: passwd } = this.state;
+
 		loginReq({user, passwd}).then( (res) => {
 			alertSuccess(res.data.message || "Login Successful");
 			// this.props.history.push("/centers");
@@ -52,7 +54,6 @@ class LoginPage extends React.Component{
 		}).finally( () => {
 			this.props.hideLoader()
 		});
-		// {user, passwd}
 		
 		// dummy to demo
 		// setTimeout(() => this.props.hideLoader(), 5000)
