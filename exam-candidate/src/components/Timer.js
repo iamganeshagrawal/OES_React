@@ -16,8 +16,7 @@ class Timer extends Component{
         this.startTimer();
     }
     componentDidUpdate(){
-        if(this.state.secs < 0){
-            console.log("Timer End");
+        if(this.state.secs === 0){
             clearInterval(this.timerID)
             // Call Timer end callback here
             this.state.callback();

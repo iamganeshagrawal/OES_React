@@ -5,7 +5,6 @@ export const login = (data) => ({
 	data
 });
 
-export const logout = (data) => ({
-	type: LOGOUT,
-	data
+export const logout = () => ({
+	type: LOGOUT
 });

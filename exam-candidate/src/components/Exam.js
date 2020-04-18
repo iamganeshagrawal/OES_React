@@ -98,8 +98,8 @@ class Exam extends Component {
 		});
 	}
 
-	componentDidUpdate() {
-		if(this.props.exam.submitted) {
+	componentDidUpdate(prevProps) {
+		if(this.props.exam.submitted && !prevProps.exam.submitted) {
 			this.props.history.push("/examSubmitted");
 		}
 	}
@@ -154,7 +154,7 @@ class Exam extends Component {
 												<p style={{cursor: 'pointer'}} onClick={() => {this.markForReview(index);}}><small>Mark For Review</small></p>
 											</Container>
 											<Container className="border-top">
-												<p style={{cursor: 'pointer'}} onClick={() => {this.clearAnswer(question.qId, index);}}><small>Clear</small></p>
+												<p style={{cursor: 'pointer'}} onClick={() => {question.option && this.clearAnswer(question.qId, index)}}><small>Clear</small></p>
 											</Container>
 										</div>
 									</Col>
@@ -189,12 +189,16 @@ class Exam extends Component {
 							<Container className="m-0 py-4 text-dark" style={{fontSize: '1.2rem'}}>
 								<Row className="">
 									{
-										index > 0 &&
+										index > 0 ?
 											<Col sm={6}>
 												<div style={{cursor: 'pointer'}} onClick={() => {this.setState({index: index - 1});}}>
 													<span className="border shadow rounded-circle" style={{display:'inline-block', width:'40px', height:'40px', padding:'auto', fontSize:'1.4rem', fontWeight:'500'}}>{`<`}</span>  Prev
 												</div>
 											</Col>
+										:
+										<Col sm={6}>
+											{/* <span className="border shadow rounded-circle" style={{display:'inline-block', width:'0px', height:'0px', padding:'auto', fontSize:'1.4rem', fontWeight:'500'}} /> */}
+										</Col>
 									}
 									{
 										index !== (questions.length-1) &&

@@ -1,4 +1,4 @@
-import { SAVE_EXAM, START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM, MARK_FOR_REVIEW } from '../actions/types';
+import { SAVE_EXAM, START_EXAM, CLEAR_ANSWER, ANSWER_QUESTION, SUBMIT_EXAM, MARK_FOR_REVIEW, LOGOUT } from '../actions/types';
 
 const initialState = {
 	questions: null,
@@ -45,6 +45,16 @@ const examReducer = (state, action) => {
 			return {
 				...state,
 				...action.data
+			};
+		case LOGOUT:
+			return {
+				questions: null,
+				code: '',
+				examTime: '',
+				max: '',
+				instructions: '',
+				startTime: '',
+				submitted: false
 			};
 		default:
 			return state;
