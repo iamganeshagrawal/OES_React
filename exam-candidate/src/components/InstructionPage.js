@@ -75,7 +75,7 @@ class InstructionPage extends React.Component{
 							callback={()=> {this.setState({timer:false})}}
 						/>
 						</div>
-						<p ><b>{startTime.split("T")[1].split("Z")[0]}</b></p>
+						<p ><b>{startTime.split("T")[1] ? startTime.split("T")[1].split("Z")[0] : startTime}</b></p>
 					</Container>
 				</div>
 				<div className="col-lg-9">
