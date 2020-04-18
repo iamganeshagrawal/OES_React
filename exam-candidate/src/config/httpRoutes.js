@@ -15,7 +15,7 @@ export const answerQuestionReq = (data) => {
 };
 
 export const clearAnswerReq = (data) => {
-	return axios.delete(baseUrl+'clearAnswer', data);
+	return axios.delete(baseUrl+'clearAnswer', {data});
 };
 
 export const submitExamReq = () => {
