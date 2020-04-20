@@ -10,6 +10,10 @@ export const startExamReq = () => {
 	return axios.get(baseUrl+'startExam');
 };
 
+export const updTmReq = () => {
+	return axios.get(baseUrl+'updTm');
+};
+
 export const answerQuestionReq = (data) => {
 	return axios.post(baseUrl+'answer', data);
 };

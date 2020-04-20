@@ -3,7 +3,7 @@ import {Container, Col, Row, Button} from 'react-bootstrap'
 import Timer from './Timer'
 import { connect } from 'react-redux';
 import { answerQuestion, clearAnswer, submitExam, markForReview } from '../actions/examActions';
-import { answerQuestionReq, clearAnswerReq, submitExamReq } from '../config/httpRoutes';
+import { answerQuestionReq, clearAnswerReq, submitExamReq, updTmReq } from '../config/httpRoutes';
 import { alertError/*, alertSuccess */ } from '../config/toaster';
 
 class Exam extends Component {
@@ -41,16 +41,19 @@ class Exam extends Component {
 			this.setState({questions}, () => {
 				this.props.answerQuestion({questions});
 			});
+			this.timeOut = setTimeout(this.updateTime, 10000);
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}
+			this.updateTime();
 		});
 	}
 
 	clearAnswer = (question, index) => {
+		clearTimeout(this.timeOut);
 		clearAnswerReq({
 			question
 		}).then( (res) => {
@@ -60,12 +63,14 @@ class Exam extends Component {
 			this.setState({questions}, () => {
 				this.props.clearAnswer({questions});
 			});
+			this.timeOut = setTimeout(this.updateTime, 10000);
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
 			} else {
 				alertError("Server has Timed Out");
 			}
+			this.updateTime();
 		});
 	}
 
@@ -79,6 +84,15 @@ class Exam extends Component {
 		}
 		questions[index] = question;
 		this.props.markForReview({questions});
+	}
+
+	updateTime = () => {
+		updTmReq()
+		.then( () => {
+			this.timeOut = setTimeout(this.updateTime, 10000);
+		}).catch( () => {
+			this.updateTime();
+		});
 	}
 
 	submitExam = () => {
