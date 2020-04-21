@@ -1,5 +1,5 @@
-import axios from 'axios';
-// import axios from './interceptor';
+// import axios from 'axios';
+import axios from './interceptor';
 const baseUrl = "http://localhost:8081/";
 
 export const loginReq = (data) => {

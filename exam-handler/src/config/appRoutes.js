@@ -27,10 +27,10 @@ class appRouter extends Component {
 					<Route exact path="/home" component={Home} />
 					<Route exact path="/changePass" component={ChangePassword} />
 					<Route exact path="/decryptReg" component={DecRegData} />
-					<Route exact path="/uploadQP" component={UploadQP} />
-					<Route exact path="/uploadQP2" component={UploadQP2} />
+					{/* <Route exact path="/uploadQP" component={UploadQP} /> */}
+					{/* <Route exact path="/uploadQP2" component={UploadQP2} /> */}
 					<Route exact path="/decryptQP" component={DecryptQP} />
-					<Route exact path="/qpAlrdy" component={QPAlreadyDecrypted} />
+					{/* <Route exact path="/qpAlrdy" component={QPAlreadyDecrypted} /> */}
 					<Route exact path="/bioDash" component={BioDash} />
 					<Route exact path="/dash" component={Dash} />
 					<Route exact path="/startExam" component={StartExam} />

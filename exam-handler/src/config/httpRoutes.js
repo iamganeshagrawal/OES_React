@@ -100,27 +100,3 @@ export const generateResponseSheetReq = (data) => {
 // export default connect(mapStateToProps)(GenResponseSheet);
 
 /**			~Response Sheet Component		 */
-
-
-/**			Logout Method		 */
-// import { logoutReq } from '../config/httpRoutes';
-// import { alertError, alertSuccess } from '../config/toaster';
-
-// logout = () => {
-// 	logoutReq(this.props.session)
-// 	.then( (res) => {
-// 		alertSuccess(res.data.message || "Logout Successful");
-// 		this.props.history.push("/login");
-// 	}).catch( (err) => {
-// 		if(err.response) {
-// 			alertError(err.response.data.message || "Unexpected Error has Occurred");
-// 		} else {
-// 			alertError("Server has Timed Out");
-// 		}
-// 	});
-// }
-
-// const mapStateToProps = (state) => ({
-// 	session: state.session.session
-// });
-/**			~Logout	Method		 */

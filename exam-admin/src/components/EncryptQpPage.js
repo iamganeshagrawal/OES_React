@@ -56,7 +56,7 @@ class EncQP extends React.Component {
 			const url = window.URL.createObjectURL(new Blob([res.data]));
 			const link = document.createElement('a');
 			link.href = url;
-			link.setAttribute('download', 'exam.enc.zip'); // or any other extension
+			link.setAttribute('download', 'exam.zip.enc'); // or any other extension
 			document.body.appendChild(link);
 			link.click();
 			link.parentElement.removeChild(link);

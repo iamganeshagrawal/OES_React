@@ -126,7 +126,7 @@ class Centers extends React.Component{
                                         {
                                             this.state.centers && this.state.centers.map((c,i) => {
                                                 return (
-                                                    <tr key={i}>
+                                                    <tr key={i} onClick={() => {this.props.history.push("/centerDash/"+c.code)}}>
                                                         <td>{i+1+".\t"}</td>
                                                         <td>{c.name}</td>
                                                         <td>{c.city}</td>
@@ -148,22 +148,24 @@ class Centers extends React.Component{
                                                 <h6>Call them for need if exam failed</h6>
                                                 <hr/>
                                                 <Table>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-                                                        <td>Center Incharge Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-                                                        <td>Deploy CI-1 Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-                                                        <td>Deploy CI-2 Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-                                                        <td>Deploy IAF Name<br/>+91 903723222</td>
-                                                    </tr>
+													<tbody>
+														<tr>
+															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
+															<td>Center Incharge Name<br/>+91 903723222</td>
+														</tr>
+														<tr>
+															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
+															<td>Deploy CI-1 Name<br/>+91 903723222</td>
+														</tr>
+														<tr>
+															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
+															<td>Deploy CI-2 Name<br/>+91 903723222</td>
+														</tr>
+														<tr>
+															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
+															<td>Deploy IAF Name<br/>+91 903723222</td>
+														</tr>
+													</tbody>
                                                 </Table>
                                                 
                                         </Container>
