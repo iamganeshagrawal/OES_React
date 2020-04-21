@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Button} from 'react-bootstrap'
 import './UI6.css'
 import { decryptExamReq } from '../config/httpRoutes';
-import { alertError, alertSuccess, alertWarn } from '../config/toaster';
+import { alertError, alertSuccess, alertWarn, alertInfo } from '../config/toaster';
 import { decryptExam } from '../actions/examActions';
 import { connect } from 'react-redux';
 
@@ -12,6 +12,9 @@ class DecryptQP extends Component {
 
 		if(!this.props.session) {
 			this.props.history.push("/login");
+		} else if (!this.props.regDataDecrypted) {
+			alertInfo("Please Decrypt Registration Data First");
+			this.props.history.push("/decryptReg");
 		}
 	
 		this.state = {
@@ -128,7 +131,8 @@ class DecryptQP extends Component {
 }
 const mapStateToProps = (state) => ({
 	qpDecrypted: state.exam.qpDecrypted,
-	session: state.session.session
+	session: state.session.session,
+	regDataDecrypted: state.exam.regDataDecrypted
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -38,9 +38,9 @@ class RouterComp extends Component {
 					<Switch>
 						<Redirect exact from="/" to="/login" />
 						
-						<Route exact path="/login" render={(props) => <Login {...props} connect={this.connectSocket} />} />
+						<Route exact path="/login" component={Login} />
 						<Route exact path="/instructions" component={Instructions} />
-						<Route exact path="/exam" render={(props) => <Exam {...props} disconnect={this.disconnectSocket} />} />
+						<Route exact path="/exam" component={Exam} />
 						<Route exact path="/examSubmitted" component={ExamSubmitted} />
 
 						<Redirect from="*" to="/login" />

@@ -108,8 +108,8 @@ class CenterListUI extends React.Component{
                                     <thead>
                                         <tr>
                                             <th className="tableHeading">Sno</th>
-                                            <th className="tableHeading">Centers</th>
-                                            <th className="tableHeading">Status</th>
+                                            <th className="tableHeading">Center Name</th>
+                                            <th className="tableHeading">City</th>
                                             <th className="tableHeading">Center Code</th>
                                         </tr>
                                     </thead>
@@ -118,10 +118,10 @@ class CenterListUI extends React.Component{
                                             mockData.map((c,i) => {
                                                 return (
                                                     <tr className="text-muted" key={i}>
-                                                        <td>{c.Sno}</td>
-                                                        <td>{c.Centers}</td>
-                                                        <td style={(c.Status==='Problem')?({color:'red'}):(c.Status==='Completed'?{color:'green'}:{color:''})}>{c.Status}</td>
-                                                        <td>{c.CenterCode}</td>
+                                                        <td>{i+1+".\t"}</td>
+                                                        <td>{c.name}</td>
+                                                        <td /**style={(c.Status==='Problem')?({color:'red'}):(c.Status==='Completed'?{color:'green'}:{color:''})}*/>{c.city}</td>
+                                                        <td>{c.code}</td>
                                                     </tr>
                                                 )
                                             })

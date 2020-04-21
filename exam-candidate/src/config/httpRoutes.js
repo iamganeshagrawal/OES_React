@@ -10,12 +10,16 @@ export const startExamReq = () => {
 	return axios.get(baseUrl+'startExam');
 };
 
+export const updTmReq = () => {
+	return axios.get(baseUrl+'updTm');
+};
+
 export const answerQuestionReq = (data) => {
 	return axios.post(baseUrl+'answer', data);
 };
 
 export const clearAnswerReq = (data) => {
-	return axios.delete(baseUrl+'clearAnswer', data);
+	return axios.delete(baseUrl+'clearAnswer', {data});
 };
 
 export const submitExamReq = () => {

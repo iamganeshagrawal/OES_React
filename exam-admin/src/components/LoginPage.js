@@ -2,17 +2,18 @@ import React, { useReducer } from 'react';
 import { connect } from 'react-redux'
 import './css/LoginPage.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import {showLoader, hideLoader} from './FullPageLoader';
+import { showLoader, hideLoader } from './FullPageLoader';
 
 import { loginReq } from '../config/httpRoutes';
 import { login } from '../actions/sessionActions';
 import { alertSuccess, alertError } from '../config/toaster';
+import { saveToken } from '../config/localStorage';
 
 class LoginPage extends React.Component{
     constructor(props) {
         super(props);
 		
-		if(this.state.session) {
+		if(this.props.session) {
 			this.props.history.push("/centers");
 		}
 		
@@ -35,14 +36,18 @@ class LoginPage extends React.Component{
         this.setState({[e.target.name] : e.target.value});
     }
     handleSignIn = (e) => {
-        this.passwordInputRef.type = 'password'
-		this.props.showLoader()
+		e.preventDefault();
+        this.passwordInputRef.type = 'password';
+		this.props.showLoader();
 		// Perform API Call Here
+
+		let { username: user, password: passwd } = this.state;
 
 		loginReq({user, passwd}).then( (res) => {
 			alertSuccess(res.data.message || "Login Successful");
 			// this.props.history.push("/centers");
 			this.props.login({session: res.headers['auth-admin']});
+			saveToken(res.headers['auth-admin']);
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred")
@@ -50,9 +55,8 @@ class LoginPage extends React.Component{
 				alertError("Server has Timed Out");
 			}
 		}).finally( () => {
-			this.props.hideLoader()
+			this.props.hideLoader();
 		});
-		// {user, passwd}
 		
 		// dummy to demo
 		// setTimeout(() => this.props.hideLoader(), 5000)
@@ -73,7 +77,7 @@ class LoginPage extends React.Component{
 						<p className="text-muted">Admin Login</p>
 						<h2 style={{fontFamily:"sans-serif", marginBottom:'2px'}}>Welcome!</h2>
 						<p className="text-muted">Enter your credentials for Login!</p>
-						<Form>
+						<Form onSubmit={this.handleSignIn}>
 							<Form.Label className="text-muted" style={{fontSize:'0.8rem', marginBottom:'0.1rem'}}>Username</Form.Label>
 							<Form.Control size="sm" type="text" name="username" placeholder="Enter username" onChange={this.handleInputChange} ref={input => this.usernameInputRef=input} style={{border:'none', borderBottom:'1px solid black', outline: 'none', boxShadow: 'none', borderRadius: '0px', marginBottom: '0.4rem'}} />
 							<Form.Label className="text-muted" style={{fontSize:'0.8rem',marginBottom:'0.1rem'}}>Password</Form.Label>
@@ -90,7 +94,7 @@ class LoginPage extends React.Component{
 									<a href="#forgotPassword" alt="Forgot Password?" style={{float:'right', fontSize: '0.8rem',color:'#2196F3'}}>Forgot Password?</a>
 								</Col>
 							</Row>
-							<Button variant="primary" type="button" size="sm" style={{float:'right', borderRadius:'1rem', padding:'.25rem 1.5rem', backgroundColor:'#2196F3', borderColor:'#2196F3'}} ref={ref => this.signInButtonRef=ref} onClick={this.handleSignIn}>Sign in</Button>
+							<Button variant="primary" type="submit" size="sm" style={{float:'right', borderRadius:'1rem', padding:'.25rem 1.5rem', backgroundColor:'#2196F3', borderColor:'#2196F3'}} ref={ref => this.signInButtonRef=ref}>Sign in</Button>
 						</Form>
 					</Container>
 				</Col>

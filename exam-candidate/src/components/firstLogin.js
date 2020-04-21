@@ -52,15 +52,8 @@ class FirstLogin extends React.Component{
 			email
 		}).then((res) => {
 			let { candidate, exam, instructions, timeLeft=false, message } = res.data;
-			
 			// if(this.props.connect(res.headers.auth)) {
 				saveToken(res.headers.auth);
-				this.props.login({
-					...candidate,
-					hallTicket,
-					email,
-					session: res.headers.auth
-				});
 				
 				this.props.saveExam({
 					...exam,
@@ -68,6 +61,12 @@ class FirstLogin extends React.Component{
 					instructions
 				});
 				
+				this.props.login({
+					...candidate,
+					hallTicket,
+					email,
+					session: res.headers.auth
+				});
 				alertSuccess(message || "Login Successful");
 			// } else {
 			// 	alertError("Could not Maintain Connection with Server. Please Try Again.");
@@ -81,8 +80,8 @@ class FirstLogin extends React.Component{
         });
 	}
 
-	componentDidUpdate() {
-		if(this.props.session) {
+	componentDidUpdate(prevProps) {
+		if((this.props.session && !prevProps.session)) {
 			this.props.history.push("/instructions");
 		}
 	}

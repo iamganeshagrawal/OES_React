@@ -1,9 +1,9 @@
-import axios from 'axios';
-// import axios from './interceptor';
-baseUrl = "http://localhost:8081/";
+// import axios from 'axios';
+import axios from './interceptor';
+const baseUrl = "http://localhost:8081/";
 
 export const loginReq = (data) => {
-	return axios.put(baseUrl+'handleLogin', data);
+	return axios.put(baseUrl+'login', data);
 };
 
 export const encryptRegistrationReq = (formData) => {

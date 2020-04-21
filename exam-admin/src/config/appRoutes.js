@@ -4,7 +4,7 @@ import Login from '../components/LoginPage';
 import EncReg from '../components/EncryptRegPage';
 import EncQP from '../components/EncryptQpPage';
 import Centers from '../components/centers';
-import CenterDash from '../components/centerDashboard';
+import CenterDash from '../components/centerDash';
 
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
