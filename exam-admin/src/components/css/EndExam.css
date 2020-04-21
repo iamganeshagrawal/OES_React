@@ -1,0 +1,9 @@
+.EElabel{
+    font-weight: bold;
+    position: absolute;
+    margin-top: -14px;
+    margin-right: -70px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
