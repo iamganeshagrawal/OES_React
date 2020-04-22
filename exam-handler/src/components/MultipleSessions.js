@@ -1,6 +1,9 @@
 import React from 'react'
 import { Container, Row, Col, Media, Table, Button } from 'react-bootstrap';
-import './BiometricDashboard.css'
+import './BiometricDashboard.css';
+import { connect } from 'react-redux';
+import { getDuplicateSessionsReq, mapSessionsReq } from '../config/httpRoutes';
+import { alertSuccess, alertError, alertWarn } from '../config/toaster';
 
 //TODO: If serach box have live serach function then we have to impliment debounce functionality
 // TODO: A selection of row in table method and highlight the selected rows (can be used outline for that)
@@ -10,9 +13,20 @@ import './BiometricDashboard.css'
 class MultipleSessions extends React.Component{
     constructor(props) {
 		super(props);
+
+		if(!this.props.examStarted) {
+			alertWarn("You must Start Exam first");
+			this.props.history.push("/startExam");
+		} else if(!this.props.session) {
+			this.props.history.push("/login");
+		}
     
         this.state = {
-             searchText: ''
+			 searchText: '',
+			 allSessions: null,
+			 sessions: null,
+			 oldSessionId: '',
+			 newSessionId: ''
         }
 
         this.customStyle = {
@@ -26,21 +40,60 @@ class MultipleSessions extends React.Component{
                 color: '#ffffff'
             }
         }
-    }
+	}
+	
+	componentDidMount() {
+		getDuplicateSessionsReq()
+		.then( (res) => {
+			this.setState({sessions: res.data, allSessions: res.data});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+	mapSessions = () => {
+		let { oldSessionId, newSessionId } = this.state;
+
+		if(!oldSessionId) {
+			return alertWarn("Select Old Candidate Session");
+		}
+
+		if(!newSessionId) {
+			return alertWarn("Select New Candidate Session");
+		}
+
+		mapSessionsReq({ oldSessionId, newSessionId })
+		.then( (res) => {
+			alertSuccess(res.data.message || "Sessions Mapped Successfully");
+			this.setState({oldSessionId: '', newSessionId: ''});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
     searchInputHandler = (e) => {
         this.setState({
             searchText: e.target.value
-        })
+        });
     }
-    searchClickHandler = (e) => {
-        console.log(this.state.searchText)
+    searchClickHandler = () => {
+        this.setState({
+			sessions: allSessions.filter( (session) =>
+				session.candidateHallTicket.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
+			)
+		});
     }
-    clearSelectionHandler = (e) => {
-        console.log('Clear Selection Clicked');
-    }
-    copySessionHandler = (e) => {
-        console.log('Copy Session Clicked');
-    }
+    clearSelectionHandler = () => {
+	   this.setState({oldSessionId: '', newSessionId: ''});
+	}
     
     render(){
         // temp data
@@ -76,7 +129,7 @@ class MultipleSessions extends React.Component{
                     <Row>
                         <Col md={2} style={{height: '100vh', position: "relative", backgroundColor:'#fff'}}>
                             <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
-                                <Media className="mb-4" style={{padding:'0'}} >
+                                <Media onClick={() => {this.props.history.push("/dash")}} className="mb-4" style={{padding:'0'}} >
                                     <img className="align-self-center mr-2" src="./assets/images/Asset 15@4x.png" style={{width:'30px'}}  alt="Dashboard" />
                                     <Media.Body className="" >
                                         <h5 style={{marginBottom:'0'}}>Dashboard</h5>
@@ -107,7 +160,7 @@ class MultipleSessions extends React.Component{
                                         </div>
                                     </Col>
                                     <Col md={3}>
-                                        <Button onClick={this.copySessionHandler} variant="outline-dark" style={{margin: '0 auto'}} block>Copy Session</Button>
+                                        <Button onClick={this.mapSessions} variant="outline-dark" style={{margin: '0 auto'}} block>Copy Session</Button>
                                     </Col>
                                     <Col md={3}>
                                         <Button onCLick={this.clearSelectionHandler} variant="outline-dark" style={{margin: '0 auto'}} block>Clear Selection</Button>
@@ -121,11 +174,13 @@ class MultipleSessions extends React.Component{
                                 <Table hover style={{position:'relative'}}>
                                     <thead>
                                         <tr>
-                                            <th className="stickyTableHeading">Question Number</th>
-                                            <th className="stickyTableHeading">Session ID</th>
-                                            <th className="stickyTableHeading">Section Name</th>
-                                            <th className="stickyTableHeading">Response</th>
-                                            <th className="stickyTableHeading">Last Activity Time</th>
+										<th className="stickyTableHeading">Hall-Ticket Number</th>
+                                        <th className="stickyTableHeading">Candidate Name</th>
+                                        <th className="stickyTableHeading">Last Activity</th>
+                                        <th className="stickyTableHeading">Last Activity Time</th>
+										<th className="stickyTableHeading">Time Left</th>
+										<th className="stickyTableHeading">Re-Login Count</th>
+										<th className="stickyTableHeading">Last Login Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,17 +192,20 @@ class MultipleSessions extends React.Component{
                                             <td>Mar 27 2020, 12:55:12 PM</td>
                                         </tr> */}
                                         {
-                                            mockData.map((cand,i) => {
-                                                return (
-                                                    <tr key={i} style={this.customStyle[cand.type]}>
-                                                        <td>{cand.questionNumber}</td>
-                                                        <td>{cand.sessionId}</td>
-                                                        <td>{cand.sectionName}</td>
-                                                        <td>{cand.response}</td>
-                                                        <td>{cand.lastActivityTime}</td>
-                                                    </tr>
-                                                )
-                                            })
+											Array.isArray(this.state.sessions) && this.state.sessions.length > 0 &&
+												this.state.sessions.map((cand,i) => {
+													return (
+														<tr key={i} className={_classname}>
+															<td>{cand.hallTicket}</td>
+															<td>{cand.candidate}</td>
+															<td>{cand.lastActivity}</td>
+															<td>{cand.lastActivityTime}</td>
+															<td>{cand.timeLeft}</td>
+															<td>{cand.reLoginCount}</td>
+															<td>{cand.lastLoginTime}</td>
+														</tr>
+													)
+												})
                                         }
                                     </tbody>
                                 </Table>
@@ -160,4 +218,9 @@ class MultipleSessions extends React.Component{
     }
 }
 
-export default MultipleSessions
+const mapStateToProps = (state) => ({
+	examStarted: state.session.examStarted,
+	session: state.session.session
+});
+
+export default connect(mapStateToProps)(MultipleSessions)

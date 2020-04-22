@@ -4,8 +4,7 @@ import { DECRYPT_REGISTRATION, DECRYPT_EXAM, DISCARD_EXAM,
 const initialState = {
 	examCode: '',
 	qpDecrypted: false,
-	regDataDecrypted: false,
-	examStarted: false
+	regDataDecrypted: false
 };
 
 const examReducer = (state, action) => {

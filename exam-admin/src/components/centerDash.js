@@ -73,12 +73,12 @@ class CenterDash extends React.Component {
                                 <thead>
                                     <tr>
                                         <th className="stickyTableHeading">Hall-Ticket Number</th>
-                                        <th className="stickyTableHeading">Session ID</th>
-                                        <th className="stickyTableHeading">Section Name</th>
-                                        <th className="stickyTableHeading">Response</th>
-                                        <th className="stickyTableHeading">IP Address(MAC Address)</th>
-                                        <th className="stickyTableHeading">Marked Detected</th>
+                                        <th className="stickyTableHeading">Candidate Name</th>
+                                        <th className="stickyTableHeading">Last Activity</th>
                                         <th className="stickyTableHeading">Last Activity Time</th>
+										<th className="stickyTableHeading">Time Left</th>
+										<th className="stickyTableHeading">Re-Login Count</th>
+										<th className="stickyTableHeading">Last Login Time</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,12 +89,12 @@ class CenterDash extends React.Component {
 												return (
 													<tr key={i} className={_classname}>
 														<td>{cand.hallTicket}</td>
-														<td>{cand.sessionId}</td>
-														<td>{cand.sectionName}</td>
-														<td>{cand.response}</td>
-														<td>{cand.ipAddress}</td>
-														<td>{cand.markedDetected}</td>
+														<td>{cand.candidate}</td>
+														<td>{cand.lastActivity}</td>
 														<td>{cand.lastActivityTime}</td>
+														<td>{cand.timeLeft}</td>
+														<td>{cand.reLoginCount}</td>
+														<td>{cand.lastLoginTime}</td>
 													</tr>
 												)
 											})

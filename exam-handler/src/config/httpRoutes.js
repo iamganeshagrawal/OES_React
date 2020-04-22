@@ -49,54 +49,11 @@ export const getExamsWithoutResponseSheetReq = () => {
 export const generateResponseSheetReq = (data) => {
 	return axios.get(baseUrl+'genResponse', data, {responseType: "blob"});
 };
-/**			Response Sheet Component		 */
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import { alertError, alertSuccess } from '../config/toaster';
-// import { getExamsWithoutResponseSheetReq, generateResponseSheetReq } from '../config/httpRoutes';
 
-// class GenResponseSheet extends React.Component {
-// 	constructor(props) {
-// 		super(props);
+export const getDuplicateSessionsReq = () => {
+	return axios.get(baseUrl+'getDupeSessions');
+};
 
-// 		this.state = {
-// 			exams: []
-// 		}
-// 	}
-
-// 	componentDidMount() {
-// 		getExamsWithoutResponseSheetReq()
-// 		.then( (res) => {
-// 			this.setState({exams: res.data});
-// 		}).catch( (err) => {
-// 			if(err.response) {
-// 				alertError(err.response.data.message || "Unexpected Error has Occurred");
-// 			} else {
-// 				alertError("Server has Timed Out");
-// 			}
-// 		})
-// 	}
-
-// 	generateResponseSheet = (examCode, examId) => {
-// 		generateResponseSheetReq({examCode, examId})
-// 		.then( (res) => {
-// 			const url = window.URL.createObjectURL(new Blob([res.data]));
-// 			const link = document.createElement('a');
-// 			link.href = url;
-// 			link.setAttribute('download', examCode+'_'+new Date().toDateString()+'.pdf'); // or any other extension
-// 			document.body.appendChild(link);
-// 			link.click();
-// 			link.parentElement.removeChild(link);
-// 		}).catch( (err) => {
-// 			if(err.response) {
-// 				alertError(err.response.data.message || "Unexpected Error has Occurred");
-// 			} else {
-// 				alertError("Server has Timed Out");
-// 			}
-// 		});
-// 	}
-// }
-
-// export default connect(mapStateToProps)(GenResponseSheet);
-
-/**			~Response Sheet Component		 */
+export const mapSessionsReq = (data) => {
+	return axios.post(baseUrl+'mapSession', data);
+};

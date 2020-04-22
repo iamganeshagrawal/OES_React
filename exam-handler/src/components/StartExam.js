@@ -68,6 +68,7 @@ class StartExam extends React.Component{
 	}
     
     render(){
+		let { examStarted, examEnded } = this.props;
         return (
 
             <div>
@@ -100,7 +101,7 @@ class StartExam extends React.Component{
                                 </Button>
                                 <Button variant="outline-dark" style={{width:'250px'}}>
                                     <b>Exam</b>
-                                    {this.state.isExamActive ? this.examStateDisplay['active'] : this.examStateDisplay['unactive'] }
+                                    {examStarted && !examEnded ? this.examStateDisplay['active'] : this.examStateDisplay['unactive'] }
                                 </Button>
                             </Container>
                         </Col>
@@ -115,7 +116,7 @@ const mapStateToProps = (state) => ({
 	session: state.session.session,
 	qpDecrypted: state.exam.qpDecrypted,
 	regDataDecrypted: state.exam.regDataDecrypted,
-	examStarted: state.exam.examStarted,
+	examStarted: state.session.examStarted,
 	examCode: state.exam.examCode
 });
 
