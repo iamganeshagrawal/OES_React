@@ -2,8 +2,8 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { alertError, alertSuccess, alertInfo } from '../config/toaster';
-import { startExamReq, endExamReq } from '../config/httpRoutes';
-import { startExam, endExam } from '../actions/sessionsActions';
+import { startExamReq } from '../config/httpRoutes';
+import { startExam } from '../actions/sessionsActions';
 import { saveToken } from '../config/localStorage';
 
 // ALL UI CHANGES FIXED || 26 March 2020 || Ganesh Agrawal
@@ -52,20 +52,7 @@ class StartExam extends React.Component{
 		});
 	}
 
-	endExam = () => {
-		endExamReq().then( (res) => {
-			alertSuccess(res.data.message || "Exam Ended Successfully");
-			this.setState({isExamActive: false}, () => {
-				this.props.endExam({examEnded: true});
-			});
-		}).catch( (err) => {
-			if(err.response) {
-				alertError(err.response.data.message || "Unexpected Error has Occurred");
-			} else {
-				alertError("Server has Timed Out");
-			}
-		});
-	}
+	
     
     render(){
 		let { examStarted, examEnded } = this.props;

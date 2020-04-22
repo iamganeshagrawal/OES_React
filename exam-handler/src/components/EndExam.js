@@ -1,10 +1,10 @@
 import React from 'react';
 import './EndExam.css';
-import { Container, Row, Col } from 'react-bootstrap';
-import { InputGroupAddon, InputGroup, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { alertError } from '../config/toaster';
-import { getExamsWithoutResponseSheetReq, generateResponseSheetReq } from '../config/httpRoutes';
+import { alertError, alertSuccess } from '../config/toaster';
+import { endExam } from '../actions/sessionsActions';
+import { getExamsWithoutResponseSheetReq, generateResponseSheetReq, endExamReq } from '../config/httpRoutes';
 
 class EndExam extends React.Component{
     constructor(props){
@@ -18,9 +18,45 @@ class EndExam extends React.Component{
 		}
 
 		this.state = {
-			exams: []
+			exams: [],
+			examCode: '',
+			examId: '',
+			currentExamStatus: this.props.examStarted && !this.props.examEnded
 		};
 	}
+
+    responseSheetSelectorHandler = (event) => {
+		let { value } = event.target;
+		if(!value) {return null;}
+		let str = value.split("~$");
+        this.setState({
+			examId: str[0],
+            examCode: str[1]
+        });
+    }
+	
+    handleEndExam = () => {
+		endExamReq().then( (res) => {
+			alertSuccess(res.data.message || "Exam Ended Successfully");
+			this.setState({isExamActive: false}, () => {
+				this.props.endExam({examEnded: true});
+			});
+		}).catch( (err) => {
+			if(err.response) {
+				alertError(err.response.data.message || "Unexpected Error has Occurred");
+			} else {
+				alertError("Server has Timed Out");
+			}
+		});
+	}
+
+    getCurrLabel = () => {
+        if(this.state.currentExamStatus){
+            return <span className="ongoing">Active</span>
+        }else{
+            return <span className="ended">Ended</span>
+        }
+    }
 	
 	componentDidMount() {
 		getExamsWithoutResponseSheetReq()
@@ -35,7 +71,8 @@ class EndExam extends React.Component{
 		})
 	}
 
-	generateResponseSheet = (examCode, examId) => {
+	handleGenerate = () => {
+		let { examCode, examId } = this.state;
 		generateResponseSheetReq({examCode, examId})
 		.then( (res) => {
 			const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -55,36 +92,51 @@ class EndExam extends React.Component{
 	}
 
     render(){
+        const {exams : resSheets, currentExamStatus: currStatus, examCode: currResSheet} = this.state;
         return (
-            <Container type="fluid">
-                <Row>
-                    <Col style={{left:"30%"}}>
-                    <img src="../u5.png" alt="image" width="400px" height="400px" />
-                    </Col>
-                    <Col style={{right:"-40%"}}>
-                    <div>
-                    <button type="button" className="btn btn-outline-dark"><b>Exam</b>&emsp;&emsp;<span class="px-2" style={{color:"white",backgroundColor:"#4dff4d",borderRadius:"4px"}}>Active</span></button>
-                    </div>
-                    <br />
-                    <br />
-                    <Button variant="outline-secondary light" style={{width:"50%",backgroundColor:"white"}} ><b style={{color:"red"}}>End Exam</b>
-                    </Button>
-                    <br />
-                    <br />
-                    <InputGroup size="lg">
-                    <Input placeholder="Exam Code" style={{fontSize:"15px",width:"300px",height:"50px"}} /><span className="EElabel">Response Sheets</span>
-                    <InputGroupAddon addonType="append" ><Button value="Generate" style={{fontSize:"15px",color:"white",backgroundColor:"black",fontWeight:"bold"}}>Generate</Button></InputGroupAddon>
-                    </InputGroup>
-                    </Col>
-                </Row>
-            </Container>
+            <div>
+                <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
+                    <Row>
+                        <Col md={{span:4, offset:1}} style={{height: '100vh', position: "relative"}}>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <img src="./assets/svg/1.svg" alt="CheckList" style={{width:'100%'}} />
+                            </Container>
+                        </Col>
+                        <Col md={{span:4,offset:2}} style={{height: '100vh', position: "relative"}}>
+                            <div className="res-exam-status">
+                                Exam {this.getCurrLabel()}
+                            </div>
+                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <Button variant="outline-danger" className="end-exam-button" disabled={!currStatus} onClick={this.handleEndExam}>End Exam</Button>
+                                    <div className="fieldBox123">
+                                        <span className="fieldTitle123">Response Sheet</span>
+                                        <select className="fieldInput-select" defaultValue={currResSheet} onChange={this.responseSheetSelectorHandler}>
+                                            <option value='' disabled>Exam Code</option>
+                                            {
+                                                resSheets.map((sheet,i) => (
+                                                    <option key={i} value={sheet.id + "~$" + sheet.code}>{sheet.code}</option>
+                                                ))
+                                            }
+                                        </select>
+                                        <button className="fieldButton123" onClick={this.handleGenerate}>Generate</button>
+                                    </div>
+                            </Container>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
 	examStarted: state.session.examStarted,
-	session: state.session.session
+	session: state.session.session,
+	examEnded: state.session.examEnded
 });
 
-export default connect(mapStateToProps)(EndExam);
+const mapDispatchToProps = (dispatch) => ({
+	endExam: () => {dispatch(endExam());}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EndExam);

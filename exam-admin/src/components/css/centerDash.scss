@@ -1,0 +1,20 @@
+.xyz-link {
+    h6 {
+        font-size: 1rem;
+        font-weight: 200;
+    }
+}
+.customTab-xyz {
+    border: 1px solid #212529;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+    padding: 10px 40px 2px;
+    font-weight: 600;
+    color: #212529;
+    transition: all 200ms ease;
+    
+    &:hover {
+        background-color: #212529;
+        color: #ffffff;
+    }
+}

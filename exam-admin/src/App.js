@@ -6,12 +6,14 @@ import Loader from './components/FullPageLoader';
 import Router from './config/appRoutes';
 import { ToastContainer } from 'react-toastify';
 
+// import Page from './components/EndExam';
 function App() {
   return (
     <Provider store={store}>
       <Loader isLoading={true} />
 	  <ToastContainer />
       <Router />
+      {/* <Page /> */}
     </Provider>
   );
 }

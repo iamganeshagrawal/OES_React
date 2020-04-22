@@ -10,6 +10,7 @@ import QPAlreadyDecrypted from '../components/QPAlreadyDecrypted';
 import BioDash from '../components/BiometricDashboard';
 import Dash from '../components/Dashboard';
 import StartExam from '../components/StartExam';
+import EndExam from '../components/EndExam';
 import Home from '../components/Home';
 import MultipleSessions from '../components/MultipleSessions';
 
@@ -35,6 +36,7 @@ class appRouter extends Component {
 					<Route exact path="/bioDash" component={BioDash} />
 					<Route exact path="/dash" component={Dash} />
 					<Route exact path="/startExam" component={StartExam} />
+					<Route exact path="/endExam" component={EndExam} />
 					<Route exact path="/dupeSessions" component={MultipleSessions} />
 
 				   	<Redirect from="*" to="/login" />
