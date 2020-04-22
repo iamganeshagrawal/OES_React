@@ -4,6 +4,7 @@ import { centerDashboardReq } from '../config/httpRoutes';
 import { alertError } from '../config/toaster';
 import { showLoader, hideLoader } from './FullPageLoader';
 import { Container, Row, Col, Table } from 'react-bootstrap';
+import './css/centerDash.scss';
 
 class CenterDash extends React.Component {
 	constructor(props) {
@@ -18,7 +19,7 @@ class CenterDash extends React.Component {
 		this.state = {
 			sessions: [],
 			totalCount: 0,
-			presentCount: 4
+			presentCount: 0
 		};
 	}
 
@@ -35,11 +36,11 @@ class CenterDash extends React.Component {
 			}
 		}).finally( () => {
 			this.props.hideLoader();
-		});
+        });
 	}
 
 	render() {
-		let progressCircleValue = parseInt((this.state.presentCount / this.state.totalCount) *100); // 88
+		let progressCircleValue = this.state.totalCount === 0 ? 0 : parseInt((this.state.presentCount / this.state.totalCount) *100);
         return (
             <div style={{height: '100vh',overflow: 'hidden'}}>
                 <Container fluid={true} >
@@ -54,7 +55,7 @@ class CenterDash extends React.Component {
                             </Container>
                         </Col>
                         <Col md={3} style={{position: "relative", height: '100%'}}>
-                            <Container fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                            <Container className="xyz-link" fluid={true} style={{position: "absolute", top: '50%', transform: 'translateY(-50%)', color: '#007bff'}}>
                                 <h6>Registration Data Hall Ticket Counts</h6>
                                 <h6>Login Hall Tickets</h6>
                                 <h6>Login Sessions</h6>
@@ -62,14 +63,14 @@ class CenterDash extends React.Component {
                         </Col>
                         <Col md={7} style={{position: "relative", height: '100%'}}>
                             <Container fluid={true} style={{position: "absolute", bottom: '0', paddingBottom:'20px'}}>
-                                <span className="customTab">Dashboard</span>
+                                <span className="customTab-xyz">Dashboard</span>
                             </Container>
                         </Col>
                     </Row>
                     <Row style={{height:'80vh'}}>
                         <Col md={{span:10, offset:1}}>
                             <div id="cond-table" style={{fontSize: '0.75rem', overflowY: 'auto',height:'78vh', marginBottom:'2vh'}}>
-                            <Table striped hover>
+                            <Table hover>
                                 <thead>
                                     <tr>
                                         <th className="stickyTableHeading">Hall-Ticket Number</th>
@@ -85,9 +86,11 @@ class CenterDash extends React.Component {
                                     {
 										Array.isArray(this.state.sessions) && this.state.sessions.length > 0 &&
 											this.state.sessions.map((cand,i) => {
-												const _classname = cand.state === 'active' ? 'font-color-green' : cand.state === 'inactive' ? 'font-color-red' : ''
+												const _cStyle = {
+                                                    color: cand.state === 'active' ? '#4BB543' : cand.state === 'inactive' ? '#ff0000' : '#212529'
+                                                }
 												return (
-													<tr key={i} className={_classname}>
+													<tr key={i} style={_cStyle}>
 														<td>{cand.hallTicket}</td>
 														<td>{cand.sessionId}</td>
 														<td>{cand.sectionName}</td>
