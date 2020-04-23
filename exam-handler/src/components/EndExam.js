@@ -2,7 +2,7 @@ import React from 'react';
 import './EndExam.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { alertError, alertSuccess } from '../config/toaster';
+import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 import { endExam } from '../actions/sessionsActions';
 import { getExamsWithoutResponseSheetReq, generateResponseSheetReq, endExamReq } from '../config/httpRoutes';
 

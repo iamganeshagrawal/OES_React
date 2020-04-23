@@ -69,7 +69,7 @@ class MultipleSessions extends React.Component{
 		mapSessionsReq({ oldSessionId, newSessionId })
 		.then( (res) => {
 			alertSuccess(res.data.message || "Sessions Mapped Successfully");
-			this.setState({oldSessionId: '', newSessionId: ''});
+			this.clearSelectionHandler();
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
@@ -85,6 +85,7 @@ class MultipleSessions extends React.Component{
         });
     }
     searchClickHandler = () => {
+		let { allSessions } = this.state;
         this.setState({
 			sessions: allSessions.filter( (session) =>
 				session.candidateHallTicket.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
@@ -93,6 +94,24 @@ class MultipleSessions extends React.Component{
     }
     clearSelectionHandler = () => {
 	   this.setState({oldSessionId: '', newSessionId: ''});
+	}
+
+	setOld = (id) => {
+		let { newSessionId } = this.state;
+		if(newSessionId === id) {
+			this.setState({oldSessionId: id, newSessionId: ''});
+		} else {
+			this.setState({oldSessionId: id});
+		}
+	}
+
+	setNew = (id) => {
+		let { oldSessionId } = this.state;
+		if(oldSessionId === id) {
+			this.setState({oldSessionId: '', newSessionId: id});
+		} else {
+			this.setState({newSessionId: id});
+		}
 	}
     
     render(){
@@ -122,7 +141,7 @@ class MultipleSessions extends React.Component{
                 type: 'normal'
             }
         ]
-        
+        let { oldSessionId: oldSess, newSessionId: newSess } = this.state;
         return(
             <div>
                 <Container fluid={true} style={{height: '100vh',overflow: 'hidden'}}>
@@ -179,8 +198,8 @@ class MultipleSessions extends React.Component{
                                         <th className="stickyTableHeading">Last Activity</th>
                                         <th className="stickyTableHeading">Last Activity Time</th>
 										<th className="stickyTableHeading">Time Left</th>
-										<th className="stickyTableHeading">Re-Login Count</th>
-										<th className="stickyTableHeading">Last Login Time</th>
+										<th className="stickyTableHeading"></th>
+										<th className="stickyTableHeading"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -195,14 +214,14 @@ class MultipleSessions extends React.Component{
 											Array.isArray(this.state.sessions) && this.state.sessions.length > 0 &&
 												this.state.sessions.map((cand,i) => {
 													return (
-														<tr key={i} className={_classname}>
+														<tr key={i} style={{backgroundColor: cand.id === newSess ? "#08F854" : cand.id === oldSess ? 'orange' : 'white', color: cand.id === newSess || cand.id === oldSess ? 'white' : 'black'}}>
 															<td>{cand.hallTicket}</td>
 															<td>{cand.candidate}</td>
 															<td>{cand.lastActivity}</td>
 															<td>{cand.lastActivityTime}</td>
 															<td>{cand.timeLeft}</td>
-															<td>{cand.reLoginCount}</td>
-															<td>{cand.lastLoginTime}</td>
+															<td onClick={() => {this.setOld(cand.id)}}>Old</td>
+															<td onClick={() => {this.setNew(cand.id)}}>New</td>
 														</tr>
 													)
 												})

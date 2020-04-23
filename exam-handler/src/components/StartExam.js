@@ -108,8 +108,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	startExam: (exmCode) => {dispatch(startExam(exmCode));},
-	endExam: () => {dispatch(endExam());}
+	startExam: (exmCode) => {dispatch(startExam(exmCode));}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartExam);
