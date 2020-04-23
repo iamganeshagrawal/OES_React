@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Row, Col, Media, Table ,Card} from 'react-bootstrap';
-import 'react-bootstrap';
 import './CenterList.css'
 
 
@@ -64,13 +63,13 @@ class CenterListUI extends React.Component{
         
         return(
             <div>
-                <Container fluid={true} style={{height: '100vh',width:'100vw'}}>
+                <Container fluid={true} style={{height: '100vh',width:'100vw',backgroundColor:'#fff',backgroundImage:'url("./assets/Images/Asset 3-100.jpg")',backgroundRepeat:'no-repeat',backgroundPositionX:'right',backgroundPositionY:'400px',backgroundSize:'45%'}}>
                     <Row>
                         <Col md={2} style={{height: '100vh', position: "relative", backgroundColor:'#fff'}}>
                         <Container fluid={true} className="" style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
                                 <div className="mb-4" style={{padding:'0',margin:'15px'}}>
-                                    <img className="rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'50px'}}  alt="admin_img" />
-                                    <div className="mt-1">
+                                    <img className="rounded-circle" src="./assets/Images/6-8.png" style={{width:'70px',borderWidth:'2px',borderStyle:'solid',borderColor:'lightBlue'}}  alt="admin_img" />
+                                    <div className="mt-2">
                                         <h6 className="text-muted" style={{paddingBottom:'0'}}>Welcome, Admin</h6>
                                         <h6>Admin</h6>
                                         <hr/>
@@ -81,15 +80,14 @@ class CenterListUI extends React.Component{
                         </Container>
                         </Col>
                         
-                        <Col md={7} id="cond-table" style={{height: '100vh', position: "relative", backgroundColor:'#fff'}}>
-                            <Container style={{paddingTop:'50px'}}>
-                                <div className="" style={{color:'red',marginLeft:'30%',backgroundImage:'./assets/images/u5.png',width:'50%',height:'50%'}}>
-                                    
+                        <Col md={7} id="cond-table" style={{height: '100vh', position: "relative", backgroundColor:''}}>
+                            <Container style={{position:'relative',paddingTop:'50px'}}>
+                                <div style={{position:'absolute',color:'red',marginLeft:'20%',backgroundImage:'url("./assets/Images/Asset 4-8.png")',backgroundRepeat:'no-repeat',backgroundSize:'100%',padding:'70px 300px 30px 30px'}}>
                                     <h6>Welcome back Admin!</h6>
                                     <h2>Examination Name</h2>
                                 </div>
                             </Container>
-                            <Container fluid={true} style={{marginTop:'10vh', marginBottom:'0'}}>
+                            <Container fluid={true} style={{marginTop:'25vh', marginBottom:'0'}}>
                                 <div style={{ marginBottom:'0',left:'0'}}>
                                 <h2>Center List</h2>
                                 </div>
@@ -103,13 +101,13 @@ class CenterListUI extends React.Component{
                                     </Row>
                                 
                             </Container>
-                            <Container  fluid={true} style={{ paddingTop:'40px',fontSize: '0.75rem', paddingBottom:'20px'}}>
+                            <Container  fluid={true} style={{paddingTop:'40px',fontSize: '0.75rem', paddingBottom:'20px'}}>
                                 <Table style={{position:'relative'}}>
                                     <thead>
                                         <tr>
                                             <th className="tableHeading">Sno</th>
-                                            <th className="tableHeading">Center Name</th>
-                                            <th className="tableHeading">City</th>
+                                            <th className="tableHeading">Centers</th>
+                                            <th className="tableHeading">Status</th>
                                             <th className="tableHeading">Center Code</th>
                                         </tr>
                                     </thead>
@@ -118,10 +116,10 @@ class CenterListUI extends React.Component{
                                             mockData.map((c,i) => {
                                                 return (
                                                     <tr className="text-muted" key={i}>
-                                                        <td>{i+1+".\t"}</td>
-                                                        <td>{c.name}</td>
-                                                        <td /**style={(c.Status==='Problem')?({color:'red'}):(c.Status==='Completed'?{color:'green'}:{color:''})}*/>{c.city}</td>
-                                                        <td>{c.code}</td>
+                                                        <td>{c.Sno}</td>
+                                                        <td>{c.Centers}</td>
+                                                        <td style={(c.Status==='Problem')?({color:'red'}):(c.Status==='Completed'?{color:'green'}:{color:''})}>{c.Status}</td>
+                                                        <td>{c.CenterCode}</td>
                                                     </tr>
                                                 )
                                             })
@@ -134,30 +132,31 @@ class CenterListUI extends React.Component{
 
                             </Container>
                         </Col>
-                        <Col md={3} style={{height: '100vh', backgroundColor:'#fff',fontSize:'0.65rem',fontWeight:'bold'}}>
-                                        <Container className="" fluid={true} style={{marginTop:'50%'}}>
-                                                <h5 style={{fontWeight:'bolder'}}>Center Personal</h5>
-                                                <h6 classname="text-muted">Call them for need if exam failed</h6>
-                                                <Table >
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'28px'}} alt="img" /></td>
-                                                        <td>Center Incharge Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'28px'}} alt="img" /></td>
-                                                        <td >Deploy CI-1 Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'28px'}} alt="img" /></td>
-                                                        <td>Deploy CI-2 Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'28px'}} alt="img" /></td>
-                                                        <td>Deploy IAF Name<br/>+91 903723222</td>
-                                                    </tr>
-                                                </Table>
+                        <Col md={3} style={{height: '100vh',fontSize:'0.65rem',fontWeight:'bold'}}>
+                            <Container className="" fluid={true} style={{marginTop:'50%'}}>
+                                <h5 style={{fontWeight:'bold'}}>Center Personal</h5>                                    
+                                <h6 className="text-muted">Call them for need if exam failed</h6>
+                                <hr/>
+                                <div className="ml-3">
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Center Incharge Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body >Deploy CI-1 Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Deploy CI-2 Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media>
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Deploy IAF Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                </div>
                                                 
-                                        </Container>
+                            </Container>
                         </Col>
                     </Row>
                 </Container>
@@ -166,3 +165,5 @@ class CenterListUI extends React.Component{
     }
 }
 export default CenterListUI;
+
+
