@@ -154,22 +154,33 @@ export class Home extends Component {
 								}
 								{
 									this.state.activetTab === 'post' &&
-										<Row className="link-card">
-											<Col md={8}>
-												<img src="/assets/images/Asset 15@4x.png" alt="something" />
-												<a href="/dash">Dashboard</a>
-											</Col>
-											{/* <Col md={4}>
-												<span className="task-status done">Done</span>
-											</Col> */}
-										</Row>
+										<>
+											<Row className="link-card">
+												<Col md={8}>
+													<img src="/assets/images/Asset 15@4x.png" alt="something" />
+													<a href="/dash">Dashboard</a>
+												</Col>
+												{/* <Col md={4}>
+													<span className="task-status done">Done</span>
+												</Col> */}
+											</Row>
+											<Row className="link-card">
+												<Col md={8}>
+													<img src="/assets/images/Asset 15@4x.png" alt="something" />
+													<a href="/dupeSessions">Map Candidate Sessions</a>
+												</Col>
+												{/* <Col md={4}>
+													<span className="task-status done">Done</span>
+												</Col> */}
+											</Row>
+										</>
 								}
 								{
 									this.state.activetTab === 'end' &&
 										<Row className="link-card">
 											<Col md={8}>
 												<img src="/assets/images/Asset 15@4x.png" alt="something" />
-												<a href="#exam">Generate Response Sheet</a>
+												<a href="/endExam">Generate Response Sheet</a>
 											</Col>
 											{/* <Col md={4}>
 												<span className="task-status done">Done</span>

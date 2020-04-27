@@ -117,8 +117,8 @@ class Centers extends React.Component{
                                     <thead>
                                         <tr>
                                             <th className="tableHeading">Sno</th>
-                                            <th className="tableHeading">Centers</th>
-                                            <th className="tableHeading">Status</th>
+                                            <th className="tableHeading">Center Name</th>
+                                            <th className="tableHeading">City</th>
                                             <th className="tableHeading">Center Code</th>
                                         </tr>
                                     </thead>
