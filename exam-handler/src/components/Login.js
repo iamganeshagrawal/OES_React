@@ -41,9 +41,16 @@ class Login extends React.Component{
 		loginReq({username, password})
 		.then( (res) => {
 			let { authhand:session } = res.headers;
+			let { message, passChanged:passwordChanged } = res.data;
 			saveToken(session);
-			this.props.login({session});
-			alertSuccess(res.data.message || "Login Successful");
+
+			if (passwordChanged === 'true') {
+				passwordChanged = true;
+			} else {
+				passwordChanged = false;
+			}
+			this.props.login({session, passwordChanged});
+			alertSuccess(message || "Login Successful");
 		}).catch( (err) => {
 			if(err.response) {
 				alertError(err.response.data.message || "Unexpected Error has Occurred");
