@@ -81,39 +81,48 @@ class Centers extends React.Component{
         
         return(
             <div>
-                <Container fluid={true} style={{height: '100vh'}}>
+                <Container fluid={true} style={{height: '100vh',width:'100vw',backgroundColor:'#fff',backgroundImage:'url("./assets/Images/Asset 3-100.jpg")',backgroundRepeat:'no-repeat',backgroundPositionX:'right',backgroundPositionY:'400px',backgroundSize:'45%'}}>
                     <Row>
                         <Col md={2} style={{height: '100vh', position: "relative", backgroundColor:'#fff'}}>
-                        <Container fluid={true} className="admin-info" style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
-                                <Media className="mb-4" style={{padding:'0',margin:'15px'}}>
-                                    <img className="align-self-center rounded-circle" src="./assets/images/Asset 15@4x.png" style={{width:'50px',marginLeft:'50px'}}  alt="Dashboard" />
-                                    <Media.Body className="">
-                                        <h3 className="text-muted" style={{paddingBottom:'0',color:'grey'}}>Welcome, Admin</h3>
-                                        <h5>Admin</h5>
+                        <Container fluid={true} className="" style={{position: "absolute", top: '50%', transform: 'translateY(-50%)'}}>
+                                <div className="mb-4" style={{padding:'0',margin:'15px'}}>
+                                    <img className="rounded-circle" src="./assets/Images/6-8.png" style={{width:'70px',borderWidth:'2px',borderStyle:'solid',borderColor:'lightBlue'}}  alt="admin_img" />
+                                    <div className="mt-2">
+                                        <h6 className="text-muted" style={{paddingBottom:'0'}}>Welcome, Admin</h6>
+                                        <h6>Admin</h6>
                                         <hr/>
-                                        <h4>Center</h4>
-                                        <h4>logout</h4>
-                                    </Media.Body>
-                                </Media>
+                                        <h5>Center</h5>
+                                        <h5>logout</h5>
+                                    </div>
+                                </div>
                         </Container>
                         </Col>
                         
-                        <Col md={7} id="" style={{height: '100vh', position: "relative", backgroundColor:'#fff', overflowY:'auto'}}>
-                            <Container fluid={true} style={{position: "relative", height:'70px'}}>
-                                <div style={{position:'absolute',right:'0',margin:'20px 0 0 0'}}>
-                                    <h2>Center List</h2>
-                                    <h6 className="text-muted">List of all centers of examination for 2019</h6>
-                                </div>
-                                <div style={{position:'absolute', right:'10%', margin:'20px'}}>
-
-                                    <div className="search-box">
-                                        <input type="text" className="search-center" onChange={this.searchCenterHandler} placeholder="Search Center" />
-                                        <img src="./assets/images/search.png" alt="search-icon" className="search-icon" onClick={this.searchClickHandler} />
-                                    </div>
+                        <Col md={7} id="" style={{height: '100vh', position: "relative", overflowY:'auto'}}>
+                            <Container style={{position:'relative',paddingTop:'50px'}}>
+                                <div style={{position:'absolute',color:'red',marginLeft:'20%',backgroundImage:'url("./assets/Images/Asset 4-8.png")',backgroundRepeat:'no-repeat',backgroundSize:'100%',padding:'70px 300px 30px 30px'}}>
+                                    <h6>Welcome back Admin!</h6>
+                                    <h2>Examination Name</h2>
                                 </div>
                             </Container>
-                            <Container fluid={true} style={{fontSize: '0.75rem', paddingBottom:'20px'}}>
-                                <Table striped hover style={{position:'relative'}}>
+                            <Container fluid={true} style={{position: "relative", height:'70px',marginTop:'25vh'}}>
+                                <div style={{ marginBottom:'0',left:'0'}}>
+                                    <h2>Center List</h2>
+                                </div>
+                                    <Row>
+                                    <Col>                                   
+                                    <h6 className="text-muted">List of all centers of examination for 2019</h6>
+                                    </Col>
+                                    <Col >
+                                        <div className="search-box" style={{marginLeft:'160px',marginRight:'30px'}}>
+                                        <input type="text" className="search-center" onChange={this.searchCenterHandler} placeholder="Search Center" />
+                                        <img src="./assets/images/search.png" alt="search-icon" className="search-icon" onClick={this.searchClickHandler} />
+                                        </div>
+                                    </Col>
+                                    </Row>                    
+                            </Container>
+                            <Container fluid={true} style={{paddingTop:'40px',fontSize: '0.75rem', paddingBottom:'20px'}}>
+                                <Table style={{position:'relative'}}>
                                     <thead>
                                         <tr>
                                             <th className="tableHeading">Sno</th>
@@ -142,33 +151,31 @@ class Centers extends React.Component{
 
                             </Container>
                         </Col>
-                        <Col md={3}>
-                                        <Container fluid={true}>
-                                                <h3>Center Personal</h3>
-                                                <h6>Call them for need if exam failed</h6>
-                                                <hr/>
-                                                <Table>
-													<tbody>
-														<tr>
-															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-															<td>Center Incharge Name<br/>+91 903723222</td>
-														</tr>
-														<tr>
-															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-															<td>Deploy CI-1 Name<br/>+91 903723222</td>
-														</tr>
-														<tr>
-															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-															<td>Deploy CI-2 Name<br/>+91 903723222</td>
-														</tr>
-														<tr>
-															<td><img className="rounded-circle" src="./assets/images/Asset 15@4x.png" alt="img" /></td>
-															<td>Deploy IAF Name<br/>+91 903723222</td>
-														</tr>
-													</tbody>
-                                                </Table>
+                        <Col md={3} style={{height: '100vh',fontSize:'0.65rem',fontWeight:'bold'}}>
+                            <Container className="" fluid={true} style={{marginTop:'50%'}}>
+                                <h5 style={{fontWeight:'bold'}}>Center Personal</h5>                                    
+                                <h6 className="text-muted">Call them for need if exam failed</h6>
+                                <hr/>
+                                <div className="ml-3">
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Center Incharge Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body >Deploy CI-1 Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media className="pb-2">
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Deploy CI-2 Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                    <Media>
+                                    <img className="rounded-circle mr-3 mt-1" src="./assets/Images/6-8.png" style={{width:'25px'}} alt="img" />
+                                        <Media.Body>Deploy IAF Name<br/>+91 903723222</Media.Body>
+                                    </Media>
+                                </div>
                                                 
-                                        </Container>
+                            </Container>
                         </Col>
                     </Row>
                 </Container>

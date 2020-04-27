@@ -1,23 +1,20 @@
 .search-center {
-    width: 170px;
+    width: 185px;
     border: none;
     border-radius: 20px;
-    padding-left: 10px;
     height: 25px;
     background-color: #f5f5ee;
     padding: 15px 5px 15px 10px;
     font-size: 1rem;
 }
+.search-box {
+    border-radius: 20px;
+    background-color: #f5f5ee;
+}
 .search-center:focus {
     outline: none;
 }
-.rounded-circle{
-    border-radius:50%
-}
-.admin-info{
-    margin-left:60px;
-    margin-top: -50px;
-}
+
 .search-icon {
     width: 15px;
     margin: 0 5px;
