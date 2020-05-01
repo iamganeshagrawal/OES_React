@@ -1,4 +1,4 @@
-import { DECRYPT_REGISTRATION, DECRYPT_EXAM, DISCARD_EXAM, 
+import { UPD_EXAM_STATUS, DECRYPT_REGISTRATION, DECRYPT_EXAM, DISCARD_EXAM, 
 	GET_DASHBOARD/*, GET_EXAMS_WITHOUT_RESPONSE_SHEET, GENERATE_RESPONSE_SHEET*/ } from '../actions/types';
 
 const initialState = {
@@ -13,6 +13,14 @@ const examReducer = (state, action) => {
 	}
 
 	switch(action.type) {
+		case UPD_EXAM_STATUS:
+			let { qpDecrypted, regDataDecrypted, examCode } = action.data;
+			return {
+				...state,
+				qpDecrypted,
+				regDataDecrypted,
+				examCode
+			};
 		case DECRYPT_REGISTRATION:
 			return {
 				...state,

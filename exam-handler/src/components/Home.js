@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { alertSuccess, alertError } from '../config/toaster';
-import { logout } from '../actions/sessionsActions';
-import { logoutReq } from '../config/httpRoutes';
+import { logout, updExamStatus } from '../actions/sessionsActions';
+import { logoutReq, getCurrentExamStatusReq } from '../config/httpRoutes';
 import "./Home.css";
 
 //TODO: Adding Pre, Post and End Exam action links. Genaric Style created for that
@@ -73,6 +73,29 @@ export class Home extends Component {
 		if(prevProps.session && !this.props.session) {
 			this.props.history.push("/login");
 		}
+	}
+
+	componentDidMount() {
+		this.getCurrentExamStatus();
+	}
+
+	getCurrentExamStatus = () => {
+		getCurrentExamStatusReq()
+		.then( ({ data: { status, examCode } }) => {
+			let statuses = [
+				null,
+				{regDataDecrypted: true, qpDecrypted: false, examStarted: false, examEnded: false},
+				{regDataDecrypted: true, qpDecrypted: true, examStarted: false, examEnded: false},
+				{regDataDecrypted: true, qpDecrypted: true, examStarted: true, examEnded: false},
+				null,
+				{regDataDecrypted: true, qpDecrypted: true, examStarted: true, examEnded: true},
+			];
+			this.props.updExamStatus({ ...statuses[status], examCode });
+		}).catch( (err) => {
+			if (err.response && err.response.status === 400) {
+				this.getCurrentExamStatus();
+			}
+		});
 	}
     
     render() {
@@ -206,7 +229,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: (tkn) => {dispatch(logout(tkn));}
+	logout: (tkn) => {dispatch(logout(tkn));},
+	updExamStatus: (status) => {dispatch(updExamStatus(status));}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

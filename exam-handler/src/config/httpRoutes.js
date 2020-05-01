@@ -22,6 +22,10 @@ export const startExamReq = (data) => {
 	return axios.put(baseUrl+'startExam', data);
 };
 
+export const getCurrentExamStatusReq = () => {
+	return axios.get(baseUrl+'getCurrentExamStatus');
+};
+
 export const endExamReq = (data) => {
 	return axios.put(baseUrl+'endExam', data);
 };

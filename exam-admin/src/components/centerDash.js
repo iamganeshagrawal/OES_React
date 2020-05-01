@@ -91,13 +91,13 @@ class CenterDash extends React.Component {
                                                 }
 												return (
 													<tr key={i} style={_cStyle}>
-														<td>{cand.hallTicket}</td>
+														<td>{cand.candidateHallTicket}</td>
 														<td>{cand.candidate}</td>
 														<td>{cand.lastActivity}</td>
-														<td>{cand.lastActivityTime}</td>
-														<td>{cand.timeLeft}</td>
+														<td>{cand.lastActivityTime.slice(11, 19)}</td>
+														<td>{cand.timeLeft.slice(11, 19)}</td>
 														<td>{cand.reLoginCount}</td>
-														<td>{cand.lastLoginTime}</td>
+														<td>{cand.lastLoginTime.slice(11, 19)}</td>
 													</tr>
 												)
 											})

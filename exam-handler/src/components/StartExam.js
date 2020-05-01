@@ -51,8 +51,6 @@ class StartExam extends React.Component{
 			}
 		});
 	}
-
-	
     
     render(){
 		let { examStarted, examEnded } = this.props;
@@ -83,7 +81,7 @@ class StartExam extends React.Component{
 													"Decrypt Registration Data and Question Paper to Continue"
 									}
                                 </p>
-                                <Button onClick={this.startExam} variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}} disabled={!(this.props.qpDecrypted && this.props.regDataDecrypted)}>
+                                <Button onClick={this.startExam} variant="outline-dark" style={{width:'250px',marginBottom:'1rem'}} disabled={(examStarted && !examEnded) || !(this.props.qpDecrypted && this.props.regDataDecrypted)}>
                                     <b>Start Exam</b>
                                 </Button>
                                 <Button variant="outline-dark" style={{width:'250px'}}>

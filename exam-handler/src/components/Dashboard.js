@@ -130,13 +130,13 @@ class Dashboard extends Component {
 												const _classname = cand.state === 'active' ? 'font-color-green' : cand.state === 'inactive' ? 'font-color-red' : ''
 												return (
 													<tr key={i} className={_classname}>
-														<td>{cand.hallTicket}</td>
+														<td>{cand.candidateHallTicket}</td>
 														<td>{cand.candidate}</td>
 														<td>{cand.lastActivity}</td>
-														<td>{cand.lastActivityTime}</td>
-														<td>{cand.timeLeft}</td>
+														<td>{cand.lastActivityTime.slice(11, 19)}</td>
+														<td>{cand.timeLeft.slice(11, 19)}</td>
 														<td>{cand.reLoginCount}</td>
-														<td>{cand.lastLoginTime}</td>
+														<td>{cand.lastLoginTime.slice(11, 19)}</td>
 													</tr>
 												)
 											})

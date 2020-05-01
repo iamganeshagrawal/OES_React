@@ -1,4 +1,4 @@
-import { LOGIN, CHANGE_PASSWORD, START_EXAM, END_EXAM, LOGOUT } from '../actions/types';
+import { LOGIN, CHANGE_PASSWORD, START_EXAM, UPD_EXAM_STATUS, END_EXAM, LOGOUT } from '../actions/types';
 
 export const login = (data) => ({
 	type: LOGIN,
@@ -12,6 +12,11 @@ export const changePassword = (data) => ({
 
 export const startExam = (data) => ({
 	type: START_EXAM,
+	data
+});
+
+export const updExamStatus = (data) => ({
+	type: UPD_EXAM_STATUS,
 	data
 });
 

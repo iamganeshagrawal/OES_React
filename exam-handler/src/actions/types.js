@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
 export const START_EXAM = 'START_EXAM';
+export const UPD_EXAM_STATUS = 'UPD_EXAM_STATUS';
 export const END_EXAM = 'END_EXAM';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const DECRYPT_REGISTRATION = 'DECRYPT_REGISTRATION';

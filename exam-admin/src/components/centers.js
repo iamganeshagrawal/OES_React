@@ -33,7 +33,7 @@ class Centers extends React.Component{
 			element.name.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
 			element.state.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
 			element.city.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
-			element.code.toLowerCase().indexOf(search.toLowerCase()) > -1
+			element.code.toString().toLowerCase().indexOf(search.toLowerCase()) > -1
 		);
 		this.setState({ centers });
 		this.props.hideLoader();
@@ -76,7 +76,6 @@ class Centers extends React.Component{
             CenterCode:'254'
         })
 
-      
         const mockData = this.state.showCenter==='ongoing' ? mockDataOngoing : (this.state.showCenter==='completed' ? mockDataCompleted :mockDataProblem);
         
         return(

@@ -7,13 +7,13 @@ import store from './config/store';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
-  return (
-    <Provider store={store}>
-		<ToastContainer />
-		{/* <Loader /> */}
-    	<Router />
-	</Provider>
-  );
+	return (
+		<Provider store={store}>
+			<ToastContainer />
+			{/* <Loader /> */}
+			<Router />
+		</Provider>
+	);
 }
 
 // // For UI testing
