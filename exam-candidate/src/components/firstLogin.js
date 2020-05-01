@@ -8,6 +8,7 @@ import { Row, Col, Container, Image, Button } from 'react-bootstrap';
 import { alertWarn, alertError, alertSuccess } from '../config/toaster';
 import { saveToken } from '../config/localStorage';
 import './css/login.scss';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 // @Recreated By: Ganesh Agrawal
 // @Last Change: 16 April 2020
@@ -46,6 +47,8 @@ class FirstLogin extends React.Component{
 		if(!emailRE.test(email)) {
 			return alertWarn("Invalid E-Mail Address");
 		}
+
+		this.props.showLoader();
 		
 		loginReq({
 			hallTicket,
@@ -77,13 +80,18 @@ class FirstLogin extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-        });
+        }).finally(() => {
+			this.props.hideLoader();
+		});
 	}
 
 	componentDidUpdate(prevProps) {
 		if((this.props.session && !prevProps.session)) {
 			this.props.history.push("/instructions");
 		}
+	}
+	componentDidMount(){
+		this.props.hideLoader();
 	}
 
     render(){
@@ -137,7 +145,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	login: (data) => {dispatch(login(data));},
-	saveExam: (data) => {dispatch(saveExam(data));}
+	saveExam: (data) => {dispatch(saveExam(data));},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FirstLogin);

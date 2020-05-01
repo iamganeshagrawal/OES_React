@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { answerQuestion, clearAnswer, submitExam, markForReview } from '../actions/examActions';
 import { answerQuestionReq, clearAnswerReq, submitExamReq, updTmReq } from '../config/httpRoutes';
 import { alertError/*, alertSuccess */ } from '../config/toaster';
+import {showLoader, hideLoader} from './FullPageLoader';
 
 class Exam extends Component {
 	constructor(props) {
@@ -25,9 +26,10 @@ class Exam extends Component {
 			index: 0
 		};
 	}
-	// componentDidMount() {
-	// 	this.setState({questions: this.props.exam.questions});
-	// }
+	componentDidMount() {
+		// this.setState({questions: this.props.exam.questions});
+		this.props.hideLoader();
+	}
 
 	answerQuestion = (option, question, optionChar, index) => {
 		answerQuestionReq({
@@ -96,6 +98,7 @@ class Exam extends Component {
 	}
 
 	submitExam = () => {
+		this.props.showLoader();
 		submitExamReq()
 		.then( (res) => {
 			// alertSuccess(res.data.message || "Exam Submitted Successfully");
@@ -109,13 +112,18 @@ class Exam extends Component {
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(()=>{
+			this.props.hideLoader();
+		})
 	}
 
 	componentDidUpdate(prevProps) {
 		if(this.props.exam.submitted && !prevProps.exam.submitted) {
 			this.props.history.push("/examSubmitted");
 		}
+	}
+	componentWillUnmount(){
+		this.props.showLoader();
 	}
 
     render() {
@@ -243,7 +251,9 @@ const mapDispatchToProps = (dispatch) => ({
 	answerQuestion: (questions) => {dispatch(answerQuestion(questions));},
 	clearAnswer: (questions) => {dispatch(clearAnswer(questions));},
 	markForReview: (questions) => {dispatch(markForReview(questions));},
-	submitExam: (submitted) => {dispatch(submitExam(submitted));}
+	submitExam: (submitted) => {dispatch(submitExam(submitted));},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exam);

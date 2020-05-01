@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { startExamReq } from '../config/httpRoutes';
 import { startExam } from '../actions/examActions';
 import { alertError, alertSuccess } from '../config/toaster';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 class InstructionPage extends React.Component{
     constructor(props){
@@ -29,8 +30,11 @@ class InstructionPage extends React.Component{
         };
         this.updateTimer = this.updateTimer.bind(this);
 	}
-	
+	componentDidMount(){
+		this.props.hideLoader();
+	}
     startExam = () => {
+		this.props.showLoader();
 		startExamReq().then( (res) => {
 			alertSuccess(res.data.message || "Exam Started Successfully");
 			this.props.saveQuestions({questions: res.data});
@@ -40,7 +44,9 @@ class InstructionPage extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(() => {
+			this.props.hideLoader();
+		})
 	}
 	
     updateTimer(){
@@ -53,6 +59,9 @@ class InstructionPage extends React.Component{
 		if(this.props.exam.questions && !prevProps.exam.questions) {
 			this.props.history.push("/exam");
 		}
+	}
+	componentWillUnmount(){
+		this.props.showLoader();
 	}
 	
     render(){
@@ -94,7 +103,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	saveQuestions: (questions) => {dispatch(startExam(questions))}
+	saveQuestions: (questions) => {dispatch(startExam(questions))},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InstructionPage);
