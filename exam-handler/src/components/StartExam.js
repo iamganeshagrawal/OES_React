@@ -5,6 +5,7 @@ import { alertError, alertSuccess, alertInfo } from '../config/toaster';
 import { startExamReq } from '../config/httpRoutes';
 import { startExam } from '../actions/sessionsActions';
 import { saveToken } from '../config/localStorage';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 // ALL UI CHANGES FIXED || 26 March 2020 || Ganesh Agrawal
 
@@ -34,6 +35,7 @@ class StartExam extends React.Component{
 	}
 	
 	startExam = () => {
+		this.props.showLoader();
 		startExamReq({
 			examCode: this.props.examCode
 		}).then( (res) => {
@@ -49,7 +51,15 @@ class StartExam extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(() => {
+			this.props.hideLoader();
+		})
+	}
+	componentWillUnmount(){
+		this.props.showLoader();
+	}
+	componentDidMount(){
+		this.props.hideLoader();
 	}
     
     render(){
@@ -106,7 +116,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	startExam: (exmCode) => {dispatch(startExam(exmCode));}
+	startExam: (exmCode) => {dispatch(startExam(exmCode));},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartExam);

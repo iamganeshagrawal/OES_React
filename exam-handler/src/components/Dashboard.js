@@ -4,6 +4,7 @@ import './BiometricDashboard.css';
 import { connect } from 'react-redux';
 import { alertError, alertWarn } from '../config/toaster';
 import { fetchDashboardReq } from '../config/httpRoutes';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 // ALL UI CHANGES FIXED || 27 March 2020 || Ganesh Agrawal
 
@@ -35,52 +36,57 @@ class Dashboard extends Component {
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
-	}
+		}).finally(() => {
+            this.props.hideLoader();
+        });
+    }
+    componentWillUnmount(){
+        this.props.showLoader();
+    }
 	
     render() {
-        let mockData = [
-            {
-                hallTicket: '123ABC456XYZ780',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                ipAddress: '192.168.100.101',
-                markedDetected: '',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                state: 'normal'
-            },
-            {
-                hallTicket: '123ABC456XYZ780',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                ipAddress: '192.168.100.101',
-                markedDetected: '',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                state: 'active'
-            },
-            {
-                hallTicket: '123ABC456XYZ780',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                ipAddress: '192.168.100.101',
-                markedDetected: '',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                state: 'normal'
-            },
-            {
-                hallTicket: '123ABC456XYZ780',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                ipAddress: '192.168.100.101',
-                markedDetected: '',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                state: 'inactive'
-            }
-        ]
+        // let mockData = [
+        //     {
+        //         hallTicket: '123ABC456XYZ780',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         ipAddress: '192.168.100.101',
+        //         markedDetected: '',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         state: 'normal'
+        //     },
+        //     {
+        //         hallTicket: '123ABC456XYZ780',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         ipAddress: '192.168.100.101',
+        //         markedDetected: '',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         state: 'active'
+        //     },
+        //     {
+        //         hallTicket: '123ABC456XYZ780',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         ipAddress: '192.168.100.101',
+        //         markedDetected: '',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         state: 'normal'
+        //     },
+        //     {
+        //         hallTicket: '123ABC456XYZ780',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         ipAddress: '192.168.100.101',
+        //         markedDetected: '',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         state: 'inactive'
+        //     }
+        // ]
         let progressCircleValue = parseInt((this.state.presentCount / this.state.totalCount) *100); // 88
         return (
             <div style={{height: '100vh',overflow: 'hidden'}}>
@@ -156,5 +162,9 @@ const mapStateToProps = (state) => ({
 	examStarted: state.session.examStarted,
 	session: state.session.session
 });
+const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
+});
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

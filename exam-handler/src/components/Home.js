@@ -5,6 +5,7 @@ import { alertSuccess, alertError } from '../config/toaster';
 import { logout, updExamStatus } from '../actions/sessionsActions';
 import { logoutReq, getCurrentExamStatusReq } from '../config/httpRoutes';
 import "./Home.css";
+import {showLoader, hideLoader} from './FullPageLoader'
 
 //TODO: Adding Pre, Post and End Exam action links. Genaric Style created for that
 //TODO: Pre Post and End exam actions list can be archived using object or any other method
@@ -71,12 +72,16 @@ export class Home extends Component {
 
 	componentDidUpdate(prevProps) {
 		if(prevProps.session && !this.props.session) {
+			// show Loader
+			this.props.showLoader();
 			this.props.history.push("/login");
 		}
 	}
 
 	componentDidMount() {
 		this.getCurrentExamStatus();
+		// //hide loader
+		// this.props.hideLoader();
 	}
 
 	getCurrentExamStatus = () => {
@@ -95,6 +100,9 @@ export class Home extends Component {
 			if (err.response && err.response.status === 400) {
 				this.getCurrentExamStatus();
 			}
+		}).finally(() => {
+			// hide loader
+			this.props.hideLoader();
 		});
 	}
     
@@ -229,6 +237,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 	logout: (tkn) => {dispatch(logout(tkn));},
 	updExamStatus: (status) => {dispatch(updExamStatus(status));}
 });

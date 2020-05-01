@@ -3,29 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Router from './config/appRoutes';
 import { Provider } from 'react-redux';
 import store from './config/store';
-// import Loader from './components/loader';
 import { ToastContainer } from 'react-toastify';
+import Loader from './components/FullPageLoader';
 
 function App() {
 	return (
 		<Provider store={store}>
+			<Loader isLoading={true} />
 			<ToastContainer />
 			{/* <Loader /> */}
 			<Router />
 		</Provider>
 	);
 }
-
-// // For UI testing
-// import UI from './components/testComp'
-// import { ToastContainer } from 'react-toastify'
-// function App() {
-// 	return (
-// 		<>
-// 		<ToastContainer />
-// 		<UI />
-// 		</>
-// 	)
-// }
 
 export default App;
