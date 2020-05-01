@@ -4,7 +4,8 @@ import './ChangePass.css';
 import { connect } from 'react-redux';
 import { alertSuccess, alertError, alertWarn } from '../config/toaster';
 import { changePasswordReq } from '../config/httpRoutes';
- import { changePassword } from '../actions/sessionsActions';
+import { changePassword } from '../actions/sessionsActions';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 // ALL UI CHANGES FIXED || 30 March 2020 || Ganesh Agrawal
 
@@ -36,7 +37,10 @@ class ChangePass extends React.Component{
         ]
     }
     
-
+    componentDidMount(){
+        // hide loader after compMount
+        this.props.hideLoader();
+    }
     inputChangeHandler = (e) => {
         this.setState({
             [e.target.name] : e.target.value
@@ -66,7 +70,8 @@ class ChangePass extends React.Component{
 		}
 
 		let { password:newPass, securityQue:secQuestion, securityAns:secAnswer } = this.state;
-
+        // show loader
+        this.props.showLoader();
 		changePasswordReq({
 			newPass,
 			secQuestion,
@@ -82,7 +87,10 @@ class ChangePass extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(() => {
+            // hide loader
+            this.props.hideLoader();
+        });
 	}
 
     render(){
@@ -154,7 +162,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	changePassword: (data) => {dispatch(changePassword(data));}
+    changePassword: (data) => {dispatch(changePassword(data));},
+    showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePass);

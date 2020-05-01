@@ -4,6 +4,7 @@ import Router from './config/appRoutes';
 import { Provider } from 'react-redux';
 import store from './config/store';
 import { ToastContainer } from 'react-toastify';
+import Loader from './components/FullPageLoader';
 
 function App() {
 	window.addEventListener("popstate", () => {
@@ -34,6 +35,7 @@ function App() {
 
 	return (
 		<Provider store={store}>
+			<Loader isLoading={true} />
 			<ToastContainer />
 			<Router />
 		</Provider>

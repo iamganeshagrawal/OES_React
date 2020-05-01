@@ -1,0 +1,88 @@
+div.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.loader-container .loader {
+    --size: 5rem;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    border: 0 solid transparent;
+    border-radius: 50%;
+    position: relative;
+}
+.loader-container .loader::after, .loader-container .loader::before {
+    content: '';
+	border: 0.25rem solid  rgb(33, 150, 243);
+	border-radius: 50%;
+	width: inherit;
+	height: inherit;
+    position: absolute;
+	top: 0;
+	left: 0;
+    animation: loader-animation 1s linear infinite;
+    opacity: 0;
+}
+.loader-container .loader::after {
+    animation-delay: .5s;
+}
+.loader-container .loader::before {
+    animation-delay: 1s;
+}
+
+
+@keyframes loader-animation {
+    0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 0;
+    }
+}
+
+.loader-container .loader-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: consolas;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: transparent;
+    position: relative;
+}
+.loader-container .loader-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    color:rgb(33, 150, 243);
+    white-space: nowrap;
+    animation: loader-text-animation 3s linear infinite;
+}
+@keyframes loader-text-animation {
+    0% {
+        width: 0%;
+    }
+    50% {
+        width: 100%;
+    }
+    100% {
+        width: 100%;
+    }
+}

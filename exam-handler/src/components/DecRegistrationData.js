@@ -5,6 +5,7 @@ import { decryptRegistrationReq } from '../config/httpRoutes';
 import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 import { decryptRegistration } from '../actions/examActions';
 import { connect } from 'react-redux';
+import { showLoader, hideLoader } from './FullPageLoader';
 
 class DecRegistrationData extends Component {
     constructor(props) {
@@ -18,7 +19,11 @@ class DecRegistrationData extends Component {
 			file: null,
 			key: '',
         }
-	}
+    }
+    componentDidMount(){
+        // hide loader
+        this.props.hideLoader();
+    }
 	
 	// key: "encRegData", zip
 	handleKeyChange = ({ target }) => {
@@ -37,6 +42,9 @@ class DecRegistrationData extends Component {
 		let formData = new FormData();
 		formData.append("zip", file);
 		formData.append("key", key);
+        
+        // show loader
+        this.props.showLoader();
 
 		decryptRegistrationReq(formData)
 		.then( (res) => {
@@ -49,7 +57,10 @@ class DecRegistrationData extends Component {
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(() => {
+            // hide loader
+            this.props.hideLoader();
+        });
 	}
 	
     onFileChangeHandler = event => {
@@ -60,6 +71,8 @@ class DecRegistrationData extends Component {
 	
 	componentDidUpdate(prevProps) {
 		if(this.props.regDataDecrypted && !prevProps.regDataDecrypted) {
+            // show loader
+            this.props.showLoader();
 			this.props.history.push("/home");
 		}
 	}
@@ -132,7 +145,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	decryptRegistration: (regDecrypted) => {dispatch(decryptRegistration(regDecrypted));}
+    decryptRegistration: (regDecrypted) => {dispatch(decryptRegistration(regDecrypted));},
+    showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecRegistrationData);

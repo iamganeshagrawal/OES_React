@@ -17,6 +17,7 @@ import MultipleSessions from '../components/MultipleSessions';
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import history from './history';
 
+
 class appRouter extends Component {
 	render() {
 		return (

@@ -5,6 +5,7 @@ import { decryptExamReq } from '../config/httpRoutes';
 import { alertError, alertSuccess, alertWarn, alertInfo } from '../config/toaster';
 import { decryptExam } from '../actions/examActions';
 import { connect } from 'react-redux';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 class DecryptQP extends Component {
 	constructor(props) {
@@ -21,7 +22,11 @@ class DecryptQP extends Component {
 			file: null,
 			key: '',
 		}
-	}
+    }
+    componentDidMount(){
+        // hide Loader
+        this.props.hideLoader();
+    }
 	
 	// key: "encPaper", zip
 	handleKeyChange = ({ target }) => {
@@ -39,8 +44,11 @@ class DecryptQP extends Component {
 
 		let formData = new FormData();
 		formData.append("zip", file);
-		formData.append("key", key);
-
+        formData.append("key", key);
+        
+        // show Loader
+        this.props.showLoader();
+        
 		decryptExamReq(formData)
 		.then( (res) => {
 			alertSuccess(res.data.message || "Question Papers Uploaded Successfully");
@@ -51,7 +59,10 @@ class DecryptQP extends Component {
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(() => {
+            // hide loader
+            this.props.hideLoader();
+        })
     }
 	
     onFileChangeHandler = event => {
@@ -65,7 +76,10 @@ class DecryptQP extends Component {
 			this.props.history.push("/home");
 		}
 	}
-
+    componentWillUnmount(){
+        // show loader
+        this.props.showLoader();
+    }
     render() {
         // create a fakePath to show on UI when file change
         let fakePath = this.state.file ? `C:\\fakepath\\${this.state.file.name}` : '' ;
@@ -136,7 +150,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	decryptExam: (qpDecrypted) => {dispatch(decryptExam(qpDecrypted));}
+    decryptExam: (qpDecrypted) => {dispatch(decryptExam(qpDecrypted));},
+    showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecryptQP);

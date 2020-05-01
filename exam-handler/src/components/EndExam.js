@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { alertError, alertSuccess, alertWarn } from '../config/toaster';
 import { endExam } from '../actions/sessionsActions';
 import { getExamsWithoutResponseSheetReq, generateResponseSheetReq, endExamReq } from '../config/httpRoutes';
+import {showLoader, hideLoader} from './FullPageLoader';
 
 class EndExam extends React.Component{
     constructor(props){
@@ -36,6 +37,7 @@ class EndExam extends React.Component{
     }
 	
     handleEndExam = () => {
+		this.props.showLoader();
 		endExamReq().then( (res) => {
 			alertSuccess(res.data.message || "Exam Ended Successfully");
 			this.setState({isExamActive: false}, () => {
@@ -47,7 +49,9 @@ class EndExam extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(()=>{
+			this.props.hideLoader();
+		})
 	}
 
     getCurrLabel = () => {
@@ -68,10 +72,13 @@ class EndExam extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
+		}).finally(()=>{
+			this.props.hideLoader();
 		})
 	}
 
 	handleGenerate = () => {
+		this.props.showLoader();
 		let { examCode, examId } = this.state;
 		generateResponseSheetReq({examCode, examId})
 		.then( (res) => {
@@ -88,7 +95,12 @@ class EndExam extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
+		}).finally(()=>{
+			this.props.hideLoader();
 		});
+	}
+	componentWillUnmount(){
+		this.props.showLoader();
 	}
 
     render(){
@@ -136,7 +148,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	endExam: () => {dispatch(endExam());}
+	endExam: () => {dispatch(endExam());},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EndExam);

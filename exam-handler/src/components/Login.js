@@ -6,6 +6,7 @@ import { loginReq } from '../config/httpRoutes';
 import { login } from '../actions/sessionsActions';
 import { alertError, alertSuccess } from '../config/toaster';
 import { saveToken } from '../config/localStorage';
+import { showLoader, hideLoader } from './FullPageLoader';
 
 // ALL UI CHANGES FIXED || 26 March 2020 || Ganesh Agrawal
 
@@ -22,7 +23,10 @@ class Login extends React.Component{
             username: ''
         }
     }
-
+	componentDidMount(){
+		// Hide loader after component mount
+		this.props.hideLoader();
+	}
     handleInputChange = (e) => {
         this.setState({[e.target.name] : e.target.value});
     }
@@ -57,16 +61,21 @@ class Login extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
+		}).finally(() => {
+			// hide loader
+			this.props.hideLoader();
+			// enable button and inputs
+			this.signInButtonRef.disabled = false
+			this.usernameInputRef.disabled = false
+			this.passwordInputRef.disabled = false
+			this.signInButtonRef.disabled = false
 		});
-        
-        // enable button and inputs
-        this.signInButtonRef.disabled = false
-        this.usernameInputRef.disabled = false
-        this.passwordInputRef.disabled = false
-        this.signInButtonRef.disabled = false
 	}
+
 	componentDidUpdate(prevProps) {
 		if(this.props.session && !prevProps.session) {
+			// show loader
+			this.props.showLoader();
 			if(this.props.passwordChanged) {
 				this.props.history.push("/home");
 			} else {
@@ -121,6 +130,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 	login: (data) => {dispatch(login(data))}
 });
 

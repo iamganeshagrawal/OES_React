@@ -21,7 +21,12 @@ class ExamSubmitted extends React.Component{
 			answered
 		}
 	}
-
+	componentWillUnmount(){
+		this.props.showLoader();
+	}
+	componentDidMount(){
+		this.props.hideLoader();
+	}
 	getAnswered = () => {
 		let { questions } = this.props.exam, answered = 0;
 		if(Array.isArray(questions) && questions.length > 1) {
@@ -81,7 +86,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => {dispatch(logout());}
+	logout: () => {dispatch(logout());},
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExamSubmitted);

@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Media, Table } from 'react-bootstrap';
 import './BiometricDashboard.css'
 import { connect } from 'react-redux';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 // ALL UI CHANGES FIXED || 27 March 2020 || Ganesh Agrawal
 
@@ -31,7 +32,15 @@ class BiometricDashboard extends React.Component{
             showCandidate: v
         })
     }
-    
+    componentDidMount(){
+        // hide loader
+        this.props.hideLoader();
+    }
+    componentWillUnmount(){
+        // show Loader
+        this.props.showLoader();
+    }
+
     render(){
         // temp data
         let mockDataActive = new Array(30).fill({
@@ -159,4 +168,9 @@ const mapStateToProps = (state) => ({
 	session: state.session.session
 });
 
-export default connect(mapStateToProps)(BiometricDashboard);
+const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BiometricDashboard);

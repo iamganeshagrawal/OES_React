@@ -4,6 +4,7 @@ import './BiometricDashboard.css';
 import { connect } from 'react-redux';
 import { getDuplicateSessionsReq, mapSessionsReq } from '../config/httpRoutes';
 import { alertSuccess, alertError, alertWarn } from '../config/toaster';
+import {showLoader, hideLoader} from './FullPageLoader'
 
 //TODO: If serach box have live serach function then we have to impliment debounce functionality
 // TODO: A selection of row in table method and highlight the selected rows (can be used outline for that)
@@ -52,7 +53,9 @@ class MultipleSessions extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(()=>{
+            this.props.hideLoader();
+        })
 	}
 
 	mapSessions = () => {
@@ -65,7 +68,7 @@ class MultipleSessions extends React.Component{
 		if(!newSessionId) {
 			return alertWarn("Select New Candidate Session");
 		}
-
+        this.props.showLoader();
 		mapSessionsReq({ oldSessionId, newSessionId })
 		.then( (res) => {
 			alertSuccess(res.data.message || "Sessions Mapped Successfully");
@@ -76,7 +79,9 @@ class MultipleSessions extends React.Component{
 			} else {
 				alertError("Server has Timed Out");
 			}
-		});
+		}).finally(()=>{
+            this.props.hideLoader();
+        })
 	}
 
     searchInputHandler = (e) => {
@@ -113,34 +118,37 @@ class MultipleSessions extends React.Component{
 			this.setState({newSessionId: id});
 		}
 	}
-    
+    componentWillUnmount(){
+        this.props.showLoader();
+    }
+
     render(){
-        // temp data
-        let mockData = [{
-                questionNumber: 'AFCAT AA 001123',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                type: 'suspicious'
-            },
-            {
-                questionNumber: 'AFCAT AA 001123',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                type: 'green'
-            },
-            {
-                questionNumber: 'AFCAT AA 001123',
-                sessionId: '1275',
-                sectionName: 'English',
-                response: 'Answer_XY_Star_1_16',
-                lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
-                type: 'normal'
-            }
-        ]
+        // // temp data
+        // let mockData = [{
+        //         questionNumber: 'AFCAT AA 001123',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         type: 'suspicious'
+        //     },
+        //     {
+        //         questionNumber: 'AFCAT AA 001123',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         type: 'green'
+        //     },
+        //     {
+        //         questionNumber: 'AFCAT AA 001123',
+        //         sessionId: '1275',
+        //         sectionName: 'English',
+        //         response: 'Answer_XY_Star_1_16',
+        //         lastActivityTime: 'Mar 27 2020, 12:55:12 PM',
+        //         type: 'normal'
+        //     }
+        // ]
         let { oldSessionId: oldSess, newSessionId: newSess } = this.state;
         return(
             <div>
@@ -241,5 +249,9 @@ const mapStateToProps = (state) => ({
 	examStarted: state.session.examStarted,
 	session: state.session.session
 });
+const mapDispatchToProps = (dispatch) => ({
+	showLoader: () => {dispatch(showLoader())},
+	hideLoader: () => {dispatch(hideLoader())},
+});
 
-export default connect(mapStateToProps)(MultipleSessions)
+export default connect(mapStateToProps, mapDispatchToProps)(MultipleSessions)
