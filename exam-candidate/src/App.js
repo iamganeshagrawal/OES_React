@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './config/store';
 import { ToastContainer } from 'react-toastify';
 import Loader from './components/FullPageLoader';
+import history from './config/history';
 
 function App() {
 	window.addEventListener("popstate", () => {
