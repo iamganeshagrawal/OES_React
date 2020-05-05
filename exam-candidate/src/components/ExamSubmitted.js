@@ -2,6 +2,7 @@ import React/*, { cloneElement }*/ from 'react';
 import './attempts.css';
 import { connect } from 'react-redux';
 import { logout } from '../actions/sessionsActions';
+import {showLoader, hideLoader} from './FullPageLoader';
 
 class ExamSubmitted extends React.Component{
 	constructor(props) {

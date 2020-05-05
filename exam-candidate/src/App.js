@@ -18,18 +18,42 @@ function App() {
 	}
 	// Refresh
 
-	document.onkeydown = function() {
+	document.onkeydown = function(event) {
+		console.log("Key Code", event.keyCode);
+		console.log("Alt Key", event.altKey);
 		switch (event.keyCode){
+			// case 16 : //Shift Key
+			// 	event.returnValue = false;
+			// 	// event.keyCode = 0;
+			// 	return false;
+			// case 17 : //Ctrl Key
+			// 	event.returnValue = false;
+			// 	// event.keyCode = 0;
+			// 	return false;
+			// case 18 : //Alt button
+			// 	event.returnValue = false;
+			// 	// event.keyCode = 0;
+			// 	return false;
 			case 116 : //F5 button
 				event.returnValue = false;
-				event.keyCode = 0;
+				// event.keyCode = 0;
+				return false;
+			case 122 : //F11 button
+				event.returnValue = false;
+				// event.keyCode = 0;
 				return false;
 			case 82 : //R button
-				if (event.ctrlKey) { 
-				event.returnValue = false;
-				event.keyCode = 0;
-				return false;
+				if (event.ctrlKey || event.ctrlLeft) { 
+					event.returnValue = false;
+					// event.keyCode = 0;
+					return false;
 				}
+			// case 9 : //Tab button
+			// 	if (event.altKey || event.altLeft) { 
+			// 		event.returnValue = false;
+			// 		// event.keyCode = 0;
+			// 		return false;
+			// 	}
 		}
 	}
 	// Block F5 and Ctrl+R

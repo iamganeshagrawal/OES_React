@@ -101,12 +101,12 @@ class FirstLogin extends React.Component{
 				<Row>
 					<Col md={{span:5, offset: 1}} style={{position: 'relative', height:'100vh'}}>
 						<Container fluid style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '0 10%'}}>
-							<Image src="/assets/images/login-screeb.png" fluid />
+							<Image src="./assets/images/login-screeb.png" fluid />
 						</Container>
 					</Col>
 					<Col md={{span:5}} style={{position: 'relative', height:'100vh'}}>
 						<div className="login-wrapper">
-							<img className="cust__hand-image" src="/assets/images/2492644.png" alt="hand" />
+							<img className="cust__hand-image" src="./assets/images/2492644.png" alt="hand" />
 							<Container fluid style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '0 10%', display: 'inline-block'}}>
 								<div className="cust__header-wrapper">
 									<span className="c-big">Login</span>
@@ -114,16 +114,16 @@ class FirstLogin extends React.Component{
 								</div>
 								<div className="cust__input-wrapper">
 									<div className="input-box" onClick={()=>this.hallTicketInputRef.focus()}>
-									<img className="icon" src="/assets/images/ticket.png" alt="icon" />
+									<img className="icon" src="./assets/images/ticket.png" alt="icon" />
 										<input type="text" name="hallTicket" value={hallTicket} onChange={this.handleChange} placeholder="123ABC456XYZ789" ref={ref=>this.hallTicketInputRef=ref} />
 										<span className="input-label">Hall Ticket Number</span>
-										<img className={this.checkValid(hallTicket, hallTicketRE) ? 'check-mark isvalid' : 'check-mark'} src="/assets/images/Asset 8@4x.png" alt="check-mark" />
+										<img className={this.checkValid(hallTicket, hallTicketRE) ? 'check-mark isvalid' : 'check-mark'} src="./assets/images/Asset 8@4x.png" alt="check-mark" />
 									</div>
 									<div className="input-box" onClick={()=>this.emailInputRef.focus()}>
-										<img className="icon" src="/assets/images/mail.png" alt="icon" />
+										<img className="icon" src="./assets/images/mail.png" alt="icon" />
 										<input className="cust__input" type="text" name="email" value={email} onChange={this.handleChange} placeholder="example@mail.com" ref={ref=>this.emailInputRef=ref} />
 										<span className="input-label">Email</span>
-										<img className={this.checkValid(email, emailRE) ? 'check-mark isvalid' : 'check-mark'} src="/assets/images/Asset 8@4x.png" alt="check-mark" />
+										<img className={this.checkValid(email, emailRE) ? 'check-mark isvalid' : 'check-mark'} src="./assets/images/Asset 8@4x.png" alt="check-mark" />
 									</div>
 								</div>
 								<div style={{width: '350px', marginTop: '35px'}}>
