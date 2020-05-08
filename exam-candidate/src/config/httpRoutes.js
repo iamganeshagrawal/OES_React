@@ -1,6 +1,14 @@
 // import axios from 'axios';
 import axios from './interceptor';
-export const baseUrl = "http://localhost:8080/";
+let baseUrl = "http://localhost:8080/";
+
+export const setBase = (ip) => {
+	baseUrl = baseUrl.replace("localhost", ip);
+};
+
+export const ping = () => {
+	return axios.get(baseUrl+'ping');
+}
 
 export const loginReq = (data) => {
 	return axios.put(baseUrl+'login', data);

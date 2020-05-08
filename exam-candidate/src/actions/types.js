@@ -1,3 +1,4 @@
+export const SAVE_IP = 'SAVE_IP';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 

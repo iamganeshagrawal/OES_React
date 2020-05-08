@@ -19,8 +19,6 @@ function App() {
 	// Refresh
 
 	document.onkeydown = function(event) {
-		console.log("Key Code", event.keyCode);
-		console.log("Alt Key", event.altKey);
 		switch (event.keyCode){
 			// case 16 : //Shift Key
 			// 	event.returnValue = false;

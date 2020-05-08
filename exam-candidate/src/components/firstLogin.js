@@ -21,6 +21,8 @@ class FirstLogin extends React.Component{
 		
 		if(this.props.session) {
 			this.props.history.push("/instructions");
+		} else if(!this.props.ip) {
+			this.props.history.push("/ping");
 		}
 
         this.state = {

@@ -14,6 +14,8 @@ class ExamSubmitted extends React.Component{
 			this.props.history.push("/instructions");
 		} else if(!this.props.exam.submitted) {
 			this.props.history.push("/exam");
+		} else if(!this.props.session.ip) {
+			this.props.history.push("/ping");
 		}
 
 		let answered = this.getAnswered();

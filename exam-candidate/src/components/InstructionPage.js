@@ -16,6 +16,8 @@ class InstructionPage extends React.Component{
 			this.props.history.push("/login");
 		} else if(this.props.exam.questions) {
 			this.props.history.push("/exam");
+		} else if(!this.props.session.ip) {
+			this.props.history.push("/ping");
 		}
 		
 		let timeLeft = ((new Date(this.props.exam.startTime)).getTime() - Date.now()) / 1000;

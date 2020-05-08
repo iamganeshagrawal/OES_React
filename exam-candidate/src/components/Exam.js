@@ -17,6 +17,8 @@ class Exam extends Component {
 			this.props.history.push("/instructions");
 		} else if(this.props.exam.submitted) {
 			this.props.history.push("/examSubmitted");
+		} else if(!this.props.session.ip) {
+			this.props.history.push("/ping");
 		}
 		
 		let examTime = this.props.exam.examTime.replace("0000", "1970");

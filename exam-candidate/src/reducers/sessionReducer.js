@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../actions/types';
+import { SAVE_IP, LOGIN, LOGOUT } from '../actions/types';
 
 const initialState = {
 	session: '',
@@ -6,7 +6,8 @@ const initialState = {
 	email: '',
 	id: '',
 	name: '',
-	image: ''
+	image: '',
+	ip: ''
 };
 
 const sessionReducer = (state, action) => {
@@ -15,6 +16,11 @@ const sessionReducer = (state, action) => {
 	}
 
 	switch(action.type) {
+		case SAVE_IP:
+			return {
+				...state,
+				...action.data
+			};
 		case LOGIN:
 			return {
 				...state,
