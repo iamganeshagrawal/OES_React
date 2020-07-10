@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "256f9c4d-0c01-4cd7-93f2-fcee6398a8e9",
+		"name": "ExamServer_Handler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"csuser\",\n\t\"password\": \"cdac123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/handleLogin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"handleLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MH0.QKzISBmjZf_H7UGy5CvMjZHWxnpCsFT-1aYuQnzr814",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"newPass\": \"Cdac@123\",\n\t\"secQuestion\": \"What is your favorite place to visit?\",\n\t\"secAnswer\": \"jaipur\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/changePass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"changePass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start Exam",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MH0.QKzISBmjZf_H7UGy5CvMjZHWxnpCsFT-1aYuQnzr814",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/startExam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"startExam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "End Exam",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6NX0.CtF_8F2llfFIWTWhC3sBqTNcEU4rHJ-Wl7RZ6KnXOYw",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/endExam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"endExam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MX0.Q6mmRPgt-V5njhV96rlAfLnogkxJB8YOwWfIaMSHFp0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/handling/fetchDash",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"fetchDash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Discard Exam",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MX0.Q6mmRPgt-V5njhV96rlAfLnogkxJB8YOwWfIaMSHFp0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/discardEx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"discardEx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Exams for Response Sheet",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MX0.Q6mmRPgt-V5njhV96rlAfLnogkxJB8YOwWfIaMSHFp0",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/preGenResponse",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"preGenResponse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Decrypt Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MH0.QKzISBmjZf_H7UGy5CvMjZHWxnpCsFT-1aYuQnzr814",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "zip",
+							"type": "file",
+							"src": "/C:/Users/DEEPENDRA/Desktop/NTPL/ExamServer/json/candidate.zip.enc"
+						},
+						{
+							"key": "key",
+							"value": "encRegData",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/decryptRegistration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"decryptRegistration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Decrypt Exam",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6MH0.QKzISBmjZf_H7UGy5CvMjZHWxnpCsFT-1aYuQnzr814",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "zip",
+							"type": "file",
+							"src": "/C:/Users/DEEPENDRA/Desktop/NTPL/ExamServer/json/exam.zip.enc"
+						},
+						{
+							"key": "key",
+							"value": "encPaper",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/handling/decryptExam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"decryptExam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Response Sheet",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-handling-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImNzdXNlciIsIkV4YW1JZCI6NX0.CtF_8F2llfFIWTWhC3sBqTNcEU4rHJ-Wl7RZ6KnXOYw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/handling/genResponse",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"handling",
+						"genResponse"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

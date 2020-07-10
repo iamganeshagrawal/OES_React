@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "9cb1b98c-4a46-4282-8624-a965142ccebf",
+		"name": "ExamServer_Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"admin\",\n\t\"passwd\": \"rootadmin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate Hash",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "admauthin",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoiYWRtaW4ifQ.XGGD89skmKtAxNPA7_za9jovG5-1T2f4ILjZyW4SQwk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "zip",
+							"type": "file",
+							"src": "/C:/Users/DEEPENDRA/Documents/ShraddhaKapoor_Shaadi.com.zip"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/calculateHash",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"calculateHash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Encrypt Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "admauthin",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoiYWRtaW4ifQ.XGGD89skmKtAxNPA7_za9jovG5-1T2f4ILjZyW4SQwk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "zip",
+							"type": "file",
+							"src": "/C:/Users/DEEPENDRA/Desktop/NTPL/ExamServer/json/candidate.zip"
+						},
+						{
+							"key": "key",
+							"value": "encRegData",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/uploadRegistration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"uploadRegistration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Encrypt QP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "admauthin",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoiYWRtaW4ifQ.XGGD89skmKtAxNPA7_za9jovG5-1T2f4ILjZyW4SQwk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "zip",
+							"type": "file",
+							"src": "/C:/Users/DEEPENDRA/Desktop/NTPL/ExamServer/json/exam.zip"
+						},
+						{
+							"key": "key",
+							"value": "encPaper",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/uploadExam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"uploadExam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Center Dashes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "admauthin",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoiYWRtaW4ifQ.XGGD89skmKtAxNPA7_za9jovG5-1T2f4ILjZyW4SQwk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/admin/centerDashes?exam=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"centerDashes"
+					],
+					"query": [
+						{
+							"key": "exam",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
